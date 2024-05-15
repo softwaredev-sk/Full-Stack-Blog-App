@@ -12,35 +12,37 @@ export default function Footer() {
           <h4 className={styles.logoText}>BlogApp</h4>
         </div>
         <p className={styles.desc}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae quod
-          dolore explicabo ad ea! At, veniam est, cumque sequi similique quidem
-          deserunt perspiciatis doloremque vero eos aliquam labore mollitia in?
+          This is a blog app created by Shailendra Kumar.
         </p>
         <div className={styles.icons}>
-          <Image src="/facebook.png" alt="" width={18} height={18} />
-          <Image src="/instagram.png" alt="" width={18} height={18} />
-          <Image src="/youtube.png" alt="" width={18} height={18} />
+          <Link href="https://www.facebook.com/shailendrakrsk">
+            <Image src="/facebook.png" alt="" width={18} height={18} />
+          </Link>
+          <Link href="https://www.instagram.com/shailendrakrsk">
+            <Image src="/instagram.png" alt="" width={18} height={18} />
+          </Link>{' '}
+          <Link href="/">
+            <Image src="/youtube.png" alt="" width={18} height={18} />
+          </Link>
         </div>
       </div>
       <div className={styles.links}>
         <div className={styles.list}>
           <span className={styles.listTitle}>Links</span>
           <Link href="/">Home</Link>
-          <Link href="/">Blog</Link>
-          <Link href="/">About</Link>
-          <Link href="/">Contact</Link>
+          <Link href="/about">About</Link>
+          <Link href="/contact">Contact</Link>
         </div>
         <div className={styles.list}>
           <span className={styles.listTitle}>Tags</span>
-          <Link href="/">Style</Link>
-          <Link href="/">Fashion</Link>
-          <Link href="/">Coding</Link>
-          <Link href="/">Travel</Link>
+          <Link href="/blog?cat=coding">Coding</Link>
+          <Link href="/blog?cat=travel">Travel</Link>
+          <Link href="/blog?cat=fashion">Fashion</Link>
         </div>
         <div className={styles.list}>
           <span className={styles.listTitle}>Social</span>
-          <Link href="/">Facebook</Link>
-          <Link href="/">Instagram</Link>
+          <Link href="https://www.facebook.com/shailendrakrsk">Facebook</Link>
+          <Link href="https://www.instagram.com/shailendrakrsk">Instagram</Link>
           <Link href="/">Youtube</Link>
         </div>
       </div>

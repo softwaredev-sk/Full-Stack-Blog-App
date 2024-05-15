@@ -22,11 +22,12 @@ export default function WritePage() {
   const router = useRouter();
 
   const [file, setFile] = useState(null);
-  const [media, setMedia] = useState('');
+  const [media, setMedia] = useState('/p1.jpeg');
   const [title, setTitle] = useState('');
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
+  const [catSlug, setCatSlug] = useState('');
 
   useEffect(() => {
     const storage = getStorage(app);
@@ -63,6 +64,7 @@ export default function WritePage() {
     };
 
     file && upload();
+    setOpen(false);
   }, [file]);
 
   if (status === 'loading') {
@@ -88,7 +90,7 @@ export default function WritePage() {
         desc: value,
         img: media,
         slug: slugify(title),
-        catSlug: 'travel',
+        catSlug: catSlug || 'fashion',
       }),
     });
 
@@ -107,35 +109,60 @@ export default function WritePage() {
           className={styles.input}
           onChange={(e) => setTitle(e.target.value)}
         />
-        {/* <input type="text" placeholder="category" /> To be worked */}
+
+        <div className={styles.extraContainer}>
+          <div className={styles.selectContainer}>
+            <label htmlFor="category" className={styles.label}>
+              Category
+            </label>
+            <select
+              id="category"
+              className={styles.select}
+              onChange={(e) => setCatSlug(e.target.value)}
+            >
+              <option value="style">style</option>
+              <option value="fashion">fashion</option>
+              <option value="food">food</option>
+              <option value="culture">culture</option>
+              <option value="travel">travel</option>
+              <option value="coding">coding</option>
+            </select>
+          </div>
+          <div className={styles.addContainer}>
+            <button
+              className={styles.button}
+              onClick={() => setOpen((prevState) => !prevState)}
+            >
+              <Image src="/plus.png" alt="" width={16} height={16} />
+            </button>
+            {open && (
+              <div className={styles.add}>
+                <input
+                  type="file"
+                  id="image"
+                  onChange={(e) => setFile(e.target.files[0])}
+                  className={styles.hiddenInput}
+                />
+                <button className={styles.addButton}>
+                  <label htmlFor="image" className={styles.label}>
+                    <Image src="/image.png" alt="" width={16} height={16} />
+                  </label>
+                </button>
+                <button className={styles.addButton}>
+                  <label htmlFor="image" className={styles.label}>
+                    <Image src="/external.png" alt="" width={16} height={16} />
+                  </label>
+                </button>
+                <button className={styles.addButton}>
+                  <label htmlFor="image" className={styles.label}>
+                    <Image src="/video.png" alt="" width={16} height={16} />
+                  </label>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
         <div className={styles.editor}>
-          <button
-            className={styles.button}
-            onClick={() => setOpen((prevState) => !prevState)}
-          >
-            <Image src="/plus.png" alt="" width={16} height={16} />
-          </button>
-          {open && (
-            <div className={styles.add}>
-              <input
-                type="file"
-                id="image"
-                onChange={(e) => setFile(e.target.files[0])}
-                className={styles.hiddenInput}
-              />
-              <button className={styles.addButton}>
-                <label htmlFor="image" className={styles.label}>
-                  <Image src="/image.png" alt="" width={16} height={16} />
-                </label>
-              </button>
-              <button className={styles.addButton}>
-                <Image src="/external.png" alt="" width={16} height={16} />
-              </button>
-              <button className={styles.addButton}>
-                <Image src="/video.png" alt="" width={16} height={16} />
-              </button>
-            </div>
-          )}
           <ReactQuill
             className={styles.textArea}
             theme="bubble"

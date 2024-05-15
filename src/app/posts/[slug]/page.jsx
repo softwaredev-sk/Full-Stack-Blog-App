@@ -19,7 +19,7 @@ export default async function SinglePage({ params }) {
   const { slug } = params;
 
   const data = await getData(slug);
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className={styles.container}>
