@@ -4,9 +4,12 @@ import Comments from '@/components/comments/Comments';
 import Menu from '@/components/menu/Menu';
 
 const getData = async (slug) => {
-  const res = await fetch(`/api/posts/${slug}`, {
-    cache: 'no-store',
-  });
+  const res = await fetch(
+    `https://full-stack-blog-app-sk.vercel.app/api/posts/${slug}`,
+    {
+      cache: 'no-store',
+    }
+  );
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');

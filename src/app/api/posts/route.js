@@ -87,11 +87,6 @@ export const POST = async (req) => {
 
   try {
     const body = await req.json();
-    console.log('body1', body);
-    console.log('body2', body.title.trim());
-    console.log('body3', body.title.trim() == '');
-    console.log('body4', body.desc.trim().length);
-    console.log('body5', body.desc.trim().length < 20);
     if (body.title.trim() == '' || body.desc.trim().length < 20) {
       return new NextResponse(
         JSON.stringify({ message: 'Invalid Data!' }, { status: 401 })
