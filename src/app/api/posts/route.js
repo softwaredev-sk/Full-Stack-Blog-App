@@ -9,7 +9,7 @@ export const GET = async (req) => {
   const featured = searchParams.get('featured');
   const popular = searchParams.get('popular');
 
-  const POST_PER_PAGE = 2;
+  const POST_PER_PAGE = 4;
 
   const query = {
     take: POST_PER_PAGE,
@@ -25,7 +25,7 @@ export const GET = async (req) => {
     //   skip: POST_PER_PAGE * (page - 1),
     // });
 
-    console.log('thisis', typeof popular);
+    // console.log('thisis', typeof popular);
 
     let posts, count, featuredPost, popularPosts;
     if (!featured && !popular) {
@@ -33,6 +33,9 @@ export const GET = async (req) => {
         prisma.post.findMany(query),
         prisma.post.count({ where: query.where }),
       ]);
+      if (page === 1) {
+        revalidatePath('/', 'layout');
+      }
     }
     if (featured) {
       featuredPost = await prisma.post.findFirst({
@@ -58,6 +61,7 @@ export const GET = async (req) => {
 
     const hasPrev = POST_PER_PAGE * (page - 1) > 0;
     const hasNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < count;
+
     return new NextResponse(
       JSON.stringify(
         { posts, hasPrev, hasNext, featuredPost, popularPosts },
@@ -83,10 +87,19 @@ export const POST = async (req) => {
 
   try {
     const body = await req.json();
+    console.log('body1', body);
+    console.log('body2', body.title.trim());
+    console.log('body3', body.title.trim() == '');
+    console.log('body4', body.desc.trim().length);
+    console.log('body5', body.desc.trim().length < 20);
+    if (body.title.trim() == '' || body.desc.trim().length < 20) {
+      return new NextResponse(
+        JSON.stringify({ message: 'Invalid Data!' }, { status: 401 })
+      );
+    }
     const post = await prisma.post.create({
       data: { ...body, userEmail: session.user.email },
     });
-
     return new NextResponse(JSON.stringify(post, { status: 200 }));
   } catch (err) {
     // console.log(err);

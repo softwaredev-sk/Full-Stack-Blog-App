@@ -118,6 +118,17 @@
   display: flex;
 }
 
+.errorData {
+  margin: auto;
+  border: 1px solid red;
+  padding: 5px 10px;
+  border-radius: 25px;
+}
+
+.hide {
+  display: none;
+}
+
 @media screen and (max-width: 640px) {
   .add .span {
     display: none;

@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import styles from './WritePage.module.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 import { useRouter } from 'next/navigation';
@@ -29,6 +29,10 @@ export default function WritePage() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const [catSlug, setCatSlug] = useState('');
+  const [hasError, setHasError] = useState(false);
+  const [progress, setProgress] = useState(null);
+
+  let lastError = useRef();
 
   useEffect(() => {
     const storage = getStorage(app);
@@ -52,6 +56,7 @@ export default function WritePage() {
               console.log('Upload is running');
               break;
           }
+          setProgress(progress);
         },
         (error) => {
           console.log(error.code);
@@ -61,6 +66,9 @@ export default function WritePage() {
             console.log(downloadURL);
             setMedia(downloadURL);
           });
+          setTimeout(() => {
+            setProgress(null);
+          }, 1200);
         }
       );
     };
@@ -85,6 +93,17 @@ export default function WritePage() {
       .replace(/^-+|-+$/g, '');
 
   async function handleSubmit() {
+    if (!title.trim() && value.trim().length < 20) {
+      if (lastError.current) {
+        clearTimeout(lastError.current);
+      }
+      setHasError(true);
+      lastError.current = setTimeout(() => {
+        lastError.current = null;
+        setHasError(false);
+      }, 2000);
+      return;
+    }
     const res = await fetch('/api/posts', {
       method: 'POST',
       body: JSON.stringify({
@@ -92,7 +111,7 @@ export default function WritePage() {
         desc: value,
         img: media,
         slug: slugify(title),
-        catSlug: catSlug || 'fashion',
+        catSlug: catSlug || 'coding',
       }),
     });
 
@@ -105,6 +124,23 @@ export default function WritePage() {
   if (status === 'authenticated') {
     return (
       <div className={styles.container}>
+        <AnimatePresence>
+          {hasError && (
+            <motion.div
+              key="error"
+              animate={{
+                x: [2, -2],
+                transition: { duration: 0.2, repeat: 2 },
+              }}
+              className={`${styles.errorData}`}
+            >
+              {
+                "Title can't be empty and story need to be at least 20 characters long."
+              }
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <input
           type="text"
           placeholder="Title"
@@ -187,6 +223,7 @@ export default function WritePage() {
               )}
             </AnimatePresence>
           </div>
+          {progress > 0 && <progress value={progress} max="100"></progress>}
         </div>
 
         <div className={styles.editor}>

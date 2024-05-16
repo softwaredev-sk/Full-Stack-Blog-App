@@ -1,12 +1,18 @@
+.container {
+  flex: 5;
+}
+
 .title {
   background-color: coral;
   color: white;
   padding: 5px 10px;
   text-align: center;
   text-transform: capitalize;
+  flex: 5;
 }
 
 .content {
   display: flex;
   gap: 50px;
+  flex: 2;
 }

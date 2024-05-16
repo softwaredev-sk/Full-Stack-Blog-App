@@ -47,6 +47,39 @@ a {
   padding-right: 80px;
 }
 
+.ql-container {
+  font-size: 28px !important;
+}
+
+.quill > .ql-container > .ql-editor.ql-blank,
+.quill > .ql-container > .ql-editor.ql-blank::before {
+  color: #b3b3b1;
+}
+
+pre {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin: 20px;
+}
+
+.error button {
+  width: max-content;
+  padding: 5px 30px;
+  background-color: var(--softBg);
+  color: var(--svgFill);
+  border-radius: 5px;
+  border: 1px solid var(--textColor);
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1536px) {
   .wrapper {
     max-width: 1366px;
@@ -77,13 +110,4 @@ a {
   .wrapper {
     max-width: 475px;
   }
-}
-
-.ql-container {
-  font-size: 28px !important;
-}
-
-.quill > .ql-container > .ql-editor.ql-blank,
-.quill > .ql-container > .ql-editor.ql-blank::before {
-  color: #b3b3b1;
 }

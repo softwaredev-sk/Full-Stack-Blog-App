@@ -4,7 +4,7 @@ import Comments from '@/components/comments/Comments';
 import Menu from '@/components/menu/Menu';
 
 const getData = async (slug) => {
-  const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
+  const res = await fetch(`/api/posts/${slug}`, {
     cache: 'no-store',
   });
 
@@ -38,13 +38,13 @@ export default async function SinglePage({ params }) {
               </div>
             )}
             <div className={styles.userTextContainer}>
-              <span className={styles.username}>{data.user.name}</span>
+              <span className={styles.username}>{data?.user.name}</span>
               <span className={styles.date}>
-                {data.createdAt.substring(8, 10) +
+                {data?.createdAt.substring(8, 10) +
                   '-' +
-                  data.createdAt.substring(5, 7) +
+                  data?.createdAt.substring(5, 7) +
                   '-' +
-                  data.createdAt.substring(0, 4)}
+                  data?.createdAt.substring(0, 4)}
               </span>
             </div>
           </div>
