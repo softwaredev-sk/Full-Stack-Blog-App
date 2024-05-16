@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import styles from './WritePage.module.css';
 import React, { useEffect, useRef, useState } from 'react';
-import ReactQuill from 'react-quill';
+// import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -14,11 +14,11 @@ import {
 } from 'firebase/storage';
 import { app } from '@/utils/firebase';
 import { motion, AnimatePresence } from 'framer-motion';
-// import dynamic from 'next/dynamic';
+import dynamic from 'next/dynamic';
 
 export default function WritePage() {
   const { status } = useSession();
-  // const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+  const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
   const router = useRouter();
 
@@ -121,124 +121,119 @@ export default function WritePage() {
     }
   }
 
-  if (status === 'authenticated') {
-    return (
-      <div className={styles.container}>
-        <AnimatePresence>
-          {hasError && (
-            <motion.div
-              key="error"
-              animate={{
-                x: [2, -2],
-                transition: { duration: 0.2, repeat: 2 },
-              }}
-              className={`${styles.errorData}`}
-            >
-              {
-                "Title can't be empty and story need to be at least 20 characters long."
-              }
-            </motion.div>
-          )}
-        </AnimatePresence>
+  // if (status === 'authenticated') {
+  return (
+    <div className={styles.container}>
+      <AnimatePresence>
+        {hasError && (
+          <motion.div
+            key="error"
+            animate={{
+              x: [2, -2],
+              transition: { duration: 0.2, repeat: 2 },
+            }}
+            className={`${styles.errorData}`}
+          >
+            {
+              "Title can't be empty and story need to be at least 20 characters long."
+            }
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-        <input
-          type="text"
-          placeholder="Title"
-          className={styles.input}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+      <input
+        type="text"
+        placeholder="Title"
+        className={styles.input}
+        onChange={(e) => setTitle(e.target.value)}
+      />
 
-        <div className={styles.extraContainer}>
-          <div className={styles.selectContainer}>
-            <label htmlFor="category" className={styles.label}>
-              Category
-            </label>
-            <select
-              id="category"
-              className={styles.select}
-              onChange={(e) => setCatSlug(e.target.value)}
-            >
-              <option value="style">style</option>
-              <option value="fashion">fashion</option>
-              <option value="food">food</option>
-              <option value="culture">culture</option>
-              <option value="travel">travel</option>
-              <option value="coding">coding</option>
-            </select>
-          </div>
-          <div className={styles.addContainer}>
-            <button
-              className={`${styles.button} ${open && styles.open}`}
-              onClick={() => setOpen((prevState) => !prevState)}
-            >
-              <Image src="/plus.svg" alt="" width={16} height={16} />
-            </button>{' '}
-            <AnimatePresence>
-              {open && (
+      <div className={styles.extraContainer}>
+        <div className={styles.selectContainer}>
+          <label htmlFor="category" className={styles.label}>
+            Category
+          </label>
+          <select
+            id="category"
+            className={styles.select}
+            onChange={(e) => setCatSlug(e.target.value)}
+          >
+            <option value="style">style</option>
+            <option value="fashion">fashion</option>
+            <option value="food">food</option>
+            <option value="culture">culture</option>
+            <option value="travel">travel</option>
+            <option value="coding">coding</option>
+          </select>
+        </div>
+        <div className={styles.addContainer}>
+          <button
+            className={`${styles.button} ${open && styles.open}`}
+            onClick={() => setOpen((prevState) => !prevState)}
+          >
+            <Image src="/plus.svg" alt="" width={16} height={16} />
+          </button>{' '}
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                key="addButton"
+                className={styles.add}
+                animate={{
+                  opacity: [0, 1],
+                  // rotate: [-45, 0],
+                  x: [600, 0],
+                  originX: 0,
+                }}
+                exit={{ x: [0, 400], opacity: [1, 0] }}
+              >
+                <input
+                  type="file"
+                  id="image"
+                  onChange={(e) => setFile(e.target.files[0])}
+                  className={styles.hiddenInput}
+                />
+                <button className={styles.addButton}>
+                  <label htmlFor="image" className={styles.label}>
+                    <Image src="/image.png" alt="" width={16} height={16} />
+                  </label>
+                </button>
+                <button className={styles.addButton}>
+                  <label htmlFor="image" className={styles.label}>
+                    <Image src="/external.png" alt="" width={16} height={16} />
+                  </label>
+                </button>
+                <button className={styles.addButton}>
+                  <label htmlFor="image" className={styles.label}>
+                    <Image src="/video.png" alt="" width={20} height={20} />
+                  </label>
+                </button>
                 <motion.div
-                  key="addButton"
-                  className={styles.add}
-                  animate={{
-                    opacity: [0, 1],
-                    // rotate: [-45, 0],
-                    x: [600, 0],
-                    originX: 0,
-                  }}
-                  exit={{ x: [0, 400], opacity: [1, 0] }}
+                  className={styles.span}
+                  animate={{ x: [1000, 0] }}
+                  exit={{ x: [0, 1000] }}
                 >
-                  <input
-                    type="file"
-                    id="image"
-                    onChange={(e) => setFile(e.target.files[0])}
-                    className={styles.hiddenInput}
-                  />
-                  <button className={styles.addButton}>
-                    <label htmlFor="image" className={styles.label}>
-                      <Image src="/image.png" alt="" width={16} height={16} />
-                    </label>
-                  </button>
-                  <button className={styles.addButton}>
-                    <label htmlFor="image" className={styles.label}>
-                      <Image
-                        src="/external.png"
-                        alt=""
-                        width={16}
-                        height={16}
-                      />
-                    </label>
-                  </button>
-                  <button className={styles.addButton}>
-                    <label htmlFor="image" className={styles.label}>
-                      <Image src="/video.png" alt="" width={20} height={20} />
-                    </label>
-                  </button>
-                  <motion.div
-                    className={styles.span}
-                    animate={{ x: [1000, 0] }}
-                    exit={{ x: [0, 1000] }}
-                  >
-                    <b>NOTE:</b> Max file size: 200 KB
-                  </motion.div>
+                  <b>NOTE:</b> Max file size: 200 KB
                 </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-          {progress > 0 && <progress value={progress} max="100"></progress>}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-
-        <div className={styles.editor}>
-          <ReactQuill
-            className={styles.textArea}
-            theme="bubble"
-            value={value}
-            onChange={setValue}
-            placeholder="Let the world know your thoughts..."
-          />
-        </div>
-        <button className={styles.publish} onClick={handleSubmit}>
-          Publish
-        </button>
+        {progress > 0 && <progress value={progress} max="100"></progress>}
       </div>
-    );
-  }
+
+      <div className={styles.editor}>
+        <ReactQuill
+          className={styles.textArea}
+          theme="bubble"
+          value={value}
+          onChange={setValue}
+          placeholder="Let the world know your thoughts..."
+        />
+      </div>
+      <button className={styles.publish} onClick={handleSubmit}>
+        Publish
+      </button>
+    </div>
+  );
 }
+// }
