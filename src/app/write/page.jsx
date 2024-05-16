@@ -13,6 +13,7 @@ import {
   getDownloadURL,
 } from 'firebase/storage';
 import { app } from '@/utils/firebase';
+import { motion, AnimatePresence } from 'framer-motion';
 // import dynamic from 'next/dynamic';
 
 export default function WritePage() {
@@ -31,6 +32,7 @@ export default function WritePage() {
 
   useEffect(() => {
     const storage = getStorage(app);
+
     const upload = () => {
       const name = new Date().getTime();
       const storageRef = ref(storage, name + file.name);
@@ -71,7 +73,7 @@ export default function WritePage() {
     return <div className={styles.loading}>Loading...</div>;
   }
   if (status === 'unauthenticated') {
-    router.push('/');
+    router.push('/login');
   }
 
   const slugify = (str) =>
@@ -130,38 +132,63 @@ export default function WritePage() {
           </div>
           <div className={styles.addContainer}>
             <button
-              className={styles.button}
+              className={`${styles.button} ${open && styles.open}`}
               onClick={() => setOpen((prevState) => !prevState)}
             >
-              <Image src="/plus.png" alt="" width={16} height={16} />
-            </button>
-            {open && (
-              <div className={styles.add}>
-                <input
-                  type="file"
-                  id="image"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  className={styles.hiddenInput}
-                />
-                <button className={styles.addButton}>
-                  <label htmlFor="image" className={styles.label}>
-                    <Image src="/image.png" alt="" width={16} height={16} />
-                  </label>
-                </button>
-                <button className={styles.addButton}>
-                  <label htmlFor="image" className={styles.label}>
-                    <Image src="/external.png" alt="" width={16} height={16} />
-                  </label>
-                </button>
-                <button className={styles.addButton}>
-                  <label htmlFor="image" className={styles.label}>
-                    <Image src="/video.png" alt="" width={16} height={16} />
-                  </label>
-                </button>
-              </div>
-            )}
+              <Image src="/plus.svg" alt="" width={16} height={16} />
+            </button>{' '}
+            <AnimatePresence>
+              {open && (
+                <motion.div
+                  key="addButton"
+                  className={styles.add}
+                  animate={{
+                    opacity: [0, 1],
+                    // rotate: [-45, 0],
+                    x: [600, 0],
+                    originX: 0,
+                  }}
+                  exit={{ x: [0, 400], opacity: [1, 0] }}
+                >
+                  <input
+                    type="file"
+                    id="image"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    className={styles.hiddenInput}
+                  />
+                  <button className={styles.addButton}>
+                    <label htmlFor="image" className={styles.label}>
+                      <Image src="/image.png" alt="" width={16} height={16} />
+                    </label>
+                  </button>
+                  <button className={styles.addButton}>
+                    <label htmlFor="image" className={styles.label}>
+                      <Image
+                        src="/external.png"
+                        alt=""
+                        width={16}
+                        height={16}
+                      />
+                    </label>
+                  </button>
+                  <button className={styles.addButton}>
+                    <label htmlFor="image" className={styles.label}>
+                      <Image src="/video.png" alt="" width={20} height={20} />
+                    </label>
+                  </button>
+                  <motion.div
+                    className={styles.span}
+                    animate={{ x: [1000, 0] }}
+                    exit={{ x: [0, 1000] }}
+                  >
+                    <b>NOTE:</b> Max file size: 200 KB
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
+
         <div className={styles.editor}>
           <ReactQuill
             className={styles.textArea}
