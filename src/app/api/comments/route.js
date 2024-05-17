@@ -19,7 +19,7 @@ export const GET = async (req) => {
     // console.log('comments ', err);
     return new NextResponse(
       JSON.stringify(
-        { message: 'comments Something went wrong!' },
+        { message: 'Something went wrong in fetching comments!' },
         { status: 500 }
       )
     );
@@ -46,7 +46,7 @@ export const POST = async (req) => {
     // console.log('comments2 ', err);
     return new NextResponse(
       JSON.stringify(
-        { message: 'comments2 Something went wrong!' },
+        { message: 'Something went wrong in fetching comments-2!' },
         { status: 500 }
       )
     );

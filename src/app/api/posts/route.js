@@ -65,7 +65,7 @@ export const GET = async (req) => {
     // console.log('posts ', err);
     return new NextResponse(
       JSON.stringify(
-        { message: 'posts Something went wrong!' },
+        { message: 'Something went wrong in fetching posts!' },
         { status: 500 }
       )
     );
@@ -96,7 +96,7 @@ export const POST = async (req) => {
     // console.log('posts2 ', err);
     return new NextResponse(
       JSON.stringify(
-        { message: 'posts2 Something went wrong!' },
+        { message: 'Something went wrong in fetching post!' },
         { status: 500 }
       )
     );

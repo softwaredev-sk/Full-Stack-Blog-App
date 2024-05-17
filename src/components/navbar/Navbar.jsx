@@ -48,7 +48,7 @@ export default function Navbar() {
         >
           About
         </Link>
-        <AuthLinks />
+        <AuthLinks path={path} />
       </div>
     </div>
   );

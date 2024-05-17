@@ -9,7 +9,7 @@ export const GET = async () => {
     // console.log('categories ', err);
     return new NextResponse(
       JSON.stringify(
-        { message: 'categories Something went wrong!' },
+        { message: 'Something went wrong in fetching Categories!' },
         { status: 500 }
       )
     );

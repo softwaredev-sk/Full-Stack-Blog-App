@@ -32,10 +32,38 @@ export default function WritePage() {
   const [open, setOpen] = useState(false);
   const [desc, setDesc] = useState('');
   const [catSlug, setCatSlug] = useState('');
-  const [hasError, setHasError] = useState(false);
+  const [hasError, setHasError] = useState({
+    hasError: false,
+    flag: null,
+    errorMsg: '',
+  });
   const [progress, setProgress] = useState(null);
+  const [uploadSuccessful, setUploadSuccessful] = useState(false);
 
   let lastError = useRef();
+
+  useEffect(() => {
+    function handleState(e) {
+      if (
+        (e.target.tagName.toLowerCase() !== 'IMG'.toLowerCase() &&
+          e.target.tagName.toLowerCase() !== 'input'.toLowerCase() &&
+          e.target.tagName.toLowerCase() !== 'button'.toLowerCase() &&
+          e.type.toLowerCase() === 'click'.toLowerCase()) ||
+        (e.type.toLowerCase() === 'keydown'.toLowerCase() &&
+          e.key.toLowerCase() === 'Escape'.toLowerCase())
+      ) {
+        setOpen(false);
+      }
+    }
+
+    document.body.addEventListener('click', (e) => handleState(e));
+    document.body.addEventListener('keydown', (e) => handleState(e));
+
+    return () => {
+      document.body.removeEventListener('click', handleState);
+      document.body.removeEventListener('keydown', handleState);
+    };
+  }, []);
 
   useEffect(() => {
     const storage = getStorage(app);
@@ -48,6 +76,7 @@ export default function WritePage() {
       uploadTask.on(
         'state_changed',
         (snapshot) => {
+          setUploadSuccessful(false);
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
@@ -62,13 +91,19 @@ export default function WritePage() {
           setProgress(progress);
         },
         (error) => {
-          console.log(error.code);
+          handleError(
+            'Image size too large. Please upload image smaller than 200 KB',
+            'upload'
+          );
+          setProgress(null);
+          console.log('Image size too large ', error.code);
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log(downloadURL);
             setMedia(downloadURL);
           });
+          setUploadSuccessful(true);
           setTimeout(() => {
             setProgress(null);
           }, 1200);
@@ -96,15 +131,11 @@ export default function WritePage() {
       .replace(/^-+|-+$/g, '');
 
   async function handleSubmit() {
-    if (!title.trim() && desc.trim().length < 20) {
-      if (lastError.current) {
-        clearTimeout(lastError.current);
-      }
-      setHasError(true);
-      lastError.current = setTimeout(() => {
-        lastError.current = null;
-        setHasError(false);
-      }, 2000);
+    if (!title.trim() && desc.trim().length < 20 && !uploadSuccessful) {
+      handleError(
+        "Title can't be empty and story need to be at least 20 characters long.",
+        'validation failed'
+      );
       return;
     }
     const res = await fetch('/api/posts', {
@@ -124,11 +155,36 @@ export default function WritePage() {
     }
   }
 
+  function handleError(msg, flag) {
+    if (lastError.current) {
+      clearTimeout(lastError.current);
+    }
+    setHasError((prevState) => {
+      return {
+        ...prevState,
+        hasError: true,
+        flag,
+        errorMsg: msg,
+      };
+    });
+    lastError.current = setTimeout(() => {
+      lastError.current = null;
+      setHasError((prevState) => {
+        return {
+          ...prevState,
+          hasError: false,
+          flag: null,
+          errorMsg: '',
+        };
+      });
+    }, 2000);
+  }
+
   if (status === 'authenticated') {
     return (
       <div className={styles.container}>
         <AnimatePresence>
-          {hasError && (
+          {hasError.hasError && (
             <motion.div
               key="error"
               animate={{
@@ -137,13 +193,11 @@ export default function WritePage() {
               }}
               className={`${styles.errorData}`}
             >
-              {
-                "Title can't be empty and story need to be at least 20 characters long."
-              }
+              {hasError.errorMsg ||
+                'Some Error Occurred, please try again after sometime.'}
             </motion.div>
           )}
         </AnimatePresence>
-
         <input
           type="text"
           placeholder="Title"
@@ -170,12 +224,20 @@ export default function WritePage() {
             </select>
           </div>
           <div className={styles.addContainer}>
-            <button
-              className={`${styles.button} ${open && styles.open}`}
-              onClick={() => setOpen((prevState) => !prevState)}
-            >
-              <Image src="/plus.svg" alt="" width={16} height={16} />
-            </button>{' '}
+            <div className={styles.buttonSuccessful}>
+              <button
+                className={`${styles.button} ${open && styles.open}`}
+                onClick={() => setOpen((prevState) => !prevState)}
+              >
+                <Image src="/plus.svg" alt="" width={16} height={16} />
+              </button>
+              {uploadSuccessful && (
+                <div className={styles.successful}>Upload Successfull ✅</div>
+              )}
+              {hasError.flag === 'upload' && (
+                <div className={styles.successful}>Upload Failed ❌</div>
+              )}
+            </div>
             <AnimatePresence>
               {open && (
                 <motion.div
@@ -183,7 +245,6 @@ export default function WritePage() {
                   className={styles.add}
                   animate={{
                     opacity: [0, 1],
-                    // rotate: [-45, 0],
                     x: [600, 0],
                     originX: 0,
                   }}
@@ -226,8 +287,9 @@ export default function WritePage() {
               )}
             </AnimatePresence>
           </div>
-          {progress > 0 && <progress value={progress} max="100"></progress>}
         </div>
+
+        {progress > 0 && <progress value={progress} max="100"></progress>}
 
         <div className={styles.editor}>
           <ReactQuill

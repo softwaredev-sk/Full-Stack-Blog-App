@@ -29,7 +29,7 @@ export const GET = async (req, { params }) => {
     return new NextResponse(
       JSON.stringify(
         {
-          message: `posts slug Something went wrong!! ${err.message}`,
+          message: `Something went wrong in fetching single post!! ${err.message}`,
         },
         { status: 500 }
       )

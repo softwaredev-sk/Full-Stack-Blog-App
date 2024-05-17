@@ -74,13 +74,20 @@
 
 @media screen and (max-width: 1280px) {
   .title {
+    font-size: 64px;
+  }
+  .title b {
     font-size: 72px;
   }
 }
 
 @media screen and (max-width: 1024px) {
   .title {
-    font-size: 64px;
+    font-size: 60px;
+  }
+
+  .title b {
+    font-size: 68px;
   }
 
   .imgContainer {
@@ -92,10 +99,23 @@
   .title {
     font-size: 48px;
   }
+
+  .title b {
+    font-size: 44px;
+  }
+
+  .title b::after {
+    content: '\A';
+    white-space: pre;
+  }
 }
 
 @media screen and (max-width: 640px) {
   .title {
     font-size: 36px;
+  }
+
+  .title b {
+    font-size: 28px;
   }
 }
