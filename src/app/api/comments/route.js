@@ -16,9 +16,12 @@ export const GET = async (req) => {
 
     return new NextResponse(JSON.stringify(comments, { status: 200 }));
   } catch (err) {
-    console.log(err);
+    console.log('comments ', err);
     return new NextResponse(
-      JSON.stringify({ message: 'Something went wrong!' }, { status: 500 })
+      JSON.stringify(
+        { message: 'comments Something went wrong!' },
+        { status: 500 }
+      )
     );
   }
 };
@@ -40,9 +43,12 @@ export const POST = async (req) => {
 
     return new NextResponse(JSON.stringify(comment, { status: 200 }));
   } catch (err) {
-    console.log(err);
+    console.log('comments2 ', err);
     return new NextResponse(
-      JSON.stringify({ message: 'Something went wrong!' }, { status: 500 })
+      JSON.stringify(
+        { message: 'comments2 Something went wrong!' },
+        { status: 500 }
+      )
     );
   }
 };

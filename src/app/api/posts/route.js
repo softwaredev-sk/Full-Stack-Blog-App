@@ -69,9 +69,12 @@ export const GET = async (req) => {
       )
     );
   } catch (err) {
-    // console.log(err);
+    console.log('posts ', err);
     return new NextResponse(
-      JSON.stringify({ message: 'Something went wrong!' }, { status: 500 })
+      JSON.stringify(
+        { message: 'posts Something went wrong!' },
+        { status: 500 }
+      )
     );
   }
 };
@@ -97,9 +100,12 @@ export const POST = async (req) => {
     });
     return new NextResponse(JSON.stringify(post, { status: 200 }));
   } catch (err) {
-    // console.log(err);
+    console.log('posts2 ', err);
     return new NextResponse(
-      JSON.stringify({ message: 'Something went wrong!' }, { status: 500 })
+      JSON.stringify(
+        { message: 'posts2 Something went wrong!' },
+        { status: 500 }
+      )
     );
   }
 };

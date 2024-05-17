@@ -1,4 +1,5 @@
 .container {
+  margin-top: 20px;
 }
 
 .infoContainer {
@@ -71,6 +72,14 @@
   margin-bottom: 20px;
 }
 
+.notFound {
+  margin: 50px auto;
+  text-align: center;
+  font-size: 60px;
+  text-decoration: overline underline;
+  text-transform: uppercase;
+}
+
 @media screen and (max-width: 1536px) {
   .title {
     font-size: 54px;
@@ -84,6 +93,11 @@
 @media screen and (max-width: 1024px) {
   .imageContainer {
     display: none;
+  }
+  .notFound {
+    text-decoration: none;
+    border-top: 4px solid black;
+    border-bottom: 4px solid black;
   }
 }
 @media screen and (max-width: 640px) {
