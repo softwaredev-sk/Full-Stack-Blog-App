@@ -1,5 +1,42 @@
 .container {
   flex: 5;
+  margin-top: 30px;
+}
+
+.header {
+  position: relative;
+}
+
+.bgCover {
+  padding: 50px 0;
+  width: 100px;
+  aspect-ratio: 1/1;
+  background-size: contain;
+  background-repeat: no-repeat;
+  /* background-position: 40px; */
+  position: absolute;
+  top: 50%;
+  left: 50px;
+  transform: translateY(-50%);
+}
+
+.bgCover.coding {
+  background-image: url(/coding.png);
+}
+.bgCover.fashion {
+  background-image: url(/fashion.png);
+}
+.bgCover.style {
+  background-image: url(/style.png);
+}
+.bgCover.travel {
+  background-image: url(/travel.png);
+}
+.bgCover.culture {
+  background-image: url(/culture.png);
+}
+.bgCover.food {
+  background-image: url(/food.png);
 }
 
 .title {
@@ -15,4 +52,19 @@
   display: flex;
   gap: 50px;
   flex: 2;
+}
+
+@media screen and (max-width: 1280px) {
+  .bgCover {
+    width: 60px;
+    top: 40px;
+    left: 30px;
+    transform: translateY(-50%);
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .bgCover {
+    display: none;
+  }
 }

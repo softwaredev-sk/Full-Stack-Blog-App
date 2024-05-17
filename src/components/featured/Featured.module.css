@@ -3,8 +3,13 @@
 }
 
 .title {
-  font-size: 96px;
+  font-size: 72px;
   font-weight: 300;
+  text-align: center;
+}
+
+.title b {
+  font-size: 80px;
 }
 
 .post {
@@ -54,6 +59,17 @@
   border-radius: 5px;
   width: max-content;
   cursor: pointer;
+}
+
+.mostViewed {
+  width: max-content;
+  padding: 5px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  /* color: var(--svgFill); */
+  color: black;
+  font-weight: 500;
+  background-color: #e6dbffd5;
 }
 
 @media screen and (max-width: 1280px) {

@@ -23,7 +23,8 @@ export default function Comments({ postSlug }) {
   const ref = useRef();
 
   const { data, mutate, isLoading } = useSwr(
-    `${process.env.PROD_URL}/api/comments?postSlug=${postSlug}`,
+    // `${process.env.PROD_URL}` + `/api/comments?postSlug=${postSlug}`,
+    `/api/comments?postSlug=${postSlug}`,
     fetcher
   );
 

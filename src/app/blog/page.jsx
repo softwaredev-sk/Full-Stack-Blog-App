@@ -8,7 +8,11 @@ export default function BlogPage({ searchParams }) {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>{cat} Blog</h2>
+      <div className={styles.header}>
+        <h2 className={styles.title}>{cat} Blog</h2>
+        <div className={`${styles.bgCover} ${styles[cat]}`}></div>
+      </div>
+
       <div className={styles.content}>
         <CardList page={page} cat={cat} />
         <Menu />

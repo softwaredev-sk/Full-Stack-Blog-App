@@ -89,6 +89,8 @@ pre {
 @media screen and (max-width: 1280px) {
   .wrapper {
     max-width: 1024px;
+    padding-left: 60px;
+    padding-right: 60px;
   }
 }
 
