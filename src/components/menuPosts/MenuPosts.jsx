@@ -4,9 +4,10 @@ import styles from './MenuPosts.module.css';
 
 const getData = async (page, cat, withImage) => {
   const res = await fetch(
-    `http://localhost:3000/api/posts?page=${page || ''}&cat=${
-      cat || ''
-    }&popular=${withImage || ''}`,
+    // `http://localhost:3000/api/posts?page=${page || ''}&cat=${
+    `https://full-stack-blog-app-sk.vercel.app/api/posts?page=${
+      page || ''
+    }&cat=${cat || ''}&popular=${withImage || ''}`,
     {
       cache: 'no-store',
     }
