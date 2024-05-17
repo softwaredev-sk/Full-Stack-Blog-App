@@ -41,6 +41,10 @@
   gap: 100px;
 }
 
+.links a:hover {
+  text-decoration: underline;
+}
+
 .list {
   display: flex;
   flex-direction: column;

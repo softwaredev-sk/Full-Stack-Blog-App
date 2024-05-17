@@ -12,7 +12,7 @@ export default function Footer() {
           <h4 className={styles.logoText}>BlogApp</h4>
         </div>
         <p className={styles.desc}>
-          This is a blog app created by Shailendra Kumar.
+          This is a blog app created by <b>Shailendra Kumar</b>.
         </p>
         <div className={styles.icons}>
           <Link href="https://www.facebook.com/shailendrakrsk">

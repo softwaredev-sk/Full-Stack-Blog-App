@@ -16,7 +16,7 @@ export default function Card({ item, key }) {
           {' - '}
           <span className={styles.category}>{item.catSlug}</span>
         </div>
-        <Link href={`/posts/${item.slug}`}>
+        <Link href={`/posts/${item.slug}`} className={styles.title}>
           <h3>{item.title}</h3>
         </Link>
         <p
@@ -24,7 +24,7 @@ export default function Card({ item, key }) {
           dangerouslySetInnerHTML={{ __html: `${item.desc}` }}
         />
         <Link href={`/posts/${item.slug}`} className={styles.link}>
-          Read More
+          Read More...
         </Link>
       </div>
     </div>

@@ -27,6 +27,14 @@
   font-size: 20px;
 }
 
+.link:hover {
+  text-decoration: underline;
+}
+
+.active {
+  text-decoration: underline;
+}
+
 @media screen and (max-width: 1280px) {
   .logo {
     font-size: 32px;

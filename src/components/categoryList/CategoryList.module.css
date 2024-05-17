@@ -23,6 +23,10 @@
   border-radius: 10px;
 }
 
+.category:hover {
+  filter: brightness(120%);
+}
+
 .category.style {
   background-color: #57c4ff31;
 }

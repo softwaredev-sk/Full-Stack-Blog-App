@@ -1,15 +1,26 @@
 'use client';
 import Link from 'next/link';
 import styles from './AuthLinks.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 
 export default function AuthLinks() {
   const [open, setOpen] = useState(false);
+  const [openProfile, setOpenProfile] = useState(true);
 
-  const { status } = useSession();
+  const { data, status } = useSession();
   // console.log('thisis', data);
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.position = null;
+      document.body.style.width = 'initial';
+    }
+  }, [open]);
 
   return (
     <>
@@ -19,22 +30,26 @@ export default function AuthLinks() {
         </Link>
       ) : (
         <>
-          <Link href="/write" className={styles.link}>
-            Write
-          </Link>
-          <span className={styles.link} onClick={signOut}>
-            Logout
-          </span>
-          {/* <div className={styles.imageContainer}>
-            <Link href="/profile">
-              <Image
-                src={data?.user.image}
-                alt=""
-                className={styles.profile}
-                fill
-              />
-            </Link>
-          </div> */}
+          <div className={styles.imageContainer}>
+            {/* <Link href="/profile"> */}
+            <Image
+              src={data?.user.image}
+              alt=""
+              className={styles.profile}
+              fill
+            />
+            {/* </Link> */}
+            {openProfile && (
+              <div className={styles.profileMenu}>
+                <Link href="/write" className={styles.link}>
+                  Write
+                </Link>
+                <span className={styles.link} onClick={signOut}>
+                  Logout
+                </span>
+              </div>
+            )}
+          </div>
         </>
       )}
       <div

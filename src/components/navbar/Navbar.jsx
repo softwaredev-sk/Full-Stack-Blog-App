@@ -1,11 +1,15 @@
+'use client';
+
 import React from 'react';
 import styles from './Navbar.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import AuthLinks from '../authLinks/AuthLinks';
 import ThemeToggle from '../themeToggle/ThemeToggle';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
+  const path = usePathname();
   return (
     <div className={styles.container}>
       <div className={styles.social}>
@@ -24,13 +28,24 @@ export default function Navbar() {
       </Link>
       <div className={styles.links}>
         <ThemeToggle />
-        <Link href="/" className={styles.link}>
+        <Link
+          href="/"
+          className={`${styles.link} ${path === '/' ? styles.active : ''}`}
+        >
           Home
         </Link>
-        <Link href="/contact" className={styles.link}>
+        <Link
+          href="/contact"
+          className={`${styles.link} ${
+            path === '/contact' ? styles.active : ''
+          }`}
+        >
           Contact
         </Link>
-        <Link href="/about" className={styles.link}>
+        <Link
+          href="/about"
+          className={`${styles.link} ${path === '/about' ? styles.active : ''}`}
+        >
           About
         </Link>
         <AuthLinks />

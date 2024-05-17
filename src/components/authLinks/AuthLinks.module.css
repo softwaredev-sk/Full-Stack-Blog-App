@@ -17,10 +17,16 @@
   background-color: var(--textColor);
 }
 
+.link:hover {
+  text-decoration: underline;
+}
+
 .responsiveMenu {
-  position: absolute;
+  position: fixed;
   top: 100px;
   left: 0;
+  right: 0;
+  bottom: 0;
   background-color: var(--bg);
   height: calc(100vh - 100px);
   width: 100%;
@@ -31,12 +37,60 @@
   gap: 50px;
 }
 
+.imageContainer {
+  width: 30px;
+  aspect-ratio: 1/1;
+  position: relative;
+  border-radius: 50%;
+  /* overflow: hidden; */
+  cursor: pointer;
+  position: relative;
+}
+
+.profile {
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.profileMenu {
+  display: flex;
+  background-color: var(--softBg);
+  /* flex-direction: column; */
+  position: absolute;
+  text-align: right;
+  padding: 20px 10px 20px 20px;
+  gap: 10px;
+  right: 5px;
+  top: 50px;
+  border-radius: 10px;
+}
+
+.profileMenu::before {
+  content: '';
+  position: absolute;
+  display: block;
+  /* width: 20px;
+  height: 15px; */
+  right: 0;
+  top: -15px;
+  width: 0;
+  height: 0;
+  border-left: 25px solid transparent;
+
+  border-bottom: 25px solid var(--softBg);
+}
+
 @media screen and (max-width: 640px) {
   .burger {
     display: flex;
   }
 
-  .link {
+  .link,
+  .imageContainer {
     display: none;
+  }
+
+  .responsiveMenu .link {
+    display: initial;
   }
 }

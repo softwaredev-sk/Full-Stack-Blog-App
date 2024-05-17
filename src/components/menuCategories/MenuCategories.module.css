@@ -12,6 +12,10 @@
   font-size: 14px;
 }
 
+.categoryItem:hover {
+  filter: brightness(120%);
+}
+
 .categoryItem.style {
   background-color: #57c4ff31;
 }
