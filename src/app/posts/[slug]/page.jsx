@@ -6,8 +6,8 @@ import { notFound } from 'next/navigation';
 
 const getData = async (slug) => {
   const res = await fetch(
-    `http://localhost:3000/api/posts/${slug}`,
-    // `https://full-stack-blog-app-sk.vercel.app/api/posts/${slug}`,
+    // `http://localhost:3000/api/posts/${slug}`,
+    `https://full-stack-blog-app-sk.vercel.app/api/posts/${slug}`,
     {
       cache: 'no-store',
     }
