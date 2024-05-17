@@ -23,8 +23,7 @@ export default function Comments({ postSlug }) {
   const ref = useRef();
 
   const { data, mutate, isLoading } = useSwr(
-    // `http://localhost:3000/api/comments?postSlug=${postSlug}`,
-    `https://full-stack-blog-app-sk.vercel.app/api/comments?postSlug=${postSlug}`,
+    `${process.env.PROD_URL}/api/comments?postSlug=${postSlug}`,
     fetcher
   );
 

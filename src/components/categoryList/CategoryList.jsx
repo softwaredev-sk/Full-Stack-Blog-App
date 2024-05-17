@@ -3,13 +3,9 @@ import styles from './CategoryList.module.css';
 import Image from 'next/image';
 
 const getData = async () => {
-  // const res = await fetch('http://localhost:3000/api/categories', {
-  const res = await fetch(
-    'https://full-stack-blog-app-sk.vercel.app/api/categories',
-    {
-      cache: 'no-store',
-    }
-  );
+  const res = await fetch(`${process.env.PROD_URL}/api/categories`, {
+    cache: 'no-store',
+  });
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');

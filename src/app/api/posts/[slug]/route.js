@@ -7,24 +7,17 @@ export const GET = async (req, { params }) => {
   try {
     const exists = await prisma.post.findFirst({ where: { slug } });
     if (exists) {
-      console.log('exists?', exists);
+      // console.log('exists?', exists);
       const post = await prisma.post.update({
         where: { slug },
         data: { views: { increment: 1 } },
         include: { user: true },
       });
-      console.log('itspost ', post);
+      // console.log('itspost ', post);
       return new NextResponse(
         JSON.stringify({ post, statusCode: 200 }, { status: 200 })
       );
     }
-    // console.log('exists?', exists);
-    // const post = await prisma.post.update({
-    //   where: { slug },
-    //   data: { views: { increment: 1 } },
-    //   include: { user: true },
-    // });
-    // console.log('itspost ', post);
     return new NextResponse(
       JSON.stringify(
         { message: 'Post not found', statusCode: 404 },
@@ -32,7 +25,7 @@ export const GET = async (req, { params }) => {
       )
     );
   } catch (err) {
-    console.log('posts slug ', err);
+    // console.log('posts slug ', err);
     return new NextResponse(
       JSON.stringify(
         {

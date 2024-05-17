@@ -20,13 +20,6 @@ export const GET = async (req) => {
   };
 
   try {
-    // const posts = await prisma.post.findMany({
-    //   take: POST_PER_PAGE,
-    //   skip: POST_PER_PAGE * (page - 1),
-    // });
-
-    // console.log('thisis', typeof popular);
-
     let posts, count, featuredPost, popularPosts;
     if (!featured && !popular) {
       [posts, count] = await prisma.$transaction([
@@ -69,7 +62,7 @@ export const GET = async (req) => {
       )
     );
   } catch (err) {
-    console.log('posts ', err);
+    // console.log('posts ', err);
     return new NextResponse(
       JSON.stringify(
         { message: 'posts Something went wrong!' },
@@ -100,7 +93,7 @@ export const POST = async (req) => {
     });
     return new NextResponse(JSON.stringify(post, { status: 200 }));
   } catch (err) {
-    console.log('posts2 ', err);
+    // console.log('posts2 ', err);
     return new NextResponse(
       JSON.stringify(
         { message: 'posts2 Something went wrong!' },

@@ -16,7 +16,7 @@ export const GET = async (req) => {
 
     return new NextResponse(JSON.stringify(comments, { status: 200 }));
   } catch (err) {
-    console.log('comments ', err);
+    // console.log('comments ', err);
     return new NextResponse(
       JSON.stringify(
         { message: 'comments Something went wrong!' },
@@ -43,7 +43,7 @@ export const POST = async (req) => {
 
     return new NextResponse(JSON.stringify(comment, { status: 200 }));
   } catch (err) {
-    console.log('comments2 ', err);
+    // console.log('comments2 ', err);
     return new NextResponse(
       JSON.stringify(
         { message: 'comments2 Something went wrong!' },

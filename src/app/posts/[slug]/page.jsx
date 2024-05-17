@@ -3,17 +3,14 @@ import styles from './SinglePage.module.css';
 import Comments from '@/components/comments/Comments';
 import Menu from '@/components/menu/Menu';
 import { notFound } from 'next/navigation';
+import getMyUrl from '@/utils/getUrl';
 
 const getData = async (slug) => {
-  const res = await fetch(
-    // `http://localhost:3000/api/posts/${slug}`,
-    `https://full-stack-blog-app-sk.vercel.app/api/posts/${slug}`,
-    {
-      cache: 'no-store',
-    }
-  );
+  const res = await fetch(`${process.env.PROD_URL}/api/posts/${slug}`, {
+    cache: 'no-store',
+  });
 
-  console.log('res-postslug ', res.status);
+  // console.log('res-postslug ', res.status);
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');
@@ -27,7 +24,7 @@ export default async function SinglePage({ params }) {
 
   const data = await getData(slug);
 
-  console.log('singlepost ', data);
+  // console.log('singlepost ', data);
   if (data.statusCode !== 200) {
     notFound();
   }
