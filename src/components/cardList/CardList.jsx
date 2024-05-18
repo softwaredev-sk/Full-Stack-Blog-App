@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './CardList.module.css';
 import Pagination from '../pagination/Pagination';
 import Card from '../card/Card';
+import Link from 'next/link';
 
 const getData = async (page, cat) => {
   const res = await fetch(
@@ -20,6 +21,7 @@ const getData = async (page, cat) => {
 
 export default async function CardList({ page, cat }) {
   const { posts, hasPrev, hasNext } = await getData(page, cat);
+  console.log('--', posts);
 
   return (
     <div className={styles.container}>
@@ -27,6 +29,21 @@ export default async function CardList({ page, cat }) {
         {page === 1 ? 'Recent Posts' : 'Browse through posts!'}
       </h2>
       <div className={styles.posts}>
+        {posts.length === 0 && (
+          <>
+            <p>
+              No Posts found for the selected category. How about{' '}
+              <Link href="/write">
+                <b>expanding</b>
+              </Link>{' '}
+              the {"posts'"} collection?
+            </p>
+            <Link href="/write">
+              <b>Write</b>
+            </Link>{' '}
+            a post!
+          </>
+        )}
         {posts?.map((item) => (
           <Card item={item} key={item._id} />
         ))}
