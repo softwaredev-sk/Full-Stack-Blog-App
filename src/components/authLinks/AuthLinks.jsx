@@ -107,7 +107,7 @@ export default function AuthLinks({ path }) {
             Home
           </Link>
           <Link
-            href="/"
+            href="/about"
             onClick={() => setOpen(false)}
             className={`${styles.link} ${
               path === '/about' ? styles.active : ''
@@ -116,7 +116,7 @@ export default function AuthLinks({ path }) {
             About
           </Link>
           <Link
-            href="/"
+            href="/contact"
             onClick={() => setOpen(false)}
             className={`${styles.link} ${
               path === '/contact' ? styles.active : ''
@@ -137,7 +137,8 @@ export default function AuthLinks({ path }) {
           ) : (
             <>
               <Link
-                href="/write"
+                href="/profile"
+                onClick={() => setOpen(false)}
                 className={`${styles.link} ${
                   path === '/profile' ? styles.active : ''
                 }`}
@@ -146,8 +147,9 @@ export default function AuthLinks({ path }) {
               </Link>
               <Link
                 href="/write"
+                onClick={() => setOpen(false)}
                 className={`${styles.link} ${
-                  path === '/login' ? styles.active : ''
+                  path === '/write' ? styles.active : ''
                 }`}
               >
                 Write
