@@ -3,14 +3,9 @@ import styles from './Featured.module.css';
 import Link from 'next/link';
 
 const getData = async (page, cat) => {
-  const res = await fetch(
-    `${process.env.PROD_URL}/api/posts?page=${page || ''}&cat=${
-      cat || ''
-    }&featured=true`,
-    {
-      cache: 'no-store',
-    }
-  );
+  const res = await fetch(`${process.env.PROD_URL}/api/posts/?featured=true`, {
+    cache: 'no-store',
+  });
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');

@@ -20,7 +20,15 @@ export default function Footer() {
           </Link>
           <Link href="https://www.instagram.com/shailendrakrsk">
             <Image src="/instagram.png" alt="" width={18} height={18} />
-          </Link>{' '}
+          </Link>
+          <Link href="https://www.twitter.com/shailendrakrsk_">
+            <Image
+              src={'https://twitter.com/favicon.ico'}
+              alt=""
+              width={18}
+              height={18}
+            />
+          </Link>
           <Link href="/">
             <Image src="/youtube.png" alt="" width={18} height={18} />
           </Link>
@@ -32,9 +40,11 @@ export default function Footer() {
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
           <Link href="/contact">Contact</Link>
+          <Link href="/categories">Tags</Link>
         </div>
         <div className={styles.list}>
           <span className={styles.listTitle}>Tags</span>
+          <Link href="/blog?cat=style">Tech</Link>
           <Link href="/blog?cat=coding">Coding</Link>
           <Link href="/blog?cat=travel">Travel</Link>
           <Link href="/blog?cat=fashion">Fashion</Link>
@@ -43,6 +53,9 @@ export default function Footer() {
           <span className={styles.listTitle}>Social</span>
           <Link href="https://www.facebook.com/shailendrakrsk">Facebook</Link>
           <Link href="https://www.instagram.com/shailendrakrsk">Instagram</Link>
+          <Link href="https://www.twitter.com/shailendrakrsk_">
+            {'X (Twitter)'}
+          </Link>
           <Link href="/">Youtube</Link>
         </div>
       </div>

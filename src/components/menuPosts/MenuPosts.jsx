@@ -2,11 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './MenuPosts.module.css';
 
-const getData = async (page, cat, withImage) => {
+const getData = async (withImage) => {
   const res = await fetch(
-    `${process.env.PROD_URL}/api/posts?page=${page || ''}&cat=${
-      cat || ''
-    }&popular=${withImage || ''}`,
+    `${process.env.PROD_URL}/api/posts/?popular=${withImage || ''}`,
     {
       cache: 'no-store',
     }
@@ -20,11 +18,7 @@ const getData = async (page, cat, withImage) => {
 };
 
 export default async function MenuPosts({ withImage }) {
-  const { popularPosts } = await getData(
-    null,
-    null,
-    withImage ? 'false' : 'true'
-  );
+  const { popularPosts } = await getData(withImage ? 'false' : 'true');
   // console.log('popular', popularPosts);
 
   return (

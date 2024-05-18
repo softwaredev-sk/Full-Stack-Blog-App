@@ -3,6 +3,12 @@
 
 .title {
   margin: 50px 0px;
+  cursor: default;
+}
+
+.seeAll {
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .categories {
@@ -17,7 +23,7 @@
   align-items: center;
   gap: 10px;
   text-transform: capitalize;
-  width: 15%;
+  width: 20%;
   height: 80px;
   justify-content: center;
   border-radius: 10px;
@@ -51,6 +57,30 @@
   background-color: #5e4fff31;
 }
 
+.category.tech {
+  background-color: #ff4f4f67;
+}
+
+.category.business {
+  background-color: #4fff6731;
+}
+
+.category.news {
+  background-color: #e3d9ce65;
+}
+
+.category.political {
+  background-color: #c375d398;
+}
+
+.category.sports {
+  background-color: #3685df81;
+}
+
+.category.personal {
+  background-color: #6dcf7288;
+}
+
 .image {
   border-radius: 50%;
 }
@@ -63,7 +93,7 @@
 
 @media screen and (max-width: 1024px) {
   .category {
-    width: 25%;
+    width: 45%;
   }
 }
 

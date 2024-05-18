@@ -66,6 +66,7 @@
 @media screen and (max-width: 640px) {
   .links {
     justify-content: flex-end;
+    gap: 15px;
   }
   .link {
     display: none;

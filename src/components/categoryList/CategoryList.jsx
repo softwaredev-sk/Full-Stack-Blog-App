@@ -14,11 +14,19 @@ const getData = async () => {
   return res.json();
 };
 
-export default async function CategoryList() {
-  const data = await getData();
+export default async function CategoryList({ page }) {
+  let data = await getData();
+  if (page === 1) {
+    data = data.slice(0, 4);
+  }
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Popular Categories</h2>
+      <Link href="/categories">
+        <h2 className={styles.title}>
+          Popular Categories{' '}
+          <span className={styles.seeAll}>{'[See All]'}</span>
+        </h2>
+      </Link>
       <div className={styles.categories}>
         {data?.map((item) => (
           <Link

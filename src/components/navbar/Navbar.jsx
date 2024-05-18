@@ -19,6 +19,14 @@ export default function Navbar() {
         <Link href="https://www.instagram.com/shailendrakrsk">
           <Image src="/instagram.png" alt="instagram" width={24} height={24} />
         </Link>
+        <Link href="https://www.twitter.com/shailendrakrsk_">
+          <Image
+            src={'https://twitter.com/favicon.ico'}
+            alt=""
+            width={24}
+            height={24}
+          />
+        </Link>
         <Link href="/">
           <Image src="/youtube.png" alt="youtube" width={24} height={24} />
         </Link>
@@ -47,6 +55,14 @@ export default function Navbar() {
           className={`${styles.link} ${path === '/about' ? styles.active : ''}`}
         >
           About
+        </Link>
+        <Link
+          href="/categories"
+          className={`${styles.link} ${
+            path === '/categories' ? styles.active : ''
+          }`}
+        >
+          Tags
         </Link>
         <AuthLinks path={path} />
       </div>

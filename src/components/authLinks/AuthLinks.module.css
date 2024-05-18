@@ -97,8 +97,7 @@
     display: flex;
   }
 
-  .link,
-  .hiddenOnMobile {
+  .link {
     display: none;
   }
 

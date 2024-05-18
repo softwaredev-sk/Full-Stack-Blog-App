@@ -5,7 +5,7 @@ import Card from '../card/Card';
 
 const getData = async (page, cat) => {
   const res = await fetch(
-    `${process.env.PROD_URL}/api/posts?page=${page}&cat=${cat || ''}`,
+    `${process.env.PROD_URL}/api/posts/?page=${page}&cat=${cat || ''}`,
     {
       cache: 'no-store',
     }
@@ -23,7 +23,9 @@ export default async function CardList({ page, cat }) {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Recent Posts</h2>
+      <h2 className={styles.title}>
+        {page === 1 ? 'Recent Posts' : 'Browse through posts!'}
+      </h2>
       <div className={styles.posts}>
         {posts?.map((item) => (
           <Card item={item} key={item._id} />
