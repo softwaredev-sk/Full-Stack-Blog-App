@@ -1,5 +1,6 @@
 .link {
   cursor: pointer;
+  user-select: none;
 }
 
 .burger {
@@ -78,15 +79,12 @@
   content: '';
   position: absolute;
   display: block;
-  /* width: 20px;
-  height: 15px; */
   right: -1.5px;
   top: -26px;
   width: 0;
   height: 0;
   border-left: 35px solid transparent;
   border-bottom: 0 solid transparent;
-  /* border-bottom: 25px solid var(--softBg); */
   border-bottom: 25px solid var(--softTextColor);
 }
 
@@ -100,11 +98,12 @@
   }
 
   .link,
-  .imageContainer {
+  .hiddenOnMobile {
     display: none;
   }
 
-  .responsiveMenu .link {
+  .responsiveMenu .link,
+  .visibleOnMobile {
     display: initial;
   }
 }

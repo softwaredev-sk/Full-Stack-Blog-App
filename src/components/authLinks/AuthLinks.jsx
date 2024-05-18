@@ -47,7 +47,9 @@ export default function AuthLinks({ path }) {
       {status === 'unauthenticated' ? (
         <Link
           href="/login"
-          className={`${styles.link} ${path === '/login' ? styles.active : ''}`}
+          className={`${styles.link} ${
+            path === '/login' ? styles.active : ''
+          } ${styles.hiddenOnMobile}`}
         >
           Login
         </Link>
@@ -70,7 +72,7 @@ export default function AuthLinks({ path }) {
                   href="/write"
                   className={`${styles.link} ${
                     path === '/write' ? styles.active : ''
-                  }`}
+                  } ${styles.visibleOnMobile}`}
                 >
                   Write
                 </Link>
@@ -78,11 +80,14 @@ export default function AuthLinks({ path }) {
                   href="/profile"
                   className={`${styles.link} ${
                     path === '/profile' ? styles.active : ''
-                  }`}
+                  } ${styles.visibleOnMobile}`}
                 >
                   Profile
                 </Link>
-                <span className={styles.link} onClick={signOut}>
+                <span
+                  className={`${styles.link} ${styles.visibleOnMobile}`}
+                  onClick={signOut}
+                >
                   Logout
                 </span>
               </div>
@@ -108,15 +113,6 @@ export default function AuthLinks({ path }) {
             Home
           </Link>
           <Link
-            href="/about"
-            onClick={() => setOpen(false)}
-            className={`${styles.link} ${
-              path === '/about' ? styles.active : ''
-            }`}
-          >
-            About
-          </Link>
-          <Link
             href="/contact"
             onClick={() => setOpen(false)}
             className={`${styles.link} ${
@@ -124,6 +120,15 @@ export default function AuthLinks({ path }) {
             }`}
           >
             Contact
+          </Link>
+          <Link
+            href="/about"
+            onClick={() => setOpen(false)}
+            className={`${styles.link} ${
+              path === '/about' ? styles.active : ''
+            }`}
+          >
+            About
           </Link>
           {status === 'unauthenticated' ? (
             <Link
@@ -137,24 +142,6 @@ export default function AuthLinks({ path }) {
             </Link>
           ) : (
             <>
-              <Link
-                href="/profile"
-                onClick={() => setOpen(false)}
-                className={`${styles.link} ${
-                  path === '/profile' ? styles.active : ''
-                }`}
-              >
-                Profile
-              </Link>
-              <Link
-                href="/write"
-                onClick={() => setOpen(false)}
-                className={`${styles.link} ${
-                  path === '/write' ? styles.active : ''
-                }`}
-              >
-                Write
-              </Link>
               <span className={styles.link} onClick={signOut}>
                 Logout
               </span>

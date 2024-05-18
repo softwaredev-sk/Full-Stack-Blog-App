@@ -18,7 +18,7 @@ export default function Card({ item, key }) {
           </Link>
         </div>
       )}
-      <div className={styles.textContainer}>
+      <div id="card" className={styles.textContainer}>
         <div className={styles.detail}>
           <span className={styles.date}>{item.createdAt.substring(0, 10)}</span>
           {' - '}

@@ -5,6 +5,7 @@
   height: 100px;
   position: relative;
   z-index: 100;
+  user-select: none;
 }
 
 .social {

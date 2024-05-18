@@ -64,4 +64,12 @@
   .imageContainer {
     display: none;
   }
+  .container:not(:first-child) .textContainer:before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: var(--softTextColor);
+    margin-bottom: 20px;
+  }
 }

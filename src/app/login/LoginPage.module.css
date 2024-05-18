@@ -14,7 +14,8 @@
   border-radius: 10px;
 }
 
-.socialButton {
+.socialButton,
+.testLoginButton {
   padding: 20px;
   border-radius: 5px;
   border: none;
@@ -27,30 +28,31 @@
 }
 
 .socialButton:first-child {
-  background-color: #ff5555;
+  background-color: #ff4545;
   order: 2;
 }
+
+.socialButton:first-child:hover {
+  background-color: #ff5555;
+}
+
 .socialButton:nth-child(2) {
   background-color: #111;
   order: 3;
 }
-.socialButton:nth-child(3) {
-  background-color: #087bea;
-  order: 4;
+
+.socialButton:nth-child(2):hover {
+  background-color: #0a0a0a;
 }
 
 .testLoginButton {
-  padding: 20px;
-  border-radius: 5px;
-  border: none;
   color: black;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: white;
   order: 1;
+}
+
+.testLoginButton:hover {
+  filter: contrast(80%);
 }
 
 .hideForm {
