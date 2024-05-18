@@ -123,8 +123,15 @@
   margin: auto;
   border: 1px solid red;
   padding: 5px 10px;
+  background-color: rgb(252, 218, 218);
+  color: red;
   border-radius: 25px;
   z-index: 1000;
+  text-align: center;
+}
+
+.errorImg {
+  transform: translateY(2px);
 }
 
 .hide {

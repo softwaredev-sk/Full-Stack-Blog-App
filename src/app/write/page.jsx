@@ -193,8 +193,15 @@ export default function WritePage() {
               }}
               className={`${styles.errorData}`}
             >
+              <Image
+                src="/error.svg"
+                alt=""
+                width={16}
+                height={16}
+                className={styles.errorImg}
+              />{' '}
               {hasError.errorMsg ||
-                'Some Error Occurred, please try again after sometime.'}
+                ' Some Error Occurred, please try again after sometime.'}
             </motion.div>
           )}
         </AnimatePresence>
@@ -235,7 +242,16 @@ export default function WritePage() {
                 <div className={styles.successful}>Upload Successfull ✅</div>
               )}
               {hasError.flag === 'upload' && (
-                <div className={styles.successful}>Upload Failed ❌</div>
+                <div className={styles.successful}>
+                  Upload Failed{' '}
+                  <Image
+                    src="/error.svg"
+                    alt=""
+                    width={16}
+                    height={16}
+                    className={styles.errorImg}
+                  />
+                </div>
               )}
             </div>
             <AnimatePresence>
