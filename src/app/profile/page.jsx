@@ -33,15 +33,18 @@ export default async function Profile() {
   const { postCount, commentsCount } = await getData(session.user.email);
   return (
     <div className={styles.container}>
-      <div className={styles.imageContainer}>
-        <Image
-          src={session.user.image.replace('s96', 's400')}
-          alt=""
-          width={250}
-          height={250}
-          className={styles.image}
-        />
-      </div>
+      {session.user && (
+        <div className={styles.imageContainer}>
+          <Image
+            src={session.user.image.replace('s96', 's400')}
+            alt=""
+            width={250}
+            height={250}
+            className={styles.image}
+            sizes=""
+          />
+        </div>
+      )}
       <div className={styles.detailContainer}>
         <h3>Your Records:</h3>
         <p>

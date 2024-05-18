@@ -59,6 +59,7 @@ export default function AuthLinks({ path }) {
               alt=""
               className={styles.profile}
               fill
+              sizes=""
               onClick={() => {
                 setOpenProfile((prevState) => !prevState);
               }}

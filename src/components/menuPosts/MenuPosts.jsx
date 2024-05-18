@@ -31,7 +31,11 @@ export default async function MenuPosts({ withImage }) {
     <div className={styles.items}>
       {popularPosts &&
         popularPosts.map((item) => (
-          <Link href={item.slug} className={styles.item} key={popularPosts._id}>
+          <Link
+            href={`/posts/${item.slug}`}
+            className={styles.item}
+            key={popularPosts._id}
+          >
             {withImage && (
               <div className={styles.imageContainer}>
                 <Image
@@ -39,6 +43,7 @@ export default async function MenuPosts({ withImage }) {
                   alt=""
                   fill
                   className={styles.image}
+                  sizes=""
                 />
               </div>
             )}

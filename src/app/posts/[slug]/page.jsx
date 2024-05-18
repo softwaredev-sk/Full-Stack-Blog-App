@@ -45,6 +45,7 @@ export default async function SinglePage({ params }) {
                   alt=""
                   fill
                   className={styles.avatar}
+                  sizes=""
                 />
               </div>
             )}
@@ -62,7 +63,13 @@ export default async function SinglePage({ params }) {
         </div>
         {data?.post.img && (
           <div className={styles.imageContainer}>
-            <Image src={data?.post.img} alt="" fill className={styles.image} />
+            <Image
+              src={data?.post.img}
+              alt=""
+              fill
+              className={styles.image}
+              sizes=""
+            />
           </div>
         )}
       </div>

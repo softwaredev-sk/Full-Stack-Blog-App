@@ -25,7 +25,17 @@ export default function LoginPage() {
           <div className={styles.socialButton} onClick={() => signIn('github')}>
             Sign in with Github
           </div>
-          <div className={styles.testLoginButton}>Sign in as Test User</div>
+          <div
+            className={styles.testLoginButton}
+            onClick={() =>
+              signIn('credentials', {
+                email: 'test@test.com',
+                password: '123456',
+              })
+            }
+          >
+            Sign in as Test User
+          </div>
         </div>
       </div>
     </>

@@ -7,7 +7,15 @@ export default function Card({ item, key }) {
     <div className={styles.container} key={key}>
       {item?.img && (
         <div className={styles.imageContainer}>
-          <Image src={item.img} alt="" fill className={styles.image} />
+          <Link href={`/posts/${item.slug}`}>
+            <Image
+              src={item.img}
+              alt=""
+              fill
+              className={styles.image}
+              sizes=""
+            />
+          </Link>
         </div>
       )}
       <div className={styles.textContainer}>
