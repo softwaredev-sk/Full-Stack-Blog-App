@@ -21,12 +21,12 @@ export default async function CategoryList({ page }) {
   }
   return (
     <div className={styles.container}>
-      <Link href="/categories">
-        <h2 className={styles.title}>
-          {page === 1 ? 'Popular' : 'All'} Categories
-          {page === 1 && <span className={styles.seeAll}>{' [See All]'}</span>}
-        </h2>
-      </Link>
+      <h2 className={styles.title}>
+        {page === 1 ? 'Popular' : 'All'} Categories
+        <Link href="/categories">
+          {page === 1 && <sup className={styles.seeAll}>{' [See All]'}</sup>}
+        </Link>
+      </h2>
       <div className={styles.categories}>
         {data?.map((item) => (
           <Link

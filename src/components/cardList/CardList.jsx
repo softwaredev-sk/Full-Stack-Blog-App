@@ -24,11 +24,11 @@ export default async function CardList({ page, cat }) {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>
+      <h2 className={`${styles.title} ${page !== 1 && styles.underlineTitle}`}>
         {page === 1 ? 'Recent Posts' : `Page ${page} out of ${totalPage}`}
       </h2>
       <div className={styles.posts}>
-        {posts.length === 0 && (
+        {posts?.length === 0 && (
           <>
             <p>
               No Posts found for the selected category. How about{' '}

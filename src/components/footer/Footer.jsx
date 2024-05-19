@@ -7,12 +7,17 @@ export default function Footer() {
   return (
     <div className={styles.container}>
       <div className={styles.info}>
-        <div className={styles.logo}>
-          <Image src="/logo.png" alt="BlogApp" width={50} height={50} />
-          <h4 className={styles.logoText}>BlogApp</h4>
-        </div>
+        <Link href="/">
+          <div className={styles.logo}>
+            <Image src="/logo.png" alt="BlogApp" width={50} height={50} />
+            <h4 className={styles.logoText}>BlogApp</h4>
+          </div>
+        </Link>
         <p className={styles.desc}>
-          This is a blog app created by <b>Shailendra Kumar</b>.
+          This is a blog app created by <b>Shailendra Kumar</b>. A dynamic blog
+          application where users can publish their stories as articles.
+          Features include user authentication, comments, and responsive design.
+          Built with Next.js, firebase storage, MongoDB and Prisma.
         </p>
         <div className={styles.icons}>
           <Link href="https://www.facebook.com/shailendrakrsk">

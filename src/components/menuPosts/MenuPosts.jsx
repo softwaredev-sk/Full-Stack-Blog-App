@@ -18,17 +18,17 @@ const getData = async (withImage) => {
 };
 
 export default async function MenuPosts({ withImage }) {
-  const { popularPosts } = await getData(withImage ? 'false' : 'true');
-  // console.log('popular', popularPosts);
+  const { menuPosts } = await getData(withImage ? 'false' : 'true');
+  // console.log('popular', menuPosts);
 
   return (
     <div className={styles.items}>
-      {popularPosts &&
-        popularPosts.map((item) => (
+      {menuPosts &&
+        menuPosts.map((item) => (
           <Link
             href={`/posts/${item.slug}`}
             className={styles.item}
-            key={popularPosts._id}
+            key={menuPosts._id}
           >
             {withImage && (
               <div className={styles.imageContainer}>

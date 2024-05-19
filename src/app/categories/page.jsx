@@ -1,5 +1,5 @@
 import CategoryList from '@/components/categoryList/CategoryList';
 
-export default function page() {
+export default function Categories() {
   return <CategoryList />;
 }

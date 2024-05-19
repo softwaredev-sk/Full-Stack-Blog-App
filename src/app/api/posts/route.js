@@ -20,7 +20,7 @@ export const GET = async (req) => {
   };
 
   try {
-    let posts, count, featuredPost, popularPosts;
+    let posts, count, featuredPost, menuPosts;
     if (!featured && !popular) {
       [posts, count] = await prisma.$transaction([
         prisma.post.findMany(query),
@@ -37,16 +37,19 @@ export const GET = async (req) => {
     }
 
     if (popular === 'true') {
-      popularPosts = await prisma.post.findMany({
+      menuPosts = await prisma.post.findMany({
         orderBy: { views: 'desc' },
         take: 5,
         include: { user: true },
       });
     }
 
-    //popular false means fetching for editor's pick section (temporarily least viewed posts).
+    //popular === false means fetching for editor's pick section, where editorPick is true in post db
     if (popular === 'false') {
-      popularPosts = await prisma.post.findMany({
+      menuPosts = await prisma.post.findMany({
+        where: {
+          editorPick: true,
+        },
         orderBy: { views: 'asc' },
         take: 5,
         include: { user: true },
@@ -59,7 +62,7 @@ export const GET = async (req) => {
 
     return new NextResponse(
       JSON.stringify(
-        { posts, hasPrev, hasNext, featuredPost, popularPosts, totalPage },
+        { posts, hasPrev, hasNext, featuredPost, menuPosts, totalPage },
         { status: 200 }
       )
     );

@@ -36,7 +36,6 @@
 .desc {
   font-size: 18px;
   font-weight: 300;
-  color: var(--softTextColor);
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: wrap;
@@ -44,6 +43,8 @@
   -webkit-line-clamp: 5;
   line-clamp: 5;
   -webkit-box-orient: vertical;
+  color: var(--softTextColor) !important;
+  filter: grayscale(100%);
 }
 
 .link {

@@ -27,3 +27,19 @@
 .form textarea {
   min-height: 200px;
 }
+
+.msg {
+  margin: 5px 0;
+}
+
+.errorImg {
+  transform: translateY(2px);
+  margin-right: 5px;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 5px;
+  overflow-wrap: break-word;
+  align-items: center;
+}
