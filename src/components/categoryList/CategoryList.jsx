@@ -23,8 +23,8 @@ export default async function CategoryList({ page }) {
     <div className={styles.container}>
       <Link href="/categories">
         <h2 className={styles.title}>
-          Popular Categories{' '}
-          <span className={styles.seeAll}>{'[See All]'}</span>
+          {page === 1 ? 'Popular' : 'All'} Categories
+          {page === 1 && <span className={styles.seeAll}>{' [See All]'}</span>}
         </h2>
       </Link>
       <div className={styles.categories}>

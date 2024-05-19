@@ -1,7 +1,7 @@
 :root {
   --bg: white;
-  --textColor: black;
   --softBg: #f0f0f0;
+  --textColor: black;
   --softTextColor: #626262;
   --svgFill: invert(0%) sepia(95%) saturate(21%) hue-rotate(2deg)
     brightness(101%) contrast(107%);
@@ -24,12 +24,17 @@ a {
 }
 
 .dark {
-  --bg: #0f172a;
+  /* --bg: #0f172a; */
+  --bg: #030a1a;
   --textColor: #ddd;
   --softBg: #1f273a;
   --softTextColor: #a6a6a6;
   --svgFill: invert(99%) sepia(0%) saturate(2323%) hue-rotate(42deg)
     brightness(115%) contrast(73%);
+}
+
+.dark img {
+  filter: brightness(75%);
 }
 
 .container {

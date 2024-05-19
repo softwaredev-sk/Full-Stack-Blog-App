@@ -44,6 +44,7 @@ export const GET = async (req) => {
       });
     }
 
+    //popular false means fetching for editor's pick section (temporarily least viewed posts).
     if (popular === 'false') {
       popularPosts = await prisma.post.findMany({
         orderBy: { views: 'asc' },
@@ -54,10 +55,11 @@ export const GET = async (req) => {
 
     const hasPrev = POST_PER_PAGE * (page - 1) > 0;
     const hasNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < count;
+    const totalPage = Math.ceil(count / POST_PER_PAGE);
 
     return new NextResponse(
       JSON.stringify(
-        { posts, hasPrev, hasNext, featuredPost, popularPosts },
+        { posts, hasPrev, hasNext, featuredPost, popularPosts, totalPage },
         { status: 200 }
       )
     );

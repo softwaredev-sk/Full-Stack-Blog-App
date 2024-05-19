@@ -20,13 +20,12 @@ const getData = async (page, cat) => {
 };
 
 export default async function CardList({ page, cat }) {
-  const { posts, hasPrev, hasNext } = await getData(page, cat);
-  console.log('--', posts);
+  const { posts, hasPrev, hasNext, totalPage } = await getData(page, cat);
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>
-        {page === 1 ? 'Recent Posts' : 'Browse through posts!'}
+        {page === 1 ? 'Recent Posts' : `Page ${page} out of ${totalPage}`}
       </h2>
       <div className={styles.posts}>
         {posts.length === 0 && (

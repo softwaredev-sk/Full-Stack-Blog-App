@@ -1,5 +1,7 @@
 .container {
   margin-top: 20px;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .infoContainer {
@@ -15,6 +17,8 @@
 .title {
   font-size: 64px;
   margin-bottom: 50px;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .user {
@@ -70,6 +74,11 @@
   font-size: 20px;
   font-weight: 300;
   margin-bottom: 20px;
+}
+
+.description {
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .notFound {

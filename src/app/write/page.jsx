@@ -138,6 +138,16 @@ export default function WritePage() {
       );
       return;
     }
+
+    if (uploadSuccessful === false) {
+      const proceed = window.confirm(
+        'Upload Failed! Are you sure to proceed without an image?'
+      );
+      if (!proceed) {
+        return;
+      }
+    }
+
     const res = await fetch('/api/posts', {
       method: 'POST',
       body: JSON.stringify({
@@ -239,7 +249,7 @@ export default function WritePage() {
                 <Image src="/plus.svg" alt="" width={16} height={16} />
               </button>
               {uploadSuccessful && (
-                <div className={styles.successful}>Upload Successfull ✅</div>
+                <div className={styles.successful}>Upload Successful ✅</div>
               )}
               {hasError.flag === 'upload' && (
                 <div className={styles.successful}>

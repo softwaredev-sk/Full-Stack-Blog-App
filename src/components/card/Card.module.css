@@ -3,6 +3,8 @@
   display: flex;
   align-items: center;
   gap: 50px;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .imageContainer {
