@@ -173,6 +173,15 @@
     flex-direction: column;
   }
 
+  .imageContainer {
+    width: 100%;
+    aspect-ratio: 20/9;
+  }
+
+  .image {
+    object-fit: cover;
+  }
+
   .notFound {
     text-decoration: none;
     border-top: 4px solid black;
