@@ -9,7 +9,7 @@ export default function BlogPage({ searchParams }) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.title}>{cat} Blog</h2>
+        <h1 className={styles.title}>{cat} Blog</h1>
         <div className={`${styles.bgCover} ${styles[cat]}`}></div>
       </div>
 

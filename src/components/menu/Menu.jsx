@@ -8,19 +8,19 @@ import MenuCategories from '../menuCategories/MenuCategories';
 export default function Menu({ page, hideIt }) {
   return (
     <div className={`${styles.container} ${hideIt && styles.hideIt}`}>
-      <h4 className={styles.subtitle}>{"What's hot"}</h4>
-      <h3 className={styles.title}>Most Popular</h3>
+      <h3 className={styles.subtitle}>{"What's hot"}</h3>
+      <h4 className={styles.title}>Most Popular</h4>
       <MenuPosts withImage={false} />
-      <h4 className={styles.subtitle}>Discover by topic</h4>
-      <h3 className={styles.title}>
+      <h3 className={styles.subtitle}>Discover by topic</h3>
+      <h4 className={styles.title}>
         Categories
         <Link href="/categories">
           {page === 1 && <sup className={styles.seeAll}>{' [See All]'}</sup>}
         </Link>
-      </h3>
+      </h4>
       <MenuCategories />
-      <h4 className={styles.subtitle}>Chosen by the editor</h4>
-      <h3 className={styles.title}>Editors Pick</h3>
+      <h3 className={styles.subtitle}>Chosen by the editor</h3>
+      <h4 className={styles.title}>Editors Pick</h4>
       <MenuPosts withImage={true} />
     </div>
   );

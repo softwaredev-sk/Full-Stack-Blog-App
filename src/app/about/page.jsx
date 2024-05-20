@@ -20,8 +20,8 @@ export default async function About() {
   const { info } = await getData('about');
   return (
     <div className={styles.about}>
-      <h2>About BlogApp</h2>
-      <h4>{infoHeadline && infoHeadline}</h4>
+      <h1>About BlogApp</h1>
+      <h2>{infoHeadline && infoHeadline}</h2>
       <p dangerouslySetInnerHTML={{ __html: info }} />
     </div>
   );

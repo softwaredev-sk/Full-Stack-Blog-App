@@ -33,7 +33,7 @@ export default async function Profile() {
   const { postCount, commentsCount } = await getData(session.user.email);
   return (
     <div className={styles.container}>
-      {session.user && (
+      {session?.user && (
         <div className={styles.imageContainer}>
           <Image
             src={session.user.image.replace('s96', 's400')}
@@ -46,12 +46,13 @@ export default async function Profile() {
         </div>
       )}
       <div className={styles.detailContainer}>
-        <h3>Your Records:</h3>
+        <h1>Hey, {session?.user?.name}</h1>
+        <h2>Your Record:</h2>
         <p>
-          <b>Name:</b> {session?.user.name}
+          <b>Name:</b> {session?.user?.name}
         </p>
         <p>
-          <b>Email:</b> {session?.user.email}
+          <b>Email:</b> {session?.user?.email}
         </p>
         <p>
           <b>Total Posts:</b> {postCount}

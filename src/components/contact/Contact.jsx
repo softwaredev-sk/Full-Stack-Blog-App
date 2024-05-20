@@ -74,7 +74,7 @@ export default function Contact() {
 
   return (
     <div>
-      <h2>Contact Me</h2>
+      <h1>Contact Me</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
           type="email"

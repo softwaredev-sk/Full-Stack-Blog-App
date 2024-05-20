@@ -5,6 +5,7 @@
 .title {
   color: var(--softTextColor);
   margin-bottom: 30px;
+  font-size: 1.5em;
 }
 
 .write {

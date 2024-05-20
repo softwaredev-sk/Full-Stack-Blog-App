@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import styles from './Card.module.css';
 import Link from 'next/link';
+import CategoryItem from '../categoryItem/CategoryItem';
 
 export default function Card({ item, key }) {
   return (
@@ -10,7 +11,7 @@ export default function Card({ item, key }) {
           <Link href={`/posts/${item.slug}`}>
             <Image
               src={item.img}
-              alt=""
+              alt="post image"
               fill
               className={styles.image}
               sizes=""
@@ -22,7 +23,11 @@ export default function Card({ item, key }) {
         <div className={styles.detail}>
           <span className={styles.date}>{item.createdAt.substring(0, 10)}</span>
           {' - '}
-          <span className={styles.category}>{item.catSlug}</span>
+          <CategoryItem
+            category={item.catSlug}
+            key={item.catSlug}
+            customCss="categoryPill"
+          />
         </div>
         <Link href={`/posts/${item.slug}`} className={styles.title}>
           <h3>{item.title}</h3>

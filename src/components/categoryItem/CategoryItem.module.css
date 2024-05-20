@@ -1,0 +1,124 @@
+.categoryPill {
+  width: max-content;
+  padding: 5px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.categoryMenu {
+  width: 45%;
+  padding: 10px 25px;
+  border-radius: 10px;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.categoryList {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: capitalize;
+  width: 20%;
+  height: 80px;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.categoryPillSmall {
+  width: max-content;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: white;
+  text-transform: capitalize;
+}
+
+.categoryItem:hover {
+  filter: brightness(120%);
+}
+
+.style {
+  background-color: #57c4ff80;
+}
+
+.fashion {
+  background-color: #da85c780;
+}
+
+.food {
+  background-color: #7fb88180;
+}
+
+.travel {
+  background-color: #ff795780;
+}
+
+.culture {
+  background-color: #ffb04f80;
+}
+
+.coding {
+  background-color: #5e4fff80;
+}
+
+.tech {
+  background-color: #ff4f4f80;
+}
+
+.business {
+  background-color: #4fff6780;
+}
+
+.news {
+  background-color: #f7912480;
+}
+
+.political {
+  background-color: #c375d380;
+}
+
+.sports {
+  background-color: #3685df80;
+}
+
+.personal {
+  background-color: #6dcf7280;
+}
+
+.untagged {
+  background-color: #78abf880;
+}
+
+@media screen and (max-width: 1280px) {
+  .categoryList {
+    width: 20%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .categoryList {
+    width: 45%;
+  }
+
+  .categoryMenu {
+    width: 28%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .categoryList {
+    width: 45%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .categoryList {
+    width: 100%;
+  }
+  .categoryMenu {
+    width: 100%;
+  }
+}

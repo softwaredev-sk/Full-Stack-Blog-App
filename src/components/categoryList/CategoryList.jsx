@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styles from './CategoryList.module.css';
 import Image from 'next/image';
+import CategoryItem from '../categoryItem/CategoryItem';
 
 const getData = async () => {
   const res = await fetch(`${process.env.PROD_URL}/api/categories`, {
@@ -29,22 +30,21 @@ export default async function CategoryList({ page }) {
       </h2>
       <div className={styles.categories}>
         {data?.map((item) => (
-          <Link
-            href={`/blog/?cat=${item.title}`}
-            className={`${styles.category} ${styles[item.slug]}`}
-            key={item._id}
+          <CategoryItem
+            category={item.title}
+            key={item.title}
+            customCss="categoryList"
           >
             {item.img && (
               <Image
                 src={item.img}
-                alt=""
+                alt="tag image"
                 width={32}
                 height={32}
                 className={styles.image}
               />
             )}
-            {item.title}
-          </Link>
+          </CategoryItem>
         ))}
       </div>
     </div>

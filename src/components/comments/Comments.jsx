@@ -44,7 +44,7 @@ export default function Comments({ postSlug }) {
 
   return (
     <div className={styles.container}>
-      <h4 className={styles.title}>Comments</h4>
+      <h6 className={styles.title}>Comments</h6>
       {status === 'authenticated' ? (
         <div className={styles.write}>
           <textarea
@@ -85,8 +85,8 @@ export default function Comments({ postSlug }) {
             <div className={styles.comment} key={item._id}>
               <div className={styles.user}>
                 <Image
-                  src={item.user.image}
-                  alt=""
+                  src={item?.user?.image}
+                  alt="user image"
                   width={50}
                   height={50}
                   className={styles.image}

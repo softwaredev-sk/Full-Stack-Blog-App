@@ -24,7 +24,13 @@ export default async function Featured() {
       </h1>
       <div className={styles.post}>
         <div className={styles.imgContainer}>
-          <Image src="/p1.jpeg" alt="" fill className={styles.image} sizes="" />
+          <Image
+            src="/p1.jpeg"
+            alt="post image"
+            fill
+            className={styles.image}
+            sizes=""
+          />
         </div>
         <div className={styles.textContainer}>
           <div className={styles.mostViewed}>Most Viewed</div>

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './MenuPosts.module.css';
+import CategoryItem from '../categoryItem/CategoryItem';
 
 const getData = async (withImage) => {
   const res = await fetch(
@@ -19,7 +20,6 @@ const getData = async (withImage) => {
 
 export default async function MenuPosts({ withImage }) {
   const { menuPosts } = await getData(withImage ? 'false' : 'true');
-  // console.log('popular', menuPosts);
 
   return (
     <div className={styles.items}>
@@ -42,9 +42,13 @@ export default async function MenuPosts({ withImage }) {
               </div>
             )}
             <div className={styles.textContainer}>
-              <span className={`${styles.category} ${styles[item.catSlug]}`}>
-                {item.catSlug}
-              </span>
+              {item?.catSlug && (
+                <CategoryItem
+                  category={item?.catSlug}
+                  key={item?.catSlug}
+                  customCss="categoryPillSmall"
+                />
+              )}
               <h5 className={styles.postTitle}>{item.title}</h5>
               <div className={styles.detail}>
                 <span className={styles.username}>

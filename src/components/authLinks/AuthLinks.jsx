@@ -56,8 +56,8 @@ export default function AuthLinks({ path }) {
           {data?.user?.image && (
             <div className={styles.imageContainer}>
               <Image
-                src={data?.user.image}
-                alt=""
+                src={data?.user?.image}
+                alt="profile image"
                 className={styles.profile}
                 fill
                 sizes=""

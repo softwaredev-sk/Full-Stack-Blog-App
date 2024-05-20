@@ -22,11 +22,9 @@ export default async function Footer() {
   return (
     <div className={styles.container}>
       <div className={styles.info}>
-        <Link href="/">
-          <div className={styles.logo}>
-            <Image src="/logo.png" alt="BlogApp" width={50} height={50} />
-            <h4 className={styles.logoText}>BlogApp</h4>
-          </div>
+        <Link href="/" className={styles.logo}>
+          <Image src="/logo.png" alt="BlogApp logo" width={50} height={50} />
+          <h4 className={styles.logoText}>BlogApp</h4>
         </Link>
         {info && (
           <p
@@ -36,21 +34,26 @@ export default async function Footer() {
         )}
         <div className={styles.icons}>
           <Link href="https://www.facebook.com/shailendrakrsk">
-            <Image src="/facebook.png" alt="" width={18} height={18} />
+            <Image src="/facebook.png" alt="facebook" width={18} height={18} />
           </Link>
           <Link href="https://www.instagram.com/shailendrakrsk">
-            <Image src="/instagram.png" alt="" width={18} height={18} />
+            <Image
+              src="/instagram.png"
+              alt="instagram"
+              width={18}
+              height={18}
+            />
           </Link>
           <Link href="https://www.twitter.com/shailendrakrsk_">
             <Image
               src={'https://twitter.com/favicon.ico'}
-              alt=""
+              alt="X"
               width={18}
               height={18}
             />
           </Link>
           <Link href="/">
-            <Image src="/youtube.png" alt="" width={18} height={18} />
+            <Image src="/youtube.png" alt="youtube" width={18} height={18} />
           </Link>
         </div>
       </div>

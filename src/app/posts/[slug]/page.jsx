@@ -3,6 +3,7 @@ import styles from './SinglePage.module.css';
 import Comments from '@/components/comments/Comments';
 import Menu from '@/components/menu/Menu';
 import { notFound } from 'next/navigation';
+import CategoryItem from '@/components/categoryItem/CategoryItem';
 
 const getData = async (slug) => {
   const res = await fetch(`${process.env.PROD_URL}/api/posts/${slug}`, {
@@ -32,9 +33,13 @@ export default async function SinglePage({ params }) {
     <div className={styles.container}>
       <div className={styles.infoContainer}>
         <div className={styles.textContainer}>
-          <div className={`${styles.category} ${styles[data?.post.catSlug]}`}>
-            {data?.post.catSlug}
-          </div>
+          {data?.post?.catSlug && (
+            <CategoryItem
+              category={data?.post.catSlug}
+              key={data?.post.catSlug}
+              customCss="categoryPill"
+            />
+          )}
           <h1 className={styles.title}>{data?.post.title}</h1>
 
           <div className={styles.user}>
