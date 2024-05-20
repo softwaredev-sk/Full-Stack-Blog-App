@@ -145,6 +145,11 @@
   gap: 20px;
 }
 
+/* .select option:last-child { */
+/* .select option:last-child {
+  color: #1a8917;
+} */
+
 @media screen and (max-width: 640px) {
   .add .span {
     display: none;

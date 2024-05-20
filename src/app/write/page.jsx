@@ -20,6 +20,18 @@ const ReactQuill = dynamic(() => import('react-quill'), {
   loading: () => <p>Loading ...</p>,
 });
 
+const getData = async () => {
+  const res = await fetch(`/api/categories`, {
+    cache: 'no-store',
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  return res.json();
+};
+
 export default function WritePage() {
   const { status } = useSession();
 
@@ -39,8 +51,18 @@ export default function WritePage() {
   });
   const [progress, setProgress] = useState(null);
   const [uploadSuccessful, setUploadSuccessful] = useState(false);
+  const [catData, setCatData] = useState(null);
 
   let lastError = useRef();
+
+  useEffect(() => {
+    async function fetchData() {
+      const catData = await getData();
+      // setCatData(catData.slice(0, catData.length - 1));
+      setCatData(catData);
+    }
+    fetchData();
+  }, []);
 
   useEffect(() => {
     function handleState(e) {
@@ -155,7 +177,7 @@ export default function WritePage() {
         desc,
         img: media,
         slug: slugify(title),
-        catSlug: catSlug || 'coding',
+        catSlug: catSlug || 'untagged',
       }),
     });
 
@@ -231,13 +253,22 @@ export default function WritePage() {
               id="category"
               className={styles.select}
               onChange={(e) => setCatSlug(e.target.value)}
+              defaultValue="untagged"
             >
-              <option value="style">style</option>
-              <option value="fashion">fashion</option>
-              <option value="food">food</option>
-              <option value="culture">culture</option>
-              <option value="travel">travel</option>
-              <option value="coding">coding</option>
+              {catData &&
+                catData.map((item) => {
+                  return (
+                    <option
+                      key={item.title}
+                      value={item.title}
+                      selected={item.title === 'untagged'}
+                      disabled={item.title === 'untagged'}
+                      hidden={item.title === 'untagged'}
+                    >
+                      {item.title}
+                    </option>
+                  );
+                })}
             </select>
           </div>
           <div className={styles.addContainer}>

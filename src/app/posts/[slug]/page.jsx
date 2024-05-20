@@ -84,7 +84,7 @@ export default async function SinglePage({ params }) {
             <Comments postSlug={slug} />
           </div>
         </div>
-        <Menu />
+        <Menu hideIt={true} />
       </div>
     </div>
   );

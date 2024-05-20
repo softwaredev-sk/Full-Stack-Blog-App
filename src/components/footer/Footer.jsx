@@ -3,7 +3,22 @@ import styles from './Footer.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Footer() {
+const getData = async (fieldname) => {
+  const res = await fetch(
+    `${process.env.PROD_URL}/api/bloginfo/?fieldname=${fieldname}`,
+    {
+      cache: 'no-store',
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  return res.json();
+};
+export default async function Footer() {
+  const { info } = await getData('summary');
   return (
     <div className={styles.container}>
       <div className={styles.info}>
@@ -13,12 +28,12 @@ export default function Footer() {
             <h4 className={styles.logoText}>BlogApp</h4>
           </div>
         </Link>
-        <p className={styles.desc}>
-          This is a blog app created by <b>Shailendra Kumar</b>. A dynamic blog
-          application where users can publish their stories as articles.
-          Features include user authentication, comments, and responsive design.
-          Built with Next.js, firebase storage, MongoDB and Prisma.
-        </p>
+        {info && (
+          <p
+            className={styles.desc}
+            dangerouslySetInnerHTML={{ __html: info }}
+          />
+        )}
         <div className={styles.icons}>
           <Link href="https://www.facebook.com/shailendrakrsk">
             <Image src="/facebook.png" alt="" width={18} height={18} />

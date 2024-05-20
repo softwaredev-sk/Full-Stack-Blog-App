@@ -128,3 +128,9 @@ model Contactme {
   subject String
   content String
 }
+
+model Bloginfo {
+  id String @id @default(cuid()) @map("_id")
+  fieldname String
+  info String
+}

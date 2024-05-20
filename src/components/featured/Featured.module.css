@@ -17,6 +17,8 @@
   display: flex;
   align-items: center;
   gap: 50px;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .imgContainer {
@@ -36,21 +38,32 @@
   gap: 20px;
 }
 
+.postTitle,
+.postDesc {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: wrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
 .postTitle {
   font-size: 40px;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .postDesc {
   font-size: 20px;
   font-weight: 300;
   color: var(--softTextColor);
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: wrap;
-  display: -webkit-box;
-  -webkit-line-clamp: 8;
-  line-clamp: 8;
-  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+}
+
+.postDesc * {
+  font-size: 20px;
+  color: var(--softTextColor) !important;
 }
 
 .button {

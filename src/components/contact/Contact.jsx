@@ -107,33 +107,35 @@ export default function Contact() {
           value={formCustomData.content}
         ></textarea>
         <div className={styles.buttonContainer}>
+          <div>
+            <AnimatePresence>
+              {formSuccessful === false && (
+                <motion.p
+                  className={styles.msg}
+                  exit={{ opacity: [1, 0], transition: { duration: 2 } }}
+                >
+                  <Image
+                    src="/error.svg"
+                    alt=""
+                    width={16}
+                    height={16}
+                    className={styles.errorImg}
+                  />
+                  Form submission failed. Make sure you are filling correct
+                  details!
+                </motion.p>
+              )}
+              {formSuccessful === true && (
+                <motion.p
+                  className={styles.msg}
+                  exit={{ opacity: [1, 0], transition: { duration: 2 } }}
+                >
+                  ✅ Form submitted successfully.
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
           <button>Submit</button>
-          <AnimatePresence>
-            {formSuccessful === false && (
-              <motion.p
-                className={styles.msg}
-                exit={{ opacity: [1, 0], transition: { duration: 2 } }}
-              >
-                <Image
-                  src="/error.svg"
-                  alt=""
-                  width={16}
-                  height={16}
-                  className={styles.errorImg}
-                />
-                Form submission failed. Make sure you are filling correct
-                details!
-              </motion.p>
-            )}
-            {formSuccessful === true && (
-              <motion.p
-                className={styles.msg}
-                exit={{ opacity: [1, 0], transition: { duration: 2 } }}
-              >
-                ✅ Form submitted successfully.
-              </motion.p>
-            )}
-          </AnimatePresence>
         </div>
       </form>
     </div>

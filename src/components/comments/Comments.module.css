@@ -1,7 +1,5 @@
 .container {
   margin-top: 50px;
-  overflow-wrap: anywhere;
-  word-break: break-all;
 }
 
 .title {
@@ -33,6 +31,8 @@
 
 .comments {
   margin-top: 50px;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .comment {

@@ -18,8 +18,11 @@
   cursor: pointer;
 }
 
-/* @media screen and (max-width: 1024px) {
-  .container {
+@media screen and (max-width: 1024px) {
+  /* .container {
+    display: none;
+  } */
+  .hideIt {
     display: none;
   }
-} */
+}

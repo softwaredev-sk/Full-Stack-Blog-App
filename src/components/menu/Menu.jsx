@@ -5,9 +5,9 @@ import Image from 'next/image';
 import MenuPosts from '../menuPosts/MenuPosts';
 import MenuCategories from '../menuCategories/MenuCategories';
 
-export default function Menu({ page }) {
+export default function Menu({ page, hideIt }) {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${hideIt && styles.hideIt}`}>
       <h4 className={styles.subtitle}>{"What's hot"}</h4>
       <h3 className={styles.title}>Most Popular</h3>
       <MenuPosts withImage={false} />

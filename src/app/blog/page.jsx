@@ -15,7 +15,7 @@ export default function BlogPage({ searchParams }) {
 
       <div className={styles.content}>
         <CardList page={page} cat={cat} />
-        <Menu />
+        <Menu hideIt={true} />
       </div>
     </div>
   );

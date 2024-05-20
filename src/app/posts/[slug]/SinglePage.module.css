@@ -1,7 +1,5 @@
 .container {
   margin-top: 20px;
-  overflow-wrap: anywhere;
-  word-break: break-all;
 }
 
 .infoContainer {
@@ -58,6 +56,7 @@
 
 .image {
   object-fit: cover;
+  position: initial !important;
 }
 
 .content {
@@ -138,9 +137,14 @@
   }
 }
 @media screen and (max-width: 1024px) {
-  .imageContainer {
+  /* .imageContainer {
     display: none;
+  } */
+
+  .infoContainer {
+    flex-direction: column;
   }
+
   .notFound {
     text-decoration: none;
     border-top: 4px solid black;

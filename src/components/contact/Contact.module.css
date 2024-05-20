@@ -28,9 +28,9 @@
   min-height: 200px;
 }
 
-.msg {
+/* .msg {
   margin: 5px 0;
-}
+} */
 
 .errorImg {
   transform: translateY(2px);
@@ -42,4 +42,10 @@
   gap: 5px;
   overflow-wrap: break-word;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.buttonContainer div {
+  justify-self: flex-start;
 }
