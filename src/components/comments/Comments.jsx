@@ -25,7 +25,6 @@ export default function Comments({ postSlug }) {
   const [typing, setTyping] = useState();
 
   const { data, mutate, isLoading } = useSwr(
-    // `${process.env.PROD_URL}` + `/api/comments?postSlug=${postSlug}`,
     `/api/comments?postSlug=${postSlug}`,
     fetcher
   );
@@ -61,7 +60,7 @@ export default function Comments({ postSlug }) {
         </div>
       ) : (
         <>
-          <Link href="/login">
+          <Link href={`/login/?redirect=${postSlug}`}>
             <b>Login</b>
           </Link>
           {' to write a comment'}

@@ -5,11 +5,14 @@ import { useRouter } from 'next/navigation';
 import { ReactTyped } from 'react-typed';
 import { useState } from 'react';
 
-export default function LoginPage() {
+export default function LoginPage({ searchParams }) {
+  const redirectUrl = searchParams?.redirect ?? '';
   const { status } = useSession();
   const [typing, setTyping] = useState();
 
   const router = useRouter();
+  const callbackUrl = redirectUrl ? `/posts/${redirectUrl}` : '/';
+  console.log('R- ', redirectUrl, ' C- ', callbackUrl, ' SP- ', searchParams);
 
   if (status === 'loading') {
     return (
@@ -32,10 +35,24 @@ export default function LoginPage() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <div className={styles.socialButton} onClick={() => signIn('google')}>
+        <div
+          className={styles.socialButton}
+          onClick={() =>
+            signIn('google', {
+              callbackUrl,
+            })
+          }
+        >
           Sign in with Google
         </div>
-        <div className={styles.socialButton} onClick={() => signIn('github')}>
+        <div
+          className={styles.socialButton}
+          onClick={() =>
+            signIn('github', {
+              callbackUrl,
+            })
+          }
+        >
           Sign in with Github
         </div>
         <div
@@ -44,6 +61,7 @@ export default function LoginPage() {
             signIn('credentials', {
               email: 'test@test.com',
               password: '123456',
+              callbackUrl,
             })
           }
         >
