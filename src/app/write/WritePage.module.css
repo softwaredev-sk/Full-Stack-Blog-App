@@ -32,7 +32,12 @@
 
 .addButton {
   border-color: #1a8917;
-  background-color: var(--softBg);
+  /* background-color: var(--softBg); */
+  background-color: var(--pngBg);
+}
+
+.addButton img {
+  filter: brightness(200%);
 }
 
 .add {

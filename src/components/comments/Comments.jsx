@@ -5,6 +5,7 @@ import Image from 'next/image';
 import useSwr from 'swr';
 import { useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
+import { ReactTyped } from 'react-typed';
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -21,6 +22,7 @@ const fetcher = async (url) => {
 export default function Comments({ postSlug }) {
   const { status } = useSession();
   const ref = useRef();
+  const [typing, setTyping] = useState();
 
   const { data, mutate, isLoading } = useSwr(
     // `${process.env.PROD_URL}` + `/api/comments?postSlug=${postSlug}`,
@@ -66,32 +68,45 @@ export default function Comments({ postSlug }) {
         </>
       )}
       <div className={styles.comments}>
-        {isLoading
-          ? 'Loading'
-          : data?.map((item) => (
-              <div className={styles.comment} key={item._id}>
-                <div className={styles.user}>
-                  <Image
-                    src={item.user.image}
-                    alt=""
-                    width={50}
-                    height={50}
-                    className={styles.image}
-                  />
-                  <div className={styles.userInfo}>
-                    <span className={styles.username}>{item.user.name}</span>
-                    <span className={styles.date}>
-                      {item.createdAt.substring(8, 10) +
-                        '-' +
-                        item.createdAt.substring(5, 7) +
-                        '-' +
-                        item.createdAt.substring(0, 4)}
-                    </span>
-                  </div>
+        {isLoading ? (
+          <>
+            <p>
+              Loading{' .'}
+              <ReactTyped
+                typedRef={setTyping}
+                showCursor={false}
+                strings={['...']}
+                typeSpeed={300}
+                loop
+              />
+            </p>
+          </>
+        ) : (
+          data?.map((item) => (
+            <div className={styles.comment} key={item._id}>
+              <div className={styles.user}>
+                <Image
+                  src={item.user.image}
+                  alt=""
+                  width={50}
+                  height={50}
+                  className={styles.image}
+                />
+                <div className={styles.userInfo}>
+                  <span className={styles.username}>{item.user.name}</span>
+                  <span className={styles.date}>
+                    {item.createdAt.substring(8, 10) +
+                      '-' +
+                      item.createdAt.substring(5, 7) +
+                      '-' +
+                      item.createdAt.substring(0, 4)}
+                  </span>
                 </div>
-                <p className={styles.desc}>{item.desc}</p>
               </div>
-            ))}
+              <p className={styles.desc}>{item.desc}</p>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ import {
 import { app } from '@/utils/firebase';
 import { motion, AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
+import { ReactTyped } from 'react-typed';
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
@@ -50,15 +51,16 @@ export default function WritePage() {
     errorMsg: '',
   });
   const [progress, setProgress] = useState(null);
-  const [uploadSuccessful, setUploadSuccessful] = useState(false);
+  const [uploadSuccessful, setUploadSuccessful] = useState(null);
   const [catData, setCatData] = useState(null);
+  const [published, setPublished] = useState(null);
+  const [typing, setTyping] = useState();
 
   let lastError = useRef();
 
   useEffect(() => {
     async function fetchData() {
       const catData = await getData();
-      // setCatData(catData.slice(0, catData.length - 1));
       setCatData(catData);
     }
     fetchData();
@@ -139,7 +141,18 @@ export default function WritePage() {
   }, [file]);
 
   if (status === 'loading') {
-    return <div className={styles.loading}>Loading...</div>;
+    return (
+      <div className={styles.loading}>
+        Loading{' .'}
+        <ReactTyped
+          typedRef={setTyping}
+          showCursor={false}
+          strings={['...']}
+          typeSpeed={300}
+          loop
+        />
+      </div>
+    );
   }
   if (status === 'unauthenticated') {
     router.push('/login');
@@ -154,7 +167,11 @@ export default function WritePage() {
       .replace(/^-+|-+$/g, '');
 
   async function handleSubmit() {
-    if (!title.trim() && desc.trim().length < 20 && !uploadSuccessful) {
+    if (
+      !title.trim() ||
+      desc.trim().length < 20 ||
+      uploadSuccessful === false
+    ) {
       handleError(
         "Title can't be empty and story need to be at least 20 characters long.",
         'validation failed'
@@ -162,11 +179,13 @@ export default function WritePage() {
       return;
     }
 
+    setPublished(false);
     if (uploadSuccessful === false) {
       const proceed = window.confirm(
         'Upload Failed! Are you sure to proceed without an image?'
       );
       if (!proceed) {
+        setPublished(null);
         return;
       }
     }
@@ -184,6 +203,7 @@ export default function WritePage() {
 
     if (res.status === 200) {
       const data = await res.json();
+      setPublished(true);
       router.push(`/posts/${data.slug}`);
     }
   }
@@ -238,6 +258,30 @@ export default function WritePage() {
             </motion.div>
           )}
         </AnimatePresence>
+        {published === false && (
+          <p>
+            Publishing{' '}
+            <ReactTyped
+              typedRef={setTyping}
+              showCursor={false}
+              strings={['...']}
+              typeSpeed={300}
+              loop
+            />
+          </p>
+        )}
+        {published === true && (
+          <p>
+            Published ✅
+            <ReactTyped
+              typedRef={setTyping}
+              showCursor={false}
+              strings={['...']}
+              typeSpeed={300}
+              loop
+            />
+          </p>
+        )}
         <input
           type="text"
           placeholder="Title"

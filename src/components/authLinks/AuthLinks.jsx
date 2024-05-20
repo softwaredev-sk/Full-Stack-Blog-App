@@ -52,44 +52,48 @@ export default function AuthLinks({ path }) {
           Login
         </Link>
       ) : (
-        <div className={styles.imageContainer}>
-          <Image
-            src={data?.user.image}
-            alt=""
-            className={styles.profile}
-            fill
-            sizes=""
-            onClick={() => {
-              setOpenProfile((prevState) => !prevState);
-            }}
-          />
-          {openProfile && (
-            <div className={styles.profileMenu} key="menu">
-              <Link
-                href="/write"
-                className={`${styles.link} ${
-                  path === '/write' ? styles.active : ''
-                } ${styles.visibleOnMobile}`}
-              >
-                Write
-              </Link>
-              <Link
-                href="/profile"
-                className={`${styles.link} ${
-                  path === '/profile' ? styles.active : ''
-                } ${styles.visibleOnMobile}`}
-              >
-                Profile
-              </Link>
-              <span
-                className={`${styles.link} ${styles.visibleOnMobile}`}
-                onClick={signOut}
-              >
-                Logout
-              </span>
+        <>
+          {data?.user?.image && (
+            <div className={styles.imageContainer}>
+              <Image
+                src={data?.user.image}
+                alt=""
+                className={styles.profile}
+                fill
+                sizes=""
+                onClick={() => {
+                  setOpenProfile((prevState) => !prevState);
+                }}
+              />
+              {openProfile && (
+                <div className={styles.profileMenu} key="menu">
+                  <Link
+                    href="/write"
+                    className={`${styles.link} ${
+                      path === '/write' ? styles.active : ''
+                    } ${styles.visibleOnMobile}`}
+                  >
+                    Write
+                  </Link>
+                  <Link
+                    href="/profile"
+                    className={`${styles.link} ${
+                      path === '/profile' ? styles.active : ''
+                    } ${styles.visibleOnMobile}`}
+                  >
+                    Profile
+                  </Link>
+                  <span
+                    className={`${styles.link} ${styles.visibleOnMobile}`}
+                    onClick={signOut}
+                  >
+                    Logout
+                  </span>
+                </div>
+              )}
             </div>
           )}
-        </div>
+        </>
       )}
       <div
         className={styles.burger}

@@ -2,14 +2,28 @@
 import { signIn, useSession } from 'next-auth/react';
 import styles from './LoginPage.module.css';
 import { useRouter } from 'next/navigation';
+import { ReactTyped } from 'react-typed';
+import { useState } from 'react';
 
 export default function LoginPage() {
   const { status } = useSession();
+  const [typing, setTyping] = useState();
 
   const router = useRouter();
 
   if (status === 'loading') {
-    return <div className={styles.loading}>Loading...</div>;
+    return (
+      <div className={styles.loading}>
+        Loading{' .'}
+        <ReactTyped
+          typedRef={setTyping}
+          showCursor={false}
+          strings={['...']}
+          typeSpeed={300}
+          loop
+        />
+      </div>
+    );
   }
   if (status === 'authenticated') {
     router.push('/');
