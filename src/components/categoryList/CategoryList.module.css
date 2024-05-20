@@ -66,7 +66,7 @@
 }
 
 .category.news {
-  background-color: #e3d9ce65;
+  background-color: #f7912465;
 }
 
 .category.political {
@@ -79,6 +79,10 @@
 
 .category.personal {
   background-color: #6dcf7288;
+}
+
+.category.untagged {
+  background-color: #78abf888;
 }
 
 .image {

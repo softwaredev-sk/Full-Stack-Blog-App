@@ -14,6 +14,7 @@ export const GET = async (req) => {
   const query = {
     take: POST_PER_PAGE,
     skip: POST_PER_PAGE * (page - 1),
+    orderBy: { createdAt: 'desc' },
     where: {
       ...(cat && { catSlug: cat }),
     },

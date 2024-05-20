@@ -118,12 +118,40 @@
   background-color: #775aec;
 }
 
+/* .coding {
+  background-color: #5e4fff31;
+} */
+
 .category.style {
   background-color: #789cff;
 }
 
-.coding {
-  background-color: #5e4fff31;
+.category.tech {
+  background-color: #ff4f4f;
+}
+
+.category.business {
+  background-color: #4fff67;
+}
+
+.category.news {
+  background-color: #f79124;
+}
+
+.category.political {
+  background-color: #c375d3;
+}
+
+.category.sports {
+  background-color: #3685df;
+}
+
+.category.personal {
+  background-color: #6dcf72;
+}
+
+.category.untagged {
+  background-color: #78abf8;
 }
 
 @media screen and (max-width: 1536px) {
