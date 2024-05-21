@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './MenuPosts.module.css';
 import CategoryItem from '../categoryItem/CategoryItem';
+import getLocalDateTime from '@/utils/getLocalTime';
 
 const getData = async (withImage) => {
   const res = await fetch(
@@ -57,7 +58,7 @@ export default async function MenuPosts({ withImage }) {
                 </span>
                 {' - '}
                 <span className={styles.date}>
-                  {item.createdAt.split('T')[0]}
+                  {getLocalDateTime(item?.createdAt)}
                 </span>
               </div>
             </div>

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import styles from './Featured.module.css';
 import Link from 'next/link';
 
-const getData = async (page, cat) => {
+const getData = async () => {
   const res = await fetch(`${process.env.PROD_URL}/api/posts/?featured=true`, {
     cache: 'no-store',
   });
