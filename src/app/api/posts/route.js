@@ -89,13 +89,14 @@ export const POST = async (req) => {
 
   try {
     const body = await req.json();
-    if (body.title.trim() == '' || body.desc.trim().length < 20) {
+    const data = body.data;
+    if (data.title.trim() == '' || data.desc.trim().length < 20) {
       return new NextResponse(
         JSON.stringify({ message: 'Invalid Data!' }, { status: 401 })
       );
     }
     const post = await prisma.post.create({
-      data: { ...body, userEmail: session.user.email },
+      data: { ...data, userEmail: session.user.email },
     });
     return new NextResponse(JSON.stringify(post, { status: 200 }));
   } catch (err) {
@@ -103,6 +104,73 @@ export const POST = async (req) => {
     return new NextResponse(
       JSON.stringify(
         { message: 'Something went wrong in fetching post!' },
+        { status: 500 }
+      )
+    );
+  }
+};
+
+export const PUT = async (req) => {
+  const session = await getAuthSession();
+
+  if (!session) {
+    return new NextResponse(
+      JSON.stringify({ message: 'Not Authenticated!' }, { status: 401 })
+    );
+  }
+
+  try {
+    const body = await req.json();
+    const { data, identifier } = body;
+    console.log('data-', data, ' idt-', identifier);
+
+    if (data.title.trim() == '' || data.desc.trim().length < 100) {
+      return new NextResponse(
+        JSON.stringify({ message: 'Invalid Data!' }, { status: 401 })
+      );
+    }
+    const post = await prisma.post.update({
+      where: {
+        id: identifier,
+      },
+      data: { ...data, userEmail: session.user.email, edited: true },
+    });
+    return new NextResponse(JSON.stringify(post, { status: 200 }));
+  } catch (err) {
+    // console.log('posts2 ', err);
+    return new NextResponse(
+      JSON.stringify(
+        { message: 'Something went wrong in fetching post!' },
+        { status: 500 }
+      )
+    );
+  }
+};
+
+export const DELETE = async (req) => {
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get('id');
+  const session = await getAuthSession();
+
+  if (!session) {
+    return new NextResponse(
+      JSON.stringify({ message: 'Not Authenticated!' }, { status: 401 })
+    );
+  }
+
+  try {
+    const deletedPost = await prisma.post.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return new NextResponse(JSON.stringify(deletedPost, { status: 200 }));
+  } catch (err) {
+    // console.log('deleteComment ', err);
+    return new NextResponse(
+      JSON.stringify(
+        { message: 'Something went wrong in fetching comments-2!' },
         { status: 500 }
       )
     );

@@ -31,7 +31,7 @@ export default async function CardList({ page, cat }) {
         {posts?.length === 0 && (
           <>
             <p>
-              No Posts found for the selected category. How about{' '}
+              No Posts found{cat && ' for the selected category'}. How about{' '}
               <Link href="/write">
                 <b>expanding</b>
               </Link>{' '}

@@ -3,6 +3,14 @@
   gap: 50px;
 }
 
+.notFound {
+  margin: 50px auto;
+  text-align: center;
+  font-size: 60px;
+  text-decoration: overline underline;
+  text-transform: uppercase;
+}
+
 @media screen and (max-width: 1024px) {
   .content {
     flex-direction: column;

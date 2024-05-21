@@ -83,7 +83,8 @@
   width: 100%;
 }
 
-.publish {
+.publish,
+.cancelPublish {
   position: absolute;
   top: 0;
   right: 0;
@@ -93,6 +94,17 @@
   color: white;
   cursor: pointer;
   border-radius: 20px;
+}
+
+.cancelPublish {
+  right: 90px;
+  padding: 0;
+  margin: 0;
+}
+.cancelPublish button {
+  margin: 0;
+  background-color: var(--softBg);
+  color: var(--textColor);
 }
 
 .hiddenInput {
@@ -148,6 +160,14 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
+}
+
+.notFound {
+  margin: 50px auto;
+  text-align: center;
+  font-size: 60px;
+  text-decoration: overline underline;
+  text-transform: uppercase;
 }
 
 /* .select option:last-child { */

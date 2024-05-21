@@ -15,6 +15,10 @@
   gap: 30px;
 }
 
+.write span {
+  width: 100%;
+}
+
 .input {
   padding: 20px;
   width: 100%;
@@ -83,4 +87,81 @@
 .desc {
   font-size: 18px;
   font-weight: 300;
+  cursor: default;
+}
+
+.editContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commentActions {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  justify-content: flex-end;
+  align-items: center;
+  text-transform: uppercase;
+  user-select: none;
+  margin: 5px 0;
+  height: fit-content;
+}
+
+.danger {
+  color: red;
+  cursor: pointer;
+  background-color: #ff000040;
+}
+
+.edit {
+  cursor: pointer;
+  background-color: var(--softBg);
+}
+
+.cancel {
+  cursor: pointer;
+  background-color: #9ff7b240;
+}
+
+.edit,
+.danger,
+.cancel {
+  padding: 2px 20px;
+  border-radius: 10px;
+}
+
+.editInput {
+  padding: 20px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.error {
+  animation: blinkborder 200s;
+}
+
+@media screen and (max-width: 768px) {
+  .commentActions {
+    justify-content: flex-start;
+    margin: 15px 0;
+  }
+
+  .edit {
+    order: 1;
+  }
+
+  .danger {
+    order: 2;
+  }
+}
+
+@keyframes blinkborder {
+  from {
+    outline: 1px solid red;
+  }
+  to {
+    outline: 2px solid orange;
+  }
 }

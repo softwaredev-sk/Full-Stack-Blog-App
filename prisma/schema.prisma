@@ -97,6 +97,7 @@ model Category {
 model Post {
   id String @id @default(cuid()) @map("_id")
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   slug String @unique
   title String
   desc String
@@ -108,16 +109,19 @@ model Post {
   userEmail String
   user User @relation(fields: [userEmail], references: [email])
   comments Comment[]
+  edited Boolean @default(false)
 }
 
 model Comment {
   id String @id @default(cuid()) @map("_id")
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   desc String
   userEmail String
   user User @relation(fields: [userEmail], references: [email])
   postSlug String
   post Post @relation(fields: [postSlug], references: [slug])
+  edited Boolean @default(false)
 }
 
 model Contactme {

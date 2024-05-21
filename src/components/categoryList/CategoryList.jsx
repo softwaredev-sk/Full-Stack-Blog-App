@@ -17,8 +17,12 @@ const getData = async () => {
 
 export default async function CategoryList({ page }) {
   let data = await getData();
+  let customCss = 'categoryList';
   if (page === 1) {
     data = data.slice(0, 4);
+  }
+  if (page !== 1) {
+    customCss = 'categoryListPage';
   }
   return (
     <div className={styles.container}>
@@ -28,12 +32,14 @@ export default async function CategoryList({ page }) {
           {page === 1 && <sup className={styles.seeAll}>{' [See All]'}</sup>}
         </Link>
       </h2>
-      <div className={styles.categories}>
+      <div
+        className={`${page === 1 ? styles.categories : styles.CategoriesPage}`}
+      >
         {data?.map((item) => (
           <CategoryItem
             category={item.title}
             key={item.title}
-            customCss="categoryList"
+            customCss={customCss}
           >
             {item.img && (
               <Image

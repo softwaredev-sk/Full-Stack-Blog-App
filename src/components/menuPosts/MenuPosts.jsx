@@ -23,7 +23,7 @@ export default async function MenuPosts({ withImage }) {
 
   return (
     <div className={styles.items}>
-      {menuPosts &&
+      {menuPosts.length > 0 &&
         menuPosts.map((item) => (
           <Link
             href={`/posts/${item.slug}`}
@@ -62,6 +62,21 @@ export default async function MenuPosts({ withImage }) {
             </div>
           </Link>
         ))}
+      {menuPosts.length === 0 && (
+        <>
+          <p>
+            No{withImage ? ' editor picked' : ' '}posts found. How about{' '}
+            <Link href="/write">
+              <b>expanding</b>
+            </Link>{' '}
+            the collection?
+            <Link href="/write">
+              <b> Write</b>
+            </Link>{' '}
+            a post!
+          </p>
+        </>
+      )}
     </div>
   );
 }

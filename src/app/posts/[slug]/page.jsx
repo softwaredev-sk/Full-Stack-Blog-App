@@ -4,6 +4,8 @@ import Comments from '@/components/comments/Comments';
 import Menu from '@/components/menu/Menu';
 import { notFound } from 'next/navigation';
 import CategoryItem from '@/components/categoryItem/CategoryItem';
+import { getAuthSession } from '@/utils/auth';
+import EditAction from '@/components/edit/EditAction';
 
 const getData = async (slug) => {
   const res = await fetch(`${process.env.PROD_URL}/api/posts/${slug}`, {
@@ -80,11 +82,17 @@ export default async function SinglePage({ params }) {
       </div>
       <div className={styles.content}>
         <div className={styles.post}>
+          <span>
+            {data?.post?.edited && (
+              <CategoryItem category="edited" customCss="edited" edited />
+            )}
+          </span>
+
           <div
             className={styles.description}
             dangerouslySetInnerHTML={{ __html: `${data?.post.desc}` }}
           />
-
+          <EditAction postData={data?.post} />
           <div className={styles.comment}>
             <Comments postSlug={slug} />
           </div>

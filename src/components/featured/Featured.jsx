@@ -22,28 +22,30 @@ export default async function Featured() {
       <h1 className={styles.title}>
         <b>Hey there, Welcome!</b> Discover new stories and creative ideas.
       </h1>
-      <div className={styles.post}>
-        <div className={styles.imgContainer}>
-          <Image
-            src="/p1.jpeg"
-            alt="post image"
-            fill
-            className={styles.image}
-            sizes=""
-          />
+      {featuredPost && (
+        <div className={styles.post}>
+          <div className={styles.imgContainer}>
+            <Image
+              src="/p1.jpeg"
+              alt="post image"
+              fill
+              className={styles.image}
+              sizes=""
+            />
+          </div>
+          <div className={styles.textContainer}>
+            <div className={styles.mostViewed}>Most Viewed</div>
+            <h2 className={styles.postTitle}>{featuredPost?.title}</h2>
+            <p
+              className={styles.postDesc}
+              dangerouslySetInnerHTML={{ __html: `${featuredPost?.desc}` }}
+            />
+            <Link href={`/posts/${featuredPost?.slug}`}>
+              <button className={styles.button}>Read More!</button>
+            </Link>
+          </div>
         </div>
-        <div className={styles.textContainer}>
-          <div className={styles.mostViewed}>Most Viewed</div>
-          <h2 className={styles.postTitle}>{featuredPost?.title}</h2>
-          <p
-            className={styles.postDesc}
-            dangerouslySetInnerHTML={{ __html: `${featuredPost?.desc}` }}
-          />
-          <Link href={`/posts/${featuredPost?.slug}`}>
-            <button className={styles.button}>Read More!</button>
-          </Link>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -16,6 +16,7 @@ import { app } from '@/utils/firebase';
 import { motion, AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { ReactTyped } from 'react-typed';
+import Link from 'next/link';
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
@@ -33,8 +34,22 @@ const getData = async () => {
   return res.json();
 };
 
-export default function WritePage() {
+const getPostData = async (slug) => {
+  const res = await fetch(`/api/posts/${slug}`, {
+    cache: 'no-store',
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  return res.json();
+};
+
+export default function WritePage({ searchParams }) {
   const { status } = useSession();
+
+  const edit = searchParams.edit || false;
 
   const router = useRouter();
 
@@ -44,7 +59,7 @@ export default function WritePage() {
 
   const [open, setOpen] = useState(false);
   const [desc, setDesc] = useState('');
-  const [catSlug, setCatSlug] = useState('');
+  const [catSlug, setCatSlug] = useState('untagged');
   const [hasError, setHasError] = useState({
     hasError: false,
     flag: null,
@@ -55,6 +70,8 @@ export default function WritePage() {
   const [catData, setCatData] = useState(null);
   const [published, setPublished] = useState(null);
   const [typing, setTyping] = useState();
+  const [publishMethod, setPublishMethod] = useState('POST');
+  const [editPostSlug, setEditPostSlug] = useState(null);
 
   let lastError = useRef();
 
@@ -67,7 +84,7 @@ export default function WritePage() {
   }, []);
 
   useEffect(() => {
-    function handleState(e) {
+    function handleEventListenerState(e) {
       if (
         (e.target.tagName.toLowerCase() !== 'IMG'.toLowerCase() &&
           e.target.tagName.toLowerCase() !== 'input'.toLowerCase() &&
@@ -80,12 +97,14 @@ export default function WritePage() {
       }
     }
 
-    document.body.addEventListener('click', (e) => handleState(e));
-    document.body.addEventListener('keydown', (e) => handleState(e));
+    document.body.addEventListener('click', (e) => handleEventListenerState(e));
+    document.body.addEventListener('keydown', (e) =>
+      handleEventListenerState(e)
+    );
 
     return () => {
-      document.body.removeEventListener('click', handleState);
-      document.body.removeEventListener('keydown', handleState);
+      document.body.removeEventListener('click', handleEventListenerState);
+      document.body.removeEventListener('keydown', handleEventListenerState);
     };
   }, []);
 
@@ -140,6 +159,26 @@ export default function WritePage() {
     setOpen(false);
   }, [file]);
 
+  useEffect(() => {
+    async function fetchPostData() {
+      const postData = await getPostData(edit);
+      if (!edit) {
+        return;
+      }
+      // const postData = await res.json();
+      setDesc(postData?.post?.desc);
+      setTitle(postData?.post?.title);
+      setCatSlug(postData?.post?.catSlug);
+      setMedia(postData?.post?.img);
+      setEditPostSlug(postData?.post?.id);
+      setPublishMethod('PUT');
+
+      console.log('loaded postData', postData);
+      // }
+    }
+    fetchPostData();
+  }, [edit]);
+
   if (status === 'loading') {
     return (
       <div className={styles.loading}>
@@ -169,11 +208,11 @@ export default function WritePage() {
   async function handleSubmit() {
     if (
       !title.trim() ||
-      desc.trim().length < 20 ||
+      desc.trim().length < 100 ||
       uploadSuccessful === false
     ) {
       handleError(
-        "Title can't be empty and story need to be at least 20 characters long.",
+        "Title can't be empty and story need to be at least 100 characters long.",
         'validation failed'
       );
       return;
@@ -191,13 +230,16 @@ export default function WritePage() {
     }
 
     const res = await fetch('/api/posts', {
-      method: 'POST',
+      method: publishMethod,
       body: JSON.stringify({
-        title,
-        desc,
-        img: media,
-        slug: slugify(title),
-        catSlug: catSlug || 'untagged',
+        data: {
+          title,
+          desc,
+          img: media,
+          slug: slugify(title),
+          catSlug: catSlug || 'untagged',
+        },
+        identifier: editPostSlug,
       }),
     });
 
@@ -285,6 +327,7 @@ export default function WritePage() {
         <input
           type="text"
           placeholder="Title"
+          value={title}
           className={styles.input}
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -299,6 +342,7 @@ export default function WritePage() {
               className={styles.select}
               onChange={(e) => setCatSlug(e.target.value)}
               defaultValue="untagged"
+              value={catSlug}
             >
               {catData &&
                 catData.map((item) => {
@@ -306,7 +350,6 @@ export default function WritePage() {
                     <option
                       key={item.title}
                       value={item.title}
-                      selected={item.title === 'untagged'}
                       disabled={item.title === 'untagged'}
                       hidden={item.title === 'untagged'}
                     >
@@ -402,9 +445,18 @@ export default function WritePage() {
             placeholder="Let the world know your thoughts..."
           />
         </div>
-        <button className={styles.publish} onClick={handleSubmit}>
-          Publish
-        </button>
+        <>
+          {edit && (
+            <Link href={`/posts/${edit}`} className={styles.cancelPublish}>
+              <button className={styles.publish} type="button">
+                Cancel
+              </button>
+            </Link>
+          )}
+          <button className={styles.publish} onClick={handleSubmit}>
+            Publish
+          </button>
+        </>
       </div>
     );
   }

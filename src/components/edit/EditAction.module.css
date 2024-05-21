@@ -1,0 +1,41 @@
+.editActions {
+  display: flex;
+  gap: 20px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  justify-content: flex-end;
+  align-items: center;
+  text-transform: uppercase;
+  user-select: none;
+  margin: 5px 0;
+}
+
+.danger {
+  color: red;
+  cursor: pointer;
+  background-color: #ff000040;
+}
+
+.edit {
+  cursor: pointer;
+  background-color: var(--softBg);
+}
+
+.edit,
+.danger {
+  padding: 2px 20px;
+  border-radius: 10px;
+}
+
+.editInput {
+  padding: 20px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .editActions {
+    justify-content: flex-start;
+    margin: 15px 0;
+  }
+}
