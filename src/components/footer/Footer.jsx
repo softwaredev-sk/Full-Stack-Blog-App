@@ -47,7 +47,7 @@ export default async function Footer() {
           <Link href="https://www.twitter.com/shailendrakrsk_">
             <Image
               src={'https://twitter.com/favicon.ico'}
-              alt="X"
+              alt="X (Twitter)"
               width={18}
               height={18}
             />

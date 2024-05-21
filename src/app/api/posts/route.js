@@ -43,6 +43,7 @@ export const GET = async (req) => {
         take: 5,
         include: { user: true },
       });
+      // console.log('true', menuPosts);
     }
 
     //popular === false means fetching for editor's pick section, where editorPick is true in post db
@@ -55,6 +56,7 @@ export const GET = async (req) => {
         take: 5,
         include: { user: true },
       });
+      // console.log('false', menuPosts);
     }
 
     const hasPrev = POST_PER_PAGE * (page - 1) > 0;
@@ -112,6 +114,7 @@ export const POST = async (req) => {
 
 export const PUT = async (req) => {
   const session = await getAuthSession();
+  const currentDateTime = new Date();
 
   if (!session) {
     return new NextResponse(
@@ -133,7 +136,12 @@ export const PUT = async (req) => {
       where: {
         id: identifier,
       },
-      data: { ...data, userEmail: session.user.email, edited: true },
+      data: {
+        ...data,
+        userEmail: session.user.email,
+        edited: true,
+        postUpdatedAt: currentDateTime,
+      },
     });
     return new NextResponse(JSON.stringify(post, { status: 200 }));
   } catch (err) {

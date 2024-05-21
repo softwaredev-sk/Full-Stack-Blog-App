@@ -5,9 +5,9 @@ import Image from 'next/image';
 import useSwr from 'swr';
 import { useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
-import { ReactTyped } from 'react-typed';
 import CategoryItem from '../categoryItem/CategoryItem';
 import { motion } from 'framer-motion';
+import ActionStatus from '../ActionStatus/ActionStatus';
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -25,7 +25,6 @@ export default function Comments({ postSlug }) {
   const { data: sessionData, status } = useSession();
   const ref = useRef();
   const editRef = useRef();
-  const [typing, setTyping] = useState();
   const [editing, setEditing] = useState(null);
   const [desc, setDesc] = useState('');
   const [editDesc, setEditDesc] = useState('');
@@ -123,18 +122,7 @@ export default function Comments({ postSlug }) {
       )}
       <div className={styles.comments}>
         {isLoading ? (
-          <>
-            <p>
-              Loading{' .'}
-              <ReactTyped
-                typedRef={setTyping}
-                showCursor={false}
-                strings={['...']}
-                typeSpeed={300}
-                loop
-              />
-            </p>
-          </>
+          <ActionStatus text="Loading" status="loading" iconSize={40} />
         ) : (
           data?.map((item) => (
             <>

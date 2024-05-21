@@ -4,7 +4,7 @@ import styles from './WritePage.module.css';
 import React, { useEffect, useRef, useState } from 'react';
 // import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
-import { useRouter } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import {
   getStorage,
@@ -15,11 +15,11 @@ import {
 import { app } from '@/utils/firebase';
 import { motion, AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import { ReactTyped } from 'react-typed';
 import Link from 'next/link';
+import ActionStatus from '@/components/ActionStatus/ActionStatus';
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
-  loading: () => <p>Loading ...</p>,
+  loading: () => <ActionStatus text="Loading" status="Loading" iconSize={30} />,
 });
 
 const getData = async () => {
@@ -39,6 +39,7 @@ const getPostData = async (slug) => {
     cache: 'no-store',
   });
 
+  // console.log('rere-', res);
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -69,9 +70,9 @@ export default function WritePage({ searchParams }) {
   const [uploadSuccessful, setUploadSuccessful] = useState(null);
   const [catData, setCatData] = useState(null);
   const [published, setPublished] = useState(null);
-  const [typing, setTyping] = useState();
   const [publishMethod, setPublishMethod] = useState('POST');
   const [editPostSlug, setEditPostSlug] = useState(null);
+  const [cancelling, setCacelling] = useState(false);
 
   let lastError = useRef();
 
@@ -161,35 +162,27 @@ export default function WritePage({ searchParams }) {
 
   useEffect(() => {
     async function fetchPostData() {
-      const postData = await getPostData(edit);
       if (!edit) {
         return;
       }
-      // const postData = await res.json();
+      const postData = await getPostData(edit);
+      if (postData.statusCode !== 200) {
+        router.push('/write');
+      }
       setDesc(postData?.post?.desc);
       setTitle(postData?.post?.title);
       setCatSlug(postData?.post?.catSlug);
       setMedia(postData?.post?.img);
       setEditPostSlug(postData?.post?.id);
       setPublishMethod('PUT');
-
-      console.log('loaded postData', postData);
-      // }
     }
     fetchPostData();
-  }, [edit]);
+  }, [edit, router]);
 
   if (status === 'loading') {
     return (
       <div className={styles.loading}>
-        Loading{' .'}
-        <ReactTyped
-          typedRef={setTyping}
-          showCursor={false}
-          strings={['...']}
-          typeSpeed={300}
-          loop
-        />
+        <ActionStatus text="Loading" status="loading" iconSize={30} />
       </div>
     );
   }
@@ -208,8 +201,8 @@ export default function WritePage({ searchParams }) {
   async function handleSubmit() {
     if (
       !title.trim() ||
-      desc.trim().length < 100 ||
-      uploadSuccessful === false
+      desc.trim().length < 100
+      // || uploadSuccessful === false
     ) {
       handleError(
         "Title can't be empty and story need to be at least 100 characters long.",
@@ -301,28 +294,10 @@ export default function WritePage({ searchParams }) {
           )}
         </AnimatePresence>
         {published === false && (
-          <p>
-            Publishing{' '}
-            <ReactTyped
-              typedRef={setTyping}
-              showCursor={false}
-              strings={['...']}
-              typeSpeed={300}
-              loop
-            />
-          </p>
+          <ActionStatus text="Publishing" status="loading" iconSize={30} />
         )}
         {published === true && (
-          <p>
-            Published ✅
-            <ReactTyped
-              typedRef={setTyping}
-              showCursor={false}
-              strings={['...']}
-              typeSpeed={300}
-              loop
-            />
-          </p>
+          <ActionStatus text="Published" status="success" iconSize={25} />
         )}
         <input
           type="text"
@@ -331,7 +306,6 @@ export default function WritePage({ searchParams }) {
           className={styles.input}
           onChange={(e) => setTitle(e.target.value)}
         />
-
         <div className={styles.extraContainer}>
           <div className={styles.selectContainer}>
             <label htmlFor="category" className={styles.label}>
@@ -368,7 +342,11 @@ export default function WritePage({ searchParams }) {
                 <Image src="/plus.svg" alt="" width={16} height={16} />
               </button>
               {uploadSuccessful && (
-                <div className={styles.successful}>Upload Successful ✅</div>
+                <ActionStatus
+                  text="Upload Successful"
+                  status="success"
+                  iconSize={30}
+                />
               )}
               {hasError.flag === 'upload' && (
                 <div className={styles.successful}>
@@ -433,9 +411,7 @@ export default function WritePage({ searchParams }) {
             </AnimatePresence>
           </div>
         </div>
-
         {progress > 0 && <progress value={progress} max="100"></progress>}
-
         <div className={styles.editor}>
           <ReactQuill
             className={styles.textArea}
@@ -448,8 +424,20 @@ export default function WritePage({ searchParams }) {
         <>
           {edit && (
             <Link href={`/posts/${edit}`} className={styles.cancelPublish}>
-              <button className={styles.publish} type="button">
-                Cancel
+              <button
+                className={styles.publish}
+                type="button"
+                onClick={() => setCacelling(true)}
+              >
+                {cancelling ? (
+                  <ActionStatus
+                    text="Cancelling"
+                    status="loading"
+                    iconSize={20}
+                  />
+                ) : (
+                  'Cancel'
+                )}
               </button>
             </Link>
           )}

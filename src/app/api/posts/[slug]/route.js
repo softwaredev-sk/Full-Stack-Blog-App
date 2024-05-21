@@ -6,8 +6,8 @@ export const GET = async (req, { params }) => {
 
   try {
     const exists = await prisma.post.findFirst({ where: { slug } });
+    // console.log('exists?', exists);
     if (exists) {
-      // console.log('exists?', exists);
       const post = await prisma.post.update({
         where: { slug },
         data: { views: { increment: 1 } },

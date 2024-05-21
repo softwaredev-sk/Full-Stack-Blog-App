@@ -2,29 +2,19 @@
 import { signIn, useSession } from 'next-auth/react';
 import styles from './LoginPage.module.css';
 import { useRouter } from 'next/navigation';
-import { ReactTyped } from 'react-typed';
-import { useState } from 'react';
+import ActionStatus from '@/components/ActionStatus/ActionStatus';
 
 export default function LoginPage({ searchParams }) {
   const redirectUrl = searchParams?.redirect ?? '';
   const { status } = useSession();
-  const [typing, setTyping] = useState();
 
   const router = useRouter();
   const callbackUrl = redirectUrl ? `/posts/${redirectUrl}` : '/';
-  console.log('R- ', redirectUrl, ' C- ', callbackUrl, ' SP- ', searchParams);
 
   if (status === 'loading') {
     return (
       <div className={styles.loading}>
-        Loading{' .'}
-        <ReactTyped
-          typedRef={setTyping}
-          showCursor={false}
-          strings={['...']}
-          typeSpeed={300}
-          loop
-        />
+        <ActionStatus text="Loading" status="loading" iconSize={50} />
       </div>
     );
   }

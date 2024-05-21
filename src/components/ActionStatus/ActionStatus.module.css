@@ -1,0 +1,8 @@
+.actionStatus {
+  display: flex;
+  align-items: center;
+}
+
+.actionStatus img {
+  margin: 0 5px;
+}

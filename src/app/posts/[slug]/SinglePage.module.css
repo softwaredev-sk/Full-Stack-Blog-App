@@ -88,6 +88,17 @@
   text-transform: uppercase;
 }
 
+.date {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.updateDate {
+  font-size: 12px;
+}
+
 @media screen and (max-width: 1536px) {
   .title {
     font-size: 54px;

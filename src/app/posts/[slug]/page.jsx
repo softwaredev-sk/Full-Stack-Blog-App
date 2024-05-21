@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import CategoryItem from '@/components/categoryItem/CategoryItem';
 import { getAuthSession } from '@/utils/auth';
 import EditAction from '@/components/edit/EditAction';
+import getLocalDateTime from '@/utils/getLocalTime';
 
 const getData = async (slug) => {
   const res = await fetch(`${process.env.PROD_URL}/api/posts/${slug}`, {
@@ -26,7 +27,6 @@ export default async function SinglePage({ params }) {
 
   const data = await getData(slug);
 
-  // console.log('singlepost ', data);
   if (data.statusCode !== 200) {
     notFound();
   }
@@ -59,11 +59,11 @@ export default async function SinglePage({ params }) {
             <div className={styles.userTextContainer}>
               <span className={styles.username}>{data?.post.user?.name}</span>
               <span className={styles.date}>
-                {data?.post.createdAt?.substring(8, 10) +
-                  '-' +
-                  data?.post.createdAt?.substring(5, 7) +
-                  '-' +
-                  data?.post.createdAt?.substring(0, 4)}
+                <span>{getLocalDateTime(data?.post?.createdAt)}</span>
+                <span className={styles.updateDate}>
+                  {data?.post?.edited &&
+                    '[Updated] ' + getLocalDateTime(data?.post?.postUpdatedAt)}
+                </span>
               </span>
             </div>
           </div>

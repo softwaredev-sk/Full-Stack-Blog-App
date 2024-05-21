@@ -5,7 +5,7 @@ import CategoryItem from '../categoryItem/CategoryItem';
 
 const getData = async (withImage) => {
   const res = await fetch(
-    `${process.env.PROD_URL}/api/posts/?popular=${withImage || ''}`,
+    `${process.env.PROD_URL}/api/posts/?popular=${withImage}`,
     {
       cache: 'no-store',
     }
@@ -20,15 +20,16 @@ const getData = async (withImage) => {
 
 export default async function MenuPosts({ withImage }) {
   const { menuPosts } = await getData(withImage ? 'false' : 'true');
+  // console.log('mp', menuPosts);
 
   return (
     <div className={styles.items}>
-      {menuPosts.length > 0 &&
-        menuPosts.map((item) => (
+      {menuPosts?.length > 0 &&
+        menuPosts?.map((item) => (
           <Link
             href={`/posts/${item.slug}`}
             className={styles.item}
-            key={menuPosts._id}
+            key={item._id}
           >
             {withImage && (
               <div className={styles.imageContainer}>
@@ -62,20 +63,19 @@ export default async function MenuPosts({ withImage }) {
             </div>
           </Link>
         ))}
-      {menuPosts.length === 0 && (
-        <>
-          <p>
-            No{withImage ? ' editor picked' : ' '}posts found. How about{' '}
-            <Link href="/write">
-              <b>expanding</b>
-            </Link>{' '}
-            the collection?
-            <Link href="/write">
-              <b> Write</b>
-            </Link>{' '}
-            a post!
-          </p>
-        </>
+      {menuPosts?.length === 0 && (
+        <p>
+          {withImage ? 'No post picked by editor. ' : 'No posts found. '}How
+          about{' '}
+          <Link href="/write">
+            <b>expanding</b>
+          </Link>{' '}
+          the collection?
+          <Link href="/write">
+            <b> Write</b>
+          </Link>{' '}
+          a post!
+        </p>
       )}
     </div>
   );
