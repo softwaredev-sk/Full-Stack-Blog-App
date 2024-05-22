@@ -22,7 +22,7 @@ export default function Navbar() {
         <Link href="https://www.twitter.com/shailendrakrsk_">
           <Image
             src={'https://twitter.com/favicon.ico'}
-            alt=""
+            alt="X (Twitter)"
             width={24}
             height={24}
           />

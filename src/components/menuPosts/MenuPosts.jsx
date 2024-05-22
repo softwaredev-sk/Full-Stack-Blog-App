@@ -27,21 +27,25 @@ export default async function MenuPosts({ withImage }) {
     <div className={styles.items}>
       {menuPosts?.length > 0 &&
         menuPosts?.map((item) => (
-          <Link
-            href={`/posts/${item.slug}`}
+          <div
+            // Link
+            // href={`/posts/${item.slug}`}
             className={styles.item}
             key={item._id}
           >
             {withImage && (
-              <div className={styles.imageContainer}>
+              <Link
+                href={`/posts/${item.slug}`}
+                className={styles.imageContainer}
+              >
                 <Image
                   src={item.img ?? '/p1.jpeg'}
-                  alt=""
+                  alt={item.title}
                   fill
                   className={styles.image}
                   sizes=""
                 />
-              </div>
+              </Link>
             )}
             <div className={styles.textContainer}>
               {item?.catSlug && (
@@ -51,7 +55,9 @@ export default async function MenuPosts({ withImage }) {
                   customCss="categoryPillSmall"
                 />
               )}
-              <h5 className={styles.postTitle}>{item.title}</h5>
+              <Link href={`/posts/${item.slug}`} className={styles.postTitle}>
+                {item.title}
+              </Link>
               <div className={styles.detail}>
                 <span className={styles.username}>
                   {item.user.name.split(' ')[0]}
@@ -62,7 +68,7 @@ export default async function MenuPosts({ withImage }) {
                 </span>
               </div>
             </div>
-          </Link>
+          </div>
         ))}
       {menuPosts?.length === 0 && (
         <p>

@@ -9,6 +9,7 @@ import CategoryItem from '../categoryItem/CategoryItem';
 import { motion } from 'framer-motion';
 import ActionStatus from '../ActionStatus/ActionStatus';
 import getLocalDateTime from '@/utils/getLocalTime';
+import Pagination from '../pagination/Pagination';
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -93,115 +94,123 @@ export default function Comments({ postSlug }) {
   }
 
   return (
-    <div className={styles.container}>
-      <h6 className={styles.title}>Comments</h6>
-      {status === 'authenticated' ? (
-        <div className={styles.write}>
-          <motion.span ref={error}>
-            <textarea
-              placeholder="write a comment..."
-              className={`${styles.input} ${hasError ? styles.error : ''}`}
-              onChange={() => setDesc(ref.current.value)}
-              ref={ref}
-              value={desc}
-            />
-          </motion.span>
-          <button
-            className={styles.button}
-            onClick={() => handleSubmit(false, null)}
-          >
-            Send
-          </button>
-        </div>
-      ) : (
-        <>
-          <Link href={`/login/?redirect=${postSlug}`}>
-            <b>Login</b>
-          </Link>
-          {' to write a comment'}
-        </>
-      )}
-      <div className={styles.comments}>
-        {isLoading ? (
-          <ActionStatus text="Loading" status="loading" iconSize={40} />
+    <>
+      <div className={styles.container}>
+        <h6 className={styles.title}>Comments</h6>
+        {status === 'authenticated' ? (
+          <div className={styles.write}>
+            <motion.span ref={error}>
+              <textarea
+                placeholder="write a comment..."
+                className={`${styles.input} ${hasError ? styles.error : ''}`}
+                onChange={() => setDesc(ref.current.value)}
+                ref={ref}
+                value={desc}
+              />
+            </motion.span>
+            <button
+              className={styles.button}
+              onClick={() => handleSubmit(false, null)}
+            >
+              Send
+            </button>
+          </div>
         ) : (
-          data?.map((item) => (
-            <>
-              <div className={styles.comment} key={item._id}>
-                <div className={styles.user}>
-                  <Image
-                    src={item?.user?.image}
-                    alt="user image"
-                    width={50}
-                    height={50}
-                    className={styles.image}
-                  />
-                  <div className={styles.userInfo}>
-                    <span className={styles.username}>{item.user.name}</span>
-                    <span className={styles.date}>
-                      {getLocalDateTime(item?.createdAt)}
-                    </span>
-                  </div>
-                </div>
-
-                <div className={styles.editContainer}>
-                  <span>
-                    {item.edited && (
-                      <CategoryItem
-                        category="edited"
-                        customCss="edited"
-                        edited
-                      />
-                    )}
-                  </span>
-                  {sessionData?.user?.email === item.user.email && (
-                    <div className={styles.commentActions}>
-                      {!editing || editing !== item.id ? (
-                        <span
-                          className={styles.danger}
-                          onClick={() => handleDelete(item?.id)}
-                        >
-                          Delete
-                        </span>
-                      ) : (
-                        <span className={styles.cancel} onClick={handleCancel}>
-                          Cancel
-                        </span>
-                      )}
-                      {editing && editing === item.id ? (
-                        <span
-                          className={styles.edit}
-                          onClick={() => handleSubmit(true, item.id)}
-                        >
-                          Save
-                        </span>
-                      ) : (
-                        <span
-                          className={styles.edit}
-                          onClick={() => handleEdit(item.desc, item.id)}
-                        >
-                          Edit
-                        </span>
-                      )}
+          <>
+            <Link href={`/login/?redirect=${postSlug}`}>
+              <b>Login</b>
+            </Link>
+            {' to write a comment'}
+          </>
+        )}
+        <div className={styles.comments}>
+          {isLoading ? (
+            <ActionStatus text="Loading" status="loading" iconSize={40} />
+          ) : (
+            data?.map((item) => (
+              <>
+                <div className={styles.comment} key={item._id}>
+                  <div className={styles.user}>
+                    <Image
+                      src={item?.user?.image}
+                      alt="user image"
+                      width={50}
+                      height={50}
+                      className={styles.image}
+                    />
+                    <div className={styles.userInfo}>
+                      <span className={styles.username}>{item.user.name}</span>
+                      <span className={styles.date}>
+                        {getLocalDateTime(item?.createdAt)}
+                      </span>
                     </div>
+                  </div>
+
+                  <div className={styles.editContainer}>
+                    <span>
+                      {item.edited && (
+                        <CategoryItem
+                          category="edited"
+                          customCss="edited"
+                          edited
+                        />
+                      )}
+                    </span>
+                    {sessionData?.user?.email === item.user.email && (
+                      <div className={styles.commentActions}>
+                        {!editing || editing !== item.id ? (
+                          <span
+                            className={styles.danger}
+                            onClick={() => handleDelete(item?.id)}
+                          >
+                            Delete
+                          </span>
+                        ) : (
+                          <span
+                            className={styles.cancel}
+                            onClick={handleCancel}
+                          >
+                            Cancel
+                          </span>
+                        )}
+                        {editing && editing === item.id ? (
+                          <span
+                            className={styles.edit}
+                            onClick={() => handleSubmit(true, item.id)}
+                          >
+                            Save
+                          </span>
+                        ) : (
+                          <span
+                            className={styles.edit}
+                            onClick={() => handleEdit(item.desc, item.id)}
+                          >
+                            Edit
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  {editing && editing === item.id ? (
+                    <input
+                      type="text"
+                      value={editDesc}
+                      ref={editRef}
+                      className={styles.editInput}
+                      onChange={() => setEditDesc(editRef.current.value)}
+                    />
+                  ) : (
+                    <p className={styles.desc}>{item.desc}</p>
                   )}
                 </div>
-                {editing && editing === item.id ? (
-                  <input
-                    type="text"
-                    value={editDesc}
-                    ref={editRef}
-                    className={styles.editInput}
-                    onChange={() => setEditDesc(editRef.current.value)}
-                  />
-                ) : (
-                  <p className={styles.desc}>{item.desc}</p>
-                )}
-              </div>
-            </>
-          ))
-        )}
+              </>
+            ))
+          )}
+        </div>
       </div>
-    </div>
+
+      {/* //use state to manage pagination fetch data */}
+      <Pagination page={1} hasPrev={1} hasNext={1} cat={undefined} />
+    </>
   );
 }

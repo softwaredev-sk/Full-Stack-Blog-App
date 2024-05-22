@@ -48,14 +48,16 @@
   -webkit-box-orient: vertical;
 }
 
+.postTitle:hover,
+.imageContainer:hover {
+  filter: brightness(120%);
+}
+
 .detail {
   font-size: 12px;
+  cursor: default;
 }
 
 .date {
   color: gray;
-}
-
-.item:hover {
-  filter: brightness(120%);
 }
