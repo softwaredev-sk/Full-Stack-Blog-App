@@ -24,7 +24,7 @@ export async function generateMetadata({ params }) {
   if (!post) {
     notFound();
   }
-  console.log('dynamic metadata-', post);
+
   return {
     title: post?.post?.title,
     description: 'Read amazing article on "' + post?.post?.title + '"',
