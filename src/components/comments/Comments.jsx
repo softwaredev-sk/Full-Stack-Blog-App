@@ -6,10 +6,9 @@ import useSwr from 'swr';
 import { useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
 import CategoryItem from '../categoryItem/CategoryItem';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import ActionStatus from '../ActionStatus/ActionStatus';
 import getLocalDateTime from '@/utils/getLocalTime';
-import Pagination from '../pagination/Pagination';
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -25,17 +24,18 @@ const fetcher = async (url) => {
 
 export default function Comments({ postSlug }) {
   const { data: sessionData, status } = useSession();
-  const ref = useRef();
-  const editRef = useRef();
   const [editing, setEditing] = useState(null);
   const [desc, setDesc] = useState('');
   const [editDesc, setEditDesc] = useState('');
   const [hasError, setHasError] = useState(false);
+  const [commentPage, setCommentPage] = useState(1);
+  const ref = useRef();
+  const editRef = useRef();
   const error = useRef();
   let lastError = useRef();
 
   const { data, mutate, isLoading } = useSwr(
-    `/api/comments?postSlug=${postSlug}`,
+    `/api/comments/?postSlug=${postSlug}&commentPage=${commentPage}`,
     fetcher
   );
 
@@ -51,7 +51,6 @@ export default function Comments({ postSlug }) {
       comment = editDesc;
       identifier = id;
     }
-    // console.log('m-', method, ' c- ', comment, ' idd- ', identifier);
     if (comment.trim()) {
       await fetch('/api/comments', {
         method: method,
@@ -60,6 +59,9 @@ export default function Comments({ postSlug }) {
       await mutate();
       setDesc('');
       setEditing(null);
+      if (!edit) {
+        setCommentPage(1);
+      }
       return;
     }
     setHasError(true);
@@ -74,12 +76,16 @@ export default function Comments({ postSlug }) {
     if (!proceed) {
       return;
     }
-    const res = await fetch(`/api/comments/?id=${id}`, {
+    const res = await fetch(`/api/comments/?id=${id}&postSlug=${postSlug}`, {
       method: 'DELETE',
     });
     await mutate();
     if (!res.ok) {
       return;
+    }
+    const data = await res.json();
+    if (commentPage > data?.totalPageAfterDelete) {
+      setCommentPage((prevCount) => prevCount - 1);
     }
   }
 
@@ -93,6 +99,12 @@ export default function Comments({ postSlug }) {
     setEditing(null);
   }
 
+  function handleFetchComment(move) {
+    setEditing(false);
+    move === 'next'
+      ? setCommentPage((prevCount) => prevCount + 1)
+      : setCommentPage((prevCount) => prevCount - 1);
+  }
   return (
     <>
       <div className={styles.container}>
@@ -101,6 +113,7 @@ export default function Comments({ postSlug }) {
           <div className={styles.write}>
             <motion.span ref={error}>
               <textarea
+                key={error}
                 placeholder="write a comment..."
                 className={`${styles.input} ${hasError ? styles.error : ''}`}
                 onChange={() => setDesc(ref.current.value)}
@@ -123,94 +136,149 @@ export default function Comments({ postSlug }) {
             {' to write a comment'}
           </>
         )}
-        <div className={styles.comments}>
+        <motion.div className={styles.comments}>
           {isLoading ? (
             <ActionStatus text="Loading" status="loading" iconSize={40} />
           ) : (
-            data?.map((item) => (
-              <>
-                <div className={styles.comment} key={item._id}>
-                  <div className={styles.user}>
-                    <Image
-                      src={item?.user?.image}
-                      alt="user image"
-                      width={50}
-                      height={50}
-                      className={styles.image}
-                    />
-                    <div className={styles.userInfo}>
-                      <span className={styles.username}>{item.user.name}</span>
-                      <span className={styles.date}>
-                        {getLocalDateTime(item?.createdAt)}
-                      </span>
-                    </div>
-                  </div>
+            <AnimatePresence mode="sync">
+              {data?.comments?.length > 0 && (
+                <motion.div
+                  key="list"
+                  initial={{ opacity: 0, y: -30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ y: -30, opacity: 0 }}
+                >
+                  <AnimatePresence>
+                    {data?.comments?.map((item, index) => (
+                      <motion.div
+                        layout
+                        key={index}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{
+                          height: 'auto',
+                          opacity: 1,
+                        }}
+                        // exit={{ height: 0 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className={styles.comment}
+                      >
+                        <div className={styles.user}>
+                          <Image
+                            src={item?.user?.image}
+                            alt="user image"
+                            width={50}
+                            height={50}
+                            className={styles.image}
+                          />
+                          <div className={styles.userInfo}>
+                            <span className={styles.username}>
+                              {item.user.name}
+                            </span>
+                            <span className={styles.date}>
+                              {getLocalDateTime(item?.createdAt)}
+                            </span>
+                          </div>
+                        </div>
 
-                  <div className={styles.editContainer}>
-                    <span>
-                      {item.edited && (
-                        <CategoryItem
-                          category="edited"
-                          customCss="edited"
-                          edited
-                        />
-                      )}
-                    </span>
-                    {sessionData?.user?.email === item.user.email && (
-                      <div className={styles.commentActions}>
-                        {!editing || editing !== item.id ? (
-                          <span
-                            className={styles.danger}
-                            onClick={() => handleDelete(item?.id)}
-                          >
-                            Delete
+                        <div className={styles.editContainer}>
+                          <span>
+                            {item?.edited && (
+                              <CategoryItem
+                                category="edited"
+                                customCss="edited"
+                                edited
+                              />
+                            )}
                           </span>
-                        ) : (
-                          <span
-                            className={styles.cancel}
-                            onClick={handleCancel}
-                          >
-                            Cancel
-                          </span>
-                        )}
+                          {sessionData?.user?.email === item.user.email && (
+                            <div className={styles.commentActions}>
+                              {!editing || editing !== item.id ? (
+                                <span
+                                  className={styles.danger}
+                                  onClick={() =>
+                                    handleDelete(item?.id, item?.postSlug)
+                                  }
+                                >
+                                  Delete
+                                </span>
+                              ) : (
+                                <span
+                                  className={styles.cancel}
+                                  onClick={handleCancel}
+                                >
+                                  Cancel
+                                </span>
+                              )}
+                              {editing && editing === item.id ? (
+                                <span
+                                  className={styles.edit}
+                                  onClick={() => handleSubmit(true, item.id)}
+                                >
+                                  Save
+                                </span>
+                              ) : (
+                                <span
+                                  className={styles.edit}
+                                  onClick={() => handleEdit(item.desc, item.id)}
+                                >
+                                  Edit
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        </div>
                         {editing && editing === item.id ? (
-                          <span
-                            className={styles.edit}
-                            onClick={() => handleSubmit(true, item.id)}
-                          >
-                            Save
-                          </span>
+                          <input
+                            type="text"
+                            value={editDesc}
+                            ref={editRef}
+                            className={styles.editInput}
+                            onChange={() => setEditDesc(editRef.current.value)}
+                          />
                         ) : (
-                          <span
-                            className={styles.edit}
-                            onClick={() => handleEdit(item.desc, item.id)}
-                          >
-                            Edit
-                          </span>
+                          <p className={styles.desc}>{item.desc}</p>
                         )}
-                      </div>
-                    )}
-                  </div>
-                  {editing && editing === item.id ? (
-                    <input
-                      type="text"
-                      value={editDesc}
-                      ref={editRef}
-                      className={styles.editInput}
-                      onChange={() => setEditDesc(editRef.current.value)}
-                    />
-                  ) : (
-                    <p className={styles.desc}>{item.desc}</p>
-                  )}
-                </div>
-              </>
-            ))
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </motion.div>
+              )}
+              {data?.comments?.length === 0 && (
+                <motion.p
+                  key="fallback"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                >
+                  No Comments found.
+                </motion.p>
+              )}
+            </AnimatePresence>
           )}
-        </div>
+        </motion.div>
       </div>
 
-      {/* //use state to manage pagination fetch data */}
-      <Pagination page={1} hasPrev={1} hasNext={1} cat={undefined} />
+      <div className={styles.pagination}>
+        <button
+          className={styles.button}
+          onClick={() => handleFetchComment('previous')}
+          disabled={!data?.hasPrev}
+        >
+          Previous
+        </button>
+        {data?.comments?.length !== 0 && (
+          <div>{`${commentPage}${
+            data?.totalPage ? ' / ' + data?.totalPage : ''
+          }`}</div>
+        )}
+        <button
+          className={styles.button}
+          onClick={() => handleFetchComment('next')}
+          disabled={!data?.hasNext}
+        >
+          Next
+        </button>
+      </div>
     </>
   );
 }

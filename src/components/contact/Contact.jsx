@@ -50,7 +50,7 @@ export default function Contact() {
       });
 
       if (!res.ok) {
-        console.log('failed');
+        console.log('failed to submit form');
         return;
       }
       setFormCustomData({

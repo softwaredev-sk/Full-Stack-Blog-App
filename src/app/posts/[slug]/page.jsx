@@ -13,8 +13,6 @@ const getData = async (slug) => {
     cache: 'no-store',
   });
 
-  // console.log('res-postslug ', res.status);
-
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }

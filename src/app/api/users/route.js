@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 export const GET = async (req) => {
   const { searchParams } = new URL(req.url);
   const email = searchParams.get('user');
-  console.log('user -', email);
+  // console.log('user -', email);
 
   const query = {
     where: {

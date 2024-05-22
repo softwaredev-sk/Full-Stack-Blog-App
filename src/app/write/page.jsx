@@ -39,7 +39,6 @@ const getPostData = async (slug) => {
     cache: 'no-store',
   });
 
-  // console.log('rere-', res);
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
@@ -141,7 +140,6 @@ export default function WritePage({ searchParams }) {
           );
           setProgress(null);
           setMedia('/p1.jpeg');
-          // console.log('Image size too large ', error.code);
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {

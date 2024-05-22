@@ -21,7 +21,6 @@ const getData = async (withImage) => {
 
 export default async function MenuPosts({ withImage }) {
   const { menuPosts } = await getData(withImage ? 'false' : 'true');
-  // console.log('mp', menuPosts);
 
   return (
     <div className={styles.items}>

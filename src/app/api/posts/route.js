@@ -125,7 +125,7 @@ export const PUT = async (req) => {
   try {
     const body = await req.json();
     const { data, identifier } = body;
-    console.log('data-', data, ' idt-', identifier);
+    // console.log('data-', data, ' idt-', identifier);
 
     if (data.title.trim() == '' || data.desc.trim().length < 100) {
       return new NextResponse(

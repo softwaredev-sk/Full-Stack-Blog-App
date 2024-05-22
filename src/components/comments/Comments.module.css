@@ -137,11 +137,30 @@
   padding: 1px 0;
   width: 100%;
   font-size: 18px;
-  /* margin-top: 10px; */
 }
 
 .error {
-  animation: blinkborder 200s;
+  animation: 200ms ease-in-out reverse both running blinkborder;
+  animation-iteration-count: 2;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagination .button {
+  width: 100px;
+  border: none;
+  padding: 8px;
+  background-color: crimson;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination .button:disabled {
+  visibility: hidden;
 }
 
 @media screen and (max-width: 768px) {
@@ -164,6 +183,6 @@
     outline: 1px solid red;
   }
   to {
-    outline: 2px solid orange;
+    outline: 6px solid red;
   }
 }
