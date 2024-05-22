@@ -10,13 +10,17 @@
 
 .write {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 30px;
+  gap: 10px;
 }
 
 .write span {
   width: 100%;
+  flex: 5;
+  padding: 0;
+  margin: 0;
 }
 
 .input {
@@ -25,13 +29,15 @@
 }
 
 .button {
-  padding: 16px 20px;
-  background-color: teal;
-  color: white;
+  padding: 12px 30px;
+  background-color: var(--softBg);
+  color: var(--textColor);
   font-weight: bold;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  text-align: center;
+  filter: saturate(300%) contrast(200%);
 }
 
 .comments {

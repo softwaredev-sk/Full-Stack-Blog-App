@@ -29,10 +29,12 @@ export default function Comments({ postSlug }) {
   const [editDesc, setEditDesc] = useState('');
   const [hasError, setHasError] = useState(false);
   const [commentPage, setCommentPage] = useState(1);
+  const [uiLoading, setUiLoading] = useState(null);
   const ref = useRef();
   const editRef = useRef();
   const error = useRef();
   let lastError = useRef();
+  let loadingRef = useRef();
 
   const { data, mutate, isLoading } = useSwr(
     `/api/comments/?postSlug=${postSlug}&commentPage=${commentPage}`,
@@ -43,6 +45,9 @@ export default function Comments({ postSlug }) {
     if (lastError.current) {
       clearTimeout(lastError.current);
     }
+    if (loadingRef.current) {
+      clearTimeout(loadingRef.current);
+    }
     let method = 'POST';
     let comment = desc;
     let identifier = postSlug;
@@ -52,6 +57,7 @@ export default function Comments({ postSlug }) {
       identifier = id;
     }
     if (comment.trim()) {
+      setUiLoading(true);
       await fetch('/api/comments', {
         method: method,
         body: JSON.stringify({ comment, identifier }),
@@ -59,12 +65,18 @@ export default function Comments({ postSlug }) {
       await mutate();
       setDesc('');
       setEditing(null);
+      setUiLoading(false);
+      loadingRef.current = setTimeout(() => {
+        loadingRef.current = null;
+        setUiLoading(null);
+      }, 2000);
       if (!edit) {
         setCommentPage(1);
       }
       return;
     }
     setHasError(true);
+    setUiLoading(null);
     lastError.current = setTimeout(() => {
       lastError.current = null;
       setHasError(false);
@@ -125,7 +137,13 @@ export default function Comments({ postSlug }) {
               className={styles.button}
               onClick={() => handleSubmit(false, null)}
             >
-              Send
+              {uiLoading === true && (
+                <ActionStatus text="Sending" status="loading" iconSize={30} />
+              )}
+              {uiLoading === false && (
+                <ActionStatus text="Sent" status="success" iconSize={20} />
+              )}
+              {uiLoading === null && <p className={styles.sendText}>Send</p>}
             </button>
           </div>
         ) : (
@@ -158,7 +176,6 @@ export default function Comments({ postSlug }) {
                           height: 'auto',
                           opacity: 1,
                         }}
-                        // exit={{ height: 0 }}
                         exit={{ height: 0, opacity: 0 }}
                         className={styles.comment}
                       >

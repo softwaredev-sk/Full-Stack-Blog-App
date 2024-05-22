@@ -1,6 +1,7 @@
 .actionStatus {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .actionStatus img {
