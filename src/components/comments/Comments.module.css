@@ -186,7 +186,7 @@
 
 @keyframes blinkborder {
   from {
-    outline: 1px solid red;
+    outline: 2px solid red;
   }
   to {
     outline: 6px solid red;
