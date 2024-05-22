@@ -56,7 +56,6 @@ export default function WritePage({ searchParams }) {
   const [file, setFile] = useState(null);
   const [media, setMedia] = useState('/p1.jpeg');
   const [title, setTitle] = useState('');
-
   const [open, setOpen] = useState(false);
   const [desc, setDesc] = useState('');
   const [catSlug, setCatSlug] = useState('untagged');
@@ -72,7 +71,7 @@ export default function WritePage({ searchParams }) {
   const [publishMethod, setPublishMethod] = useState('POST');
   const [editPostSlug, setEditPostSlug] = useState(null);
   const [cancelling, setCacelling] = useState(false);
-
+  const [mounted, setMounted] = useState(false);
   let lastError = useRef();
 
   useEffect(() => {
@@ -161,6 +160,7 @@ export default function WritePage({ searchParams }) {
   useEffect(() => {
     async function fetchPostData() {
       if (!edit) {
+        setMounted(true);
         return;
       }
       const postData = await getPostData(edit);
@@ -173,6 +173,7 @@ export default function WritePage({ searchParams }) {
       setMedia(postData?.post?.img);
       setEditPostSlug(postData?.post?.id);
       setPublishMethod('PUT');
+      setMounted(true);
     }
     fetchPostData();
   }, [edit, router]);
@@ -268,182 +269,199 @@ export default function WritePage({ searchParams }) {
 
   if (status === 'authenticated') {
     return (
-      <div className={styles.container}>
-        <AnimatePresence>
-          {hasError.hasError && (
-            <motion.div
-              key="error"
-              animate={{
-                x: [2, -2],
-                transition: { duration: 0.2, repeat: 2 },
-              }}
-              className={`${styles.errorData}`}
-            >
-              <Image
-                src="/error.svg"
-                alt=""
-                width={16}
-                height={16}
-                className={styles.errorImg}
-              />{' '}
-              {hasError.errorMsg ||
-                ' Some Error Occurred, please try again after sometime.'}
-            </motion.div>
-          )}
-        </AnimatePresence>
-        {published === false && (
-          <ActionStatus text="Publishing" status="loading" iconSize={30} />
+      <>
+        {!mounted && (
+          <ActionStatus text="Please Wait!" status="loading" iconSize={30} />
         )}
-        {published === true && (
-          <ActionStatus text="Published" status="success" iconSize={25} />
-        )}
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          className={styles.input}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <div className={styles.extraContainer}>
-          <div className={styles.selectContainer}>
-            <label htmlFor="category" className={styles.label}>
-              Category
-            </label>
-            <select
-              id="category"
-              className={styles.select}
-              onChange={(e) => setCatSlug(e.target.value)}
-              defaultValue="untagged"
-              value={catSlug}
-            >
-              {catData &&
-                catData.map((item) => {
-                  return (
-                    <option
-                      key={item.title}
-                      value={item.title}
-                      disabled={item.title === 'untagged'}
-                      hidden={item.title === 'untagged'}
-                    >
-                      {item.title}
-                    </option>
-                  );
-                })}
-            </select>
-          </div>
-          <div className={styles.addContainer}>
-            <div className={styles.buttonSuccessful}>
-              <button
-                className={`${styles.button} ${open && styles.open}`}
-                onClick={() => setOpen((prevState) => !prevState)}
-              >
-                <Image src="/plus.svg" alt="" width={16} height={16} />
-              </button>
-              {uploadSuccessful && (
-                <ActionStatus
-                  text="Upload Successful"
-                  status="success"
-                  iconSize={30}
-                />
-              )}
-              {hasError.flag === 'upload' && (
-                <div className={styles.successful}>
-                  Upload Failed{' '}
+        {mounted && (
+          <div className={styles.container}>
+            <AnimatePresence>
+              {hasError.hasError && (
+                <motion.div
+                  key="error"
+                  animate={{
+                    x: [2, -2],
+                    transition: { duration: 0.2, repeat: 2 },
+                  }}
+                  className={`${styles.errorData}`}
+                >
                   <Image
                     src="/error.svg"
                     alt=""
                     width={16}
                     height={16}
                     className={styles.errorImg}
-                  />
-                </div>
-              )}
-            </div>
-            <AnimatePresence>
-              {open && (
-                <motion.div
-                  key="addButton"
-                  className={styles.add}
-                  animate={{
-                    opacity: [0, 1],
-                    x: [600, 0],
-                    originX: 0,
-                  }}
-                  exit={{ x: [0, 400], opacity: [1, 0] }}
-                >
-                  <input
-                    type="file"
-                    id="image"
-                    onChange={(e) => setFile(e.target.files[0])}
-                    className={styles.hiddenInput}
-                  />
-                  <button className={styles.addButton}>
-                    <label htmlFor="image" className={styles.label}>
-                      <Image src="/image.png" alt="" width={16} height={16} />
-                    </label>
-                  </button>
-                  <button className={styles.addButton}>
-                    <label htmlFor="image" className={styles.label}>
-                      <Image
-                        src="/external.png"
-                        alt=""
-                        width={16}
-                        height={16}
-                      />
-                    </label>
-                  </button>
-                  <button className={styles.addButton}>
-                    <label htmlFor="image" className={styles.label}>
-                      <Image src="/video.png" alt="" width={20} height={20} />
-                    </label>
-                  </button>
-                  <motion.div
-                    className={styles.span}
-                    animate={{ x: [1000, 0] }}
-                    exit={{ x: [0, 1000] }}
-                  >
-                    <b>NOTE:</b> Max file size: 200 KB
-                  </motion.div>
+                  />{' '}
+                  {hasError.errorMsg ||
+                    ' Some Error Occurred, please try again after sometime.'}
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
-        </div>
-        {progress > 0 && <progress value={progress} max="100"></progress>}
-        <div className={styles.editor}>
-          <ReactQuill
-            className={styles.textArea}
-            theme="bubble"
-            value={desc}
-            onChange={setDesc}
-            placeholder="Let the world know your thoughts..."
-          />
-        </div>
-        <>
-          {edit && (
-            <Link href={`/posts/${edit}`} className={styles.cancelPublish}>
-              <button
-                className={styles.publish}
-                type="button"
-                onClick={() => setCacelling(true)}
-              >
-                {cancelling ? (
-                  <ActionStatus
-                    text="Cancelling"
-                    status="loading"
-                    iconSize={20}
-                  />
-                ) : (
-                  'Cancel'
-                )}
+            {published === false && (
+              <ActionStatus text="Publishing" status="loading" iconSize={30} />
+            )}
+            {published === true && (
+              <ActionStatus text="Published" status="success" iconSize={25} />
+            )}
+            <input
+              type="text"
+              placeholder="Title"
+              value={title}
+              className={styles.input}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <div className={styles.extraContainer}>
+              <div className={styles.selectContainer}>
+                <label htmlFor="category" className={styles.label}>
+                  Category
+                </label>
+                <select
+                  id="category"
+                  className={styles.select}
+                  onChange={(e) => setCatSlug(e.target.value)}
+                  defaultValue="untagged"
+                  value={catSlug}
+                >
+                  {catData &&
+                    catData.map((item) => {
+                      return (
+                        <option
+                          key={item.title}
+                          value={item.title}
+                          disabled={item.title === 'untagged'}
+                          hidden={item.title === 'untagged'}
+                        >
+                          {item.title}
+                        </option>
+                      );
+                    })}
+                </select>
+              </div>
+              <div className={styles.addContainer}>
+                <div className={styles.buttonSuccessful}>
+                  <button
+                    className={`${styles.button} ${open && styles.open}`}
+                    onClick={() => setOpen((prevState) => !prevState)}
+                  >
+                    <Image src="/plus.svg" alt="" width={16} height={16} />
+                  </button>
+                  {uploadSuccessful && (
+                    <ActionStatus
+                      text="Upload Successful"
+                      status="success"
+                      iconSize={30}
+                    />
+                  )}
+                  {hasError.flag === 'upload' && (
+                    <div className={styles.successful}>
+                      Upload Failed{' '}
+                      <Image
+                        src="/error.svg"
+                        alt=""
+                        width={16}
+                        height={16}
+                        className={styles.errorImg}
+                      />
+                    </div>
+                  )}
+                </div>
+                <AnimatePresence>
+                  {open && (
+                    <motion.div
+                      key="addButton"
+                      className={styles.add}
+                      animate={{
+                        opacity: [0, 1],
+                        x: [600, 0],
+                        originX: 0,
+                      }}
+                      exit={{ x: [0, 400], opacity: [1, 0] }}
+                    >
+                      <input
+                        type="file"
+                        id="image"
+                        onChange={(e) => setFile(e.target.files[0])}
+                        className={styles.hiddenInput}
+                      />
+                      <button className={styles.addButton}>
+                        <label htmlFor="image" className={styles.label}>
+                          <Image
+                            src="/image.png"
+                            alt=""
+                            width={16}
+                            height={16}
+                          />
+                        </label>
+                      </button>
+                      <button className={styles.addButton}>
+                        <label htmlFor="image" className={styles.label}>
+                          <Image
+                            src="/external.png"
+                            alt=""
+                            width={16}
+                            height={16}
+                          />
+                        </label>
+                      </button>
+                      <button className={styles.addButton}>
+                        <label htmlFor="image" className={styles.label}>
+                          <Image
+                            src="/video.png"
+                            alt=""
+                            width={20}
+                            height={20}
+                          />
+                        </label>
+                      </button>
+                      <motion.div
+                        className={styles.span}
+                        animate={{ x: [1000, 0] }}
+                        exit={{ x: [0, 1000] }}
+                      >
+                        <b>NOTE:</b> Max file size: 200 KB
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+            {progress > 0 && <progress value={progress} max="100"></progress>}
+            <div className={styles.editor}>
+              <ReactQuill
+                className={styles.textArea}
+                theme="bubble"
+                value={desc}
+                onChange={setDesc}
+                placeholder="Let the world know your thoughts..."
+              />
+            </div>
+            <>
+              {edit && (
+                <Link href={`/posts/${edit}`} className={styles.cancelPublish}>
+                  <button
+                    className={styles.publish}
+                    type="button"
+                    onClick={() => setCacelling(true)}
+                  >
+                    {cancelling ? (
+                      <ActionStatus
+                        text="Cancelling"
+                        status="loading"
+                        iconSize={20}
+                      />
+                    ) : (
+                      'Cancel'
+                    )}
+                  </button>
+                </Link>
+              )}
+              <button className={styles.publish} onClick={handleSubmit}>
+                Publish
               </button>
-            </Link>
-          )}
-          <button className={styles.publish} onClick={handleSubmit}>
-            Publish
-          </button>
-        </>
-      </div>
+            </>
+          </div>
+        )}
+      </>
     );
   }
 }
