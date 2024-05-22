@@ -37,7 +37,7 @@
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
-  filter: saturate(300%) contrast(200%);
+  filter: saturate(300%);
 }
 
 .comments {
