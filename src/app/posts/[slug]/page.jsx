@@ -5,7 +5,7 @@ import Menu from '@/components/menu/Menu';
 import { notFound } from 'next/navigation';
 import CategoryItem from '@/components/categoryItem/CategoryItem';
 import EditAction from '@/components/edit/EditAction';
-import getLocalDateTime from '@/utils/getLocalTime';
+import LocalDateTime from '@/components/LocalDateTime/LocalDateTime';
 
 const getData = async (slug) => {
   const res = await fetch(`${process.env.PROD_URL}/api/posts/${slug}`, {
@@ -20,13 +20,14 @@ const getData = async (slug) => {
 };
 
 export async function generateMetadata({ params }) {
-  const post = getData(params.slug);
+  const post = await getData(params.slug);
   if (!post) {
     notFound();
   }
+  console.log('dynamic metadata-', post);
   return {
-    title: post.title,
-    description: 'Read amazing article on ' + post.title,
+    title: post?.post?.title,
+    description: 'Read amazing article on "' + post?.post?.title + '"',
   };
 }
 
@@ -67,10 +68,14 @@ export default async function SinglePage({ params }) {
             <div className={styles.userTextContainer}>
               <span className={styles.username}>{data?.post.user?.name}</span>
               <span className={styles.date}>
-                <span>{getLocalDateTime(data?.post?.createdAt)}</span>
+                <LocalDateTime date={data?.post?.createdAt} />
                 <span className={styles.updateDate}>
-                  {data?.post?.edited &&
-                    '[Updated] ' + getLocalDateTime(data?.post?.postUpdatedAt)}
+                  {data?.post?.edited && (
+                    <>
+                      {'[Updated] '}
+                      <LocalDateTime date={data?.post?.postUpdatedAt} />
+                    </>
+                  )}
                 </span>
               </span>
             </div>

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import styles from './Card.module.css';
 import Link from 'next/link';
 import CategoryItem from '../categoryItem/CategoryItem';
-import getLocalDateTime from '@/utils/getLocalTime';
+import LocalDateTime from '../LocalDateTime/LocalDateTime';
 
 export default function Card({ item, key }) {
   return (
@@ -23,7 +23,7 @@ export default function Card({ item, key }) {
       <div id="card" className={styles.textContainer}>
         <div className={styles.detail}>
           <span className={styles.date}>
-            {getLocalDateTime(item?.createdAt).split(',')[0]}
+            <LocalDateTime date={item?.createdAt} splitDate={true} />
           </span>
           {' - '}
           <CategoryItem

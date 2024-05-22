@@ -8,7 +8,7 @@ import { useRef, useState } from 'react';
 import CategoryItem from '../categoryItem/CategoryItem';
 import { AnimatePresence, motion } from 'framer-motion';
 import ActionStatus from '../ActionStatus/ActionStatus';
-import getLocalDateTime from '@/utils/getLocalTime';
+import LocalDateTime from '../LocalDateTime/LocalDateTime';
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -192,7 +192,7 @@ export default function Comments({ postSlug }) {
                               {item.user.name}
                             </span>
                             <span className={styles.date}>
-                              {getLocalDateTime(item?.createdAt)}
+                              <LocalDateTime date={item?.createdAt} />
                             </span>
                           </div>
                         </div>
