@@ -42,13 +42,13 @@ export const authOptions = {
         },
       },
       async authorize(credentials) {
-        const { email, password } = credentials;
+        const { email } = credentials;
         const user = await getUser(email);
         if (!user) {
           console.log("User doesn't exist");
           return null;
         }
-        if (user.email !== 'test@test.com' || password !== '123456') {
+        if (email !== user.email || user.accessBlocked) {
           return null;
         }
         return user;

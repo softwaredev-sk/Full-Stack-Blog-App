@@ -2,8 +2,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   margin-top: 60px;
+  gap: 10px;
   user-select: none;
+  text-align: center;
+}
+
+.container a {
+  font-weight: 600;
 }
 
 .wrapper {
@@ -26,6 +33,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.testLoginButton {
+  cursor: default;
 }
 
 .socialButton:first-child {
@@ -52,9 +63,9 @@
   order: 1;
 }
 
-.testLoginButton:hover {
+/* .testLoginButton:hover {
   filter: contrast(80%);
-}
+} */
 
 .hideForm {
   display: none;

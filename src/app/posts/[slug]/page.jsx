@@ -4,7 +4,6 @@ import Comments from '@/components/comments/Comments';
 import Menu from '@/components/menu/Menu';
 import { notFound } from 'next/navigation';
 import CategoryItem from '@/components/categoryItem/CategoryItem';
-import { getAuthSession } from '@/utils/auth';
 import EditAction from '@/components/edit/EditAction';
 import getLocalDateTime from '@/utils/getLocalTime';
 
@@ -19,6 +18,17 @@ const getData = async (slug) => {
 
   return res.json();
 };
+
+export async function generateMetadata({ params }) {
+  const post = getData(params.slug);
+  if (!post) {
+    notFound();
+  }
+  return {
+    title: post.title,
+    description: 'Read amazing article on ' + post.title,
+  };
+}
 
 export default async function SinglePage({ params }) {
   const { slug } = params;

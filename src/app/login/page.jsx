@@ -3,6 +3,7 @@ import { signIn, useSession } from 'next-auth/react';
 import styles from './LoginPage.module.css';
 import { useRouter } from 'next/navigation';
 import ActionStatus from '@/components/ActionStatus/ActionStatus';
+import Link from 'next/link';
 
 export default function LoginPage({ searchParams }) {
   const redirectUrl = searchParams?.redirect ?? '';
@@ -24,8 +25,18 @@ export default function LoginPage({ searchParams }) {
 
   return (
     <div className={styles.container}>
+      <div>
+        <p>
+          Test Login Disabled for security reasons. Feel free to use Google or
+          Github Login
+        </p>
+        <p>
+          Use <Link href="/contact">Contact</Link> page to ask for test login
+          access.
+        </p>
+      </div>
       <div className={styles.wrapper}>
-        <div
+        <button
           className={styles.socialButton}
           onClick={() =>
             signIn('google', {
@@ -34,8 +45,8 @@ export default function LoginPage({ searchParams }) {
           }
         >
           Sign in with Google
-        </div>
-        <div
+        </button>
+        <button
           className={styles.socialButton}
           onClick={() =>
             signIn('github', {
@@ -44,8 +55,8 @@ export default function LoginPage({ searchParams }) {
           }
         >
           Sign in with Github
-        </div>
-        <div
+        </button>
+        <button
           className={styles.testLoginButton}
           onClick={() =>
             signIn('credentials', {
@@ -54,9 +65,10 @@ export default function LoginPage({ searchParams }) {
               callbackUrl,
             })
           }
+          // disabled
         >
           Sign in as Test User
-        </div>
+        </button>
       </div>
     </div>
   );
