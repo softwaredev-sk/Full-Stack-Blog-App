@@ -69,7 +69,7 @@ export default function Comments({ postSlug }) {
       loadingRef.current = setTimeout(() => {
         loadingRef.current = null;
         setUiLoading(null);
-      }, 2000);
+      }, 1400);
       if (!edit) {
         setCommentPage(1);
       }
@@ -136,6 +136,7 @@ export default function Comments({ postSlug }) {
             <button
               className={styles.button}
               onClick={() => handleSubmit(false, null)}
+              disabled={uiLoading !== null}
             >
               {uiLoading === true && (
                 <ActionStatus text="Sending" status="loading" iconSize={30} />

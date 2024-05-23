@@ -198,6 +198,7 @@ export default function WritePage({ searchParams }) {
       .replace(/^-+|-+$/g, '');
 
   async function handleSubmit() {
+    setPublished(false);
     if (
       !title.trim() ||
       desc.trim().length < 100
@@ -207,10 +208,11 @@ export default function WritePage({ searchParams }) {
         "Title can't be empty and story need to be at least 100 characters long.",
         'validation failed'
       );
+
+      setPublished(null);
       return;
     }
 
-    setPublished(false);
     if (uploadSuccessful === false) {
       const proceed = window.confirm(
         'Upload Failed! Are you sure to proceed without an image?'
@@ -221,6 +223,8 @@ export default function WritePage({ searchParams }) {
       }
     }
 
+    const date = new Date();
+    const slugSalt = slugify(title) + '-' + date.getTime();
     const res = await fetch('/api/posts', {
       method: publishMethod,
       body: JSON.stringify({
@@ -228,7 +232,8 @@ export default function WritePage({ searchParams }) {
           title,
           desc,
           img: media,
-          slug: slugify(title),
+          // slug: slugify(title),
+          slug: slugSalt,
           catSlug: catSlug || 'untagged',
         },
         identifier: editPostSlug,
@@ -455,7 +460,11 @@ export default function WritePage({ searchParams }) {
                   </button>
                 </Link>
               )}
-              <button className={styles.publish} onClick={handleSubmit}>
+              <button
+                className={styles.publish}
+                onClick={handleSubmit}
+                disabled={published !== null}
+              >
                 Publish
               </button>
             </>

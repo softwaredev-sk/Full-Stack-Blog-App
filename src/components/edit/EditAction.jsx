@@ -7,18 +7,20 @@ import { useRouter } from 'next/navigation';
 export default function EditAction({ postData }) {
   const { data } = useSession();
   const router = useRouter();
-
-  async function handleDeletePost(id) {
-    const proceed = window.confirm('Are you sure you want to delete?');
+  async function handleDeletePost(id, slug) {
+    const proceed = window.confirm(
+      'Are you sure you want to delete post and all associated comments?'
+    );
     if (!proceed) {
       return;
     }
-    const res = await fetch(`/api/posts/?id=${id}`, {
+    const res = await fetch(`/api/posts/?id=${id}&postSlug=${slug}`, {
       method: 'DELETE',
     });
     if (!res.ok) {
       return;
     }
+
     router.push('/');
   }
   return (
@@ -28,7 +30,7 @@ export default function EditAction({ postData }) {
           <Link href={`/write/?edit=${postData?.slug}`}>Edit</Link>
           <span
             className={styles.danger}
-            onClick={() => handleDeletePost(postData?.id)}
+            onClick={() => handleDeletePost(postData?.id, postData?.slug)}
           >
             Delete
           </span>

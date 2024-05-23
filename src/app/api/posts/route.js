@@ -158,6 +158,7 @@ export const PUT = async (req) => {
 export const DELETE = async (req) => {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
+  const postSlug = searchParams.get('postSlug');
   const session = await getAuthSession();
 
   if (!session) {
@@ -167,13 +168,22 @@ export const DELETE = async (req) => {
   }
 
   try {
-    const deletedPost = await prisma.post.delete({
-      where: {
-        id: id,
-      },
-    });
+    const deletedPostAndComment = await prisma.$transaction([
+      prisma.comment.deleteMany({
+        where: {
+          postSlug: postSlug,
+        },
+      }),
+      prisma.post.delete({
+        where: {
+          id: id,
+        },
+      }),
+    ]);
 
-    return new NextResponse(JSON.stringify(deletedPost, { status: 200 }));
+    return new NextResponse(
+      JSON.stringify(deletedPostAndComment, { status: 200 })
+    );
   } catch (err) {
     // console.log('deleteComment ', err);
     return new NextResponse(
