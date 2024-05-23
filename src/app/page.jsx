@@ -17,7 +17,7 @@ export default function Home({ searchParams }) {
       )}
       <div className={styles.content}>
         <CardList page={page} />
-        <Menu page={page} />
+        <Menu page={page} hideInHomePage={true} />
       </div>
     </div>
   );

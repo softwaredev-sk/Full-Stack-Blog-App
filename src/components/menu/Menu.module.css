@@ -22,7 +22,8 @@
   /* .container {
     display: none;
   } */
-  .hideIt {
+  .hideIt,
+  .hideInHomePage {
     display: none;
   }
 }
