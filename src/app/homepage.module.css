@@ -1,6 +1,7 @@
 .content {
   display: flex;
   gap: 50px;
+  min-width: 0;
 }
 
 .notFound {

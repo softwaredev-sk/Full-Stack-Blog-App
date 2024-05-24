@@ -38,7 +38,9 @@ export default async function Featured() {
             <h2 className={styles.postTitle}>{featuredPost?.title}</h2>
             <p
               className={styles.postDesc}
-              dangerouslySetInnerHTML={{ __html: `${featuredPost?.desc}` }}
+              dangerouslySetInnerHTML={{
+                __html: `${featuredPost?.desc}`,
+              }}
             />
             <Link href={`/posts/${featuredPost?.slug}`}>
               <button className={styles.button}>Read More!</button>
