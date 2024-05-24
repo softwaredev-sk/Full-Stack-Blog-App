@@ -49,15 +49,17 @@ export default function Comments({ postSlug }) {
       clearTimeout(loadingRef.current);
     }
     let method = 'POST';
-    let comment = desc;
+    let comment = desc.trim();
     let identifier = postSlug;
     if (edit) {
       method = 'PUT';
-      comment = editDesc;
+      comment = editDesc.trim();
       identifier = id;
     }
     if (comment.trim()) {
-      setUiLoading(true);
+      if (!edit) {
+        setUiLoading(true);
+      }
       await fetch('/api/comments', {
         method: method,
         body: JSON.stringify({ comment, identifier }),
@@ -65,7 +67,9 @@ export default function Comments({ postSlug }) {
       await mutate();
       setDesc('');
       setEditing(null);
-      setUiLoading(false);
+      if (!edit) {
+        setUiLoading(false);
+      }
       loadingRef.current = setTimeout(() => {
         loadingRef.current = null;
         setUiLoading(null);
@@ -107,7 +111,7 @@ export default function Comments({ postSlug }) {
   }
 
   function handleCancel() {
-    setEditDesc('editData');
+    setEditDesc('');
     setEditing(null);
   }
 

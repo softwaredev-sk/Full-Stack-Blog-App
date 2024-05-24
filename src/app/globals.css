@@ -87,6 +87,11 @@ pre {
   cursor: pointer;
 }
 
+.bodyOverFlow {
+  overflow: hidden;
+  height: 100vh;
+}
+
 @media screen and (max-width: 1536px) {
   .wrapper {
     max-width: 1366px;

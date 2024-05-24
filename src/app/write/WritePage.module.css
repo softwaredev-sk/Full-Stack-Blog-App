@@ -46,7 +46,7 @@
   /* background-color: var(--bg); */
   background-color: transparent;
   position: absolute;
-  z-index: 999;
+  z-index: 150;
   /* width: 100%; */
   width: max-content;
   left: 70px;
@@ -143,7 +143,7 @@
   background-color: rgb(252, 218, 218);
   color: red;
   border-radius: 25px;
-  z-index: 1000;
+  z-index: 200;
   text-align: center;
 }
 

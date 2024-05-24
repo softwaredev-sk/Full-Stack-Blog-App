@@ -11,6 +11,29 @@
   text-transform: uppercase;
 }
 
+.loaderContainer p {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 160;
+}
+
+.loaderContainer p img {
+  user-select: none;
+}
+
+.loaderWrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 151;
+  background-color: var(--bg);
+}
+
 @media screen and (max-width: 1024px) {
   .content {
     flex-direction: column;

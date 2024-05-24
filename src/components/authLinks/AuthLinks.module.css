@@ -24,18 +24,21 @@
 
 .responsiveMenu {
   position: fixed;
-  top: 100px;
+  top: 80px;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: var(--bg);
-  height: calc(100vh - 100px);
+  height: calc(100vh - 80px);
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 50px;
+  z-index: 152;
+  margin: 0;
+  padding: 0;
 }
 
 .imageContainer {
@@ -46,18 +49,18 @@
   /* overflow: hidden; */
   cursor: pointer;
   position: relative;
-  z-index: 100;
+  z-index: 152;
 }
 
 .imageContainer img {
-  z-index: 100;
+  z-index: 152;
   position: absolute;
 }
 
 .profile {
   object-fit: cover;
   border-radius: 50%;
-  z-index: 100;
+  z-index: 152;
   border: 1px solid var(--softTextColor);
   padding: -2px;
 }

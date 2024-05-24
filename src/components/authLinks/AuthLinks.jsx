@@ -34,11 +34,9 @@ export default function AuthLinks({ path }) {
 
   useEffect(() => {
     if (open) {
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
+      document.body.classList.add('bodyOverFlow');
     } else {
-      document.body.style.position = 'initial';
-      document.body.style.width = 'initial';
+      document.body.classList.remove('bodyOverFlow');
     }
   }, [open]);
 

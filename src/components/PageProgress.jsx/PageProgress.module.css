@@ -1,0 +1,19 @@
+.progressBar {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background-color: red;
+  z-index: 150;
+  transform-origin: 0%;
+  margin: 10px 0;
+}
+
+.fullWidth {
+  position: sticky;
+  top: 80px;
+  width: 100%;
+  background-color: var(--softBg);
+  z-index: 150;
+  margin: 0;
+  padding: 0;
+}
