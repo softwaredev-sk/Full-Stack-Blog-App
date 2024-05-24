@@ -26,7 +26,7 @@ export default async function Featured() {
         <div className={styles.post}>
           <div className={styles.imgContainer}>
             <Image
-              src="/p1.jpeg"
+              src={featuredPost?.img}
               alt="post image"
               fill
               className={styles.image}
