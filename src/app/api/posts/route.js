@@ -92,7 +92,7 @@ export const POST = async (req) => {
   try {
     const body = await req.json();
     const data = body.data;
-    if (data.title.trim() == '' || data.desc.trim().length < 20) {
+    if (data?.title.trim() == '' || data?.desc.trim().length < 20) {
       return new NextResponse(
         JSON.stringify({ message: 'Invalid Data!' }, { status: 401 })
       );
@@ -127,7 +127,7 @@ export const PUT = async (req) => {
     const { data, identifier } = body;
     // console.log('data-', data, ' idt-', identifier);
 
-    if (data.title.trim() == '' || data.desc.trim().length < 100) {
+    if (data?.title.trim() == '' || data?.desc.trim().length < 100) {
       return new NextResponse(
         JSON.stringify({ message: 'Invalid Data!' }, { status: 401 })
       );

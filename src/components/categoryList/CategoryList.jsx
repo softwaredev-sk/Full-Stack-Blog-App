@@ -19,7 +19,7 @@ export default async function CategoryList({ page }) {
   let data = await getData();
   let customCss = 'categoryList';
   if (page === 1) {
-    data = data.slice(0, 4);
+    data = data?.slice(0, 4);
   }
   if (page !== 1) {
     customCss = 'categoryListPage';

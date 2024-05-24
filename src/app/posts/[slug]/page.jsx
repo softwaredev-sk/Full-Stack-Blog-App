@@ -57,7 +57,7 @@ export default async function SinglePage({ params }) {
             {data?.post?.user.image && (
               <div className={styles.userImageContainer}>
                 <Image
-                  src={data.post.user.image}
+                  src={data?.post.user.image}
                   alt=""
                   fill
                   className={styles.avatar}
