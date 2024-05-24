@@ -1,11 +1,13 @@
 .container {
   margin-top: 50px;
+  min-width: 0;
 }
 
 .title {
   color: var(--softTextColor);
   margin-bottom: 30px;
   font-size: 1.5em;
+  min-width: 0;
 }
 
 .write {
@@ -21,11 +23,13 @@
   flex: 5;
   padding: 0;
   margin: 0;
+  min-width: 0;
 }
 
 .input {
   padding: 20px;
   width: 100%;
+  min-width: 0;
 }
 
 .button {
@@ -38,16 +42,19 @@
   cursor: pointer;
   text-align: center;
   filter: saturate(300%);
+  min-width: 0;
 }
 
 .comments {
   margin-top: 50px;
   overflow-wrap: anywhere;
   word-break: break-all;
+  min-width: 0;
 }
 
 .comment {
   margin-bottom: 20px;
+  min-width: 0;
 }
 
 .comment:first-child {
@@ -95,6 +102,7 @@
   font-weight: 300;
   cursor: default;
   margin-top: 1px;
+  min-width: 0;
 }
 
 .editContainer {
@@ -137,6 +145,7 @@
 .cancel {
   padding: 2px 20px;
   border-radius: 10px;
+  min-width: 0;
 }
 
 .editInput {

@@ -229,8 +229,8 @@ export default function WritePage({ searchParams }) {
       method: publishMethod,
       body: JSON.stringify({
         data: {
-          title,
-          desc,
+          title: title.trim(),
+          desc: desc.trim(),
           img: media,
           // slug: slugify(title),
           slug: slugSalt,
