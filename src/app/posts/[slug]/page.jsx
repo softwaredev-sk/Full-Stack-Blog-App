@@ -6,7 +6,18 @@ import { notFound } from 'next/navigation';
 import CategoryItem from '@/components/categoryItem/CategoryItem';
 import EditAction from '@/components/edit/EditAction';
 import LocalDateTime from '@/components/LocalDateTime/LocalDateTime';
-import PageProgress from '@/components/PageProgress.jsx/PageProgress';
+// import PageProgress from '@/components/PageProgress.jsx/PageProgress';
+import dynamic from 'next/dynamic';
+import ActionStatus from '@/components/ActionStatus/ActionStatus';
+const PageProgress = dynamic(
+  () => import('@/components/PageProgress.jsx/PageProgress'),
+  {
+    ssr: false,
+    loading: () => (
+      <ActionStatus text="Loading" status="Loading" iconSize={30} />
+    ),
+  }
+);
 
 const getData = async (slug) => {
   const res = await fetch(`${process.env.PROD_URL}/api/posts/${slug}`, {

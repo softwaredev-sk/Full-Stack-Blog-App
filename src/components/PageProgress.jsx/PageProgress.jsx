@@ -18,7 +18,6 @@ export default function PageProgress() {
 
   useEffect(() => {
     ref.current = document.querySelector('#post');
-    console.log(ref);
   }, []);
 
   return (
