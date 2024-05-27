@@ -17,3 +17,18 @@
   margin: 0;
   padding: 0;
 }
+
+.description p {
+  font-size: 20px;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.description {
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+.description img {
+  max-width: 100%;
+}

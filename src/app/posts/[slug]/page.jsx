@@ -10,7 +10,7 @@ import LocalDateTime from '@/components/LocalDateTime/LocalDateTime';
 import dynamic from 'next/dynamic';
 import ActionStatus from '@/components/ActionStatus/ActionStatus';
 const PageProgress = dynamic(
-  () => import('@/components/PageProgress.jsx/PageProgress'),
+  () => import('@/components/PageProgress/PageProgress'),
   {
     ssr: false,
     loading: () => (
@@ -55,7 +55,7 @@ export default async function SinglePage({ params }) {
   return (
     <>
       <div className={styles.container}>
-        {data?.post && <PageProgress />}
+        {/* {data?.post && <PageProgress />} */}
         <div className={styles.infoContainer}>
           <div className={styles.textContainer}>
             {data?.post?.catSlug && (
@@ -110,16 +110,20 @@ export default async function SinglePage({ params }) {
         </div>
         <div className={styles.content}>
           <div className={styles.post}>
-            <span>
+            {/* <span>
               {data?.post?.edited && (
                 <CategoryItem category="edited" customCss="edited" edited />
               )}
-            </span>
+            </span> */}
 
-            <div
+            {/* <div
               id="post"
               className={styles.description}
               dangerouslySetInnerHTML={{ __html: `${data?.post.desc}` }}
+            /> */}
+            <PageProgress
+              edited={data?.post?.edited}
+              postContent={data?.post.desc}
             />
             <EditAction postData={data?.post} />
             <div className={styles.comment}>
