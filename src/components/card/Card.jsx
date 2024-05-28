@@ -17,6 +17,7 @@ export default function Card({ item, key }) {
               className={styles.image}
               sizes="(max-width: 1280px) 100px, 500px"
               quality={50}
+              priority={true}
             />
           </Link>
         </div>
