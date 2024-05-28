@@ -15,7 +15,8 @@ export default function Card({ item, key }) {
               alt="post image"
               fill
               className={styles.image}
-              sizes=""
+              sizes="(max-width: 1280px) 100px, 500px"
+              quality={50}
             />
           </Link>
         </div>
