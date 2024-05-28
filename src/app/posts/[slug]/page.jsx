@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation';
 import CategoryItem from '@/components/categoryItem/CategoryItem';
 import EditAction from '@/components/edit/EditAction';
 import LocalDateTime from '@/components/LocalDateTime/LocalDateTime';
-// import PageProgress from '@/components/PageProgress.jsx/PageProgress';
+// import PageProgress from '@/components/PageProgress/PageProgress';
 import dynamic from 'next/dynamic';
 import ActionStatus from '@/components/ActionStatus/ActionStatus';
 const PageProgress = dynamic(

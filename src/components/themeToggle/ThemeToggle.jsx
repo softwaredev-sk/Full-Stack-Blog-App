@@ -21,7 +21,7 @@ export default function ThemeToggle() {
           theme === 'dark' ? styles.dark : styles.light
         }`}
       ></div>
-      <Image src="/sun.png" alt="" width={14} height={14} />
+      <Image src="/sun.svg" alt="" width={14} height={14} />
     </div>
   );
 }
