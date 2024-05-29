@@ -6,6 +6,12 @@
   max-width: 640px;
 }
 
+.form .fields {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .form button {
   width: max-content;
   padding: 10px 30px;

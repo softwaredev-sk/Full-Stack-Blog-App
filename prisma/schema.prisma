@@ -130,6 +130,7 @@ model Contactme {
   id String @id @default(cuid()) @map("_id")
   createdAt DateTime @default(now())
   userEmail String @default("NOT LOGGED IN")
+  name String
   email String
   subject String
   content String
