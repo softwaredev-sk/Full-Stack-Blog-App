@@ -4,7 +4,7 @@ import styles from './WritePage.module.css';
 import React, { useEffect, useRef, useState } from 'react';
 // import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
-import { notFound, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import {
   getStorage,

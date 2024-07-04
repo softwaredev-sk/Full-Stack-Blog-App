@@ -75,11 +75,6 @@ export default function Contact() {
       content.trim()
     ) {
       const res = await sendContactForm(formCustomData);
-      if (!res.ok) {
-        console.log('failed to submit form');
-        handleFormSendStatus(false);
-        return;
-      }
       setFormCustomData({
         name: '',
         email: '',
